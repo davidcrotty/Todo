@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="You have no todo items!"
-        android:id="@+id/textView"
+        android:id="@+id/no_items_text"
         android:textSize="@dimen/large_text"
         android:layout_gravity="center" />
 </FrameLayout>

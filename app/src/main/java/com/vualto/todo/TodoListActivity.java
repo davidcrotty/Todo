@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class TodoListActivity extends Activity {
+public class TodoListActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

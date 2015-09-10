@@ -13,7 +13,6 @@ public class TodoListPresenter {
 
     public TodoListActivity _todolistActivity;
 
-    @Inject
     public TodoListPresenter(TodoListActivity todolistActivity) {
         _todolistActivity = todolistActivity;
     }

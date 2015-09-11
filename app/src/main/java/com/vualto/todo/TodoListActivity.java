@@ -14,18 +14,15 @@ public class TodoListActivity extends BaseActivity {
     private TodoListPresenterComponent _component;
     @Inject TodoListPresenter _presenter;
 
-    //that can be injected < aware of injection
-    //injecting constructor presenter more complex
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        _component = DaggerTodoListPresenterComponent.builder()
-        .todoListPresenterModule(new TodoListPresenterModule(this))
-        .build();
-        TodoListPresenter presenter = _component.provideTodoListPresenter();
 
-        presenter.doStuff();
+        DaggerTodoListPresenterComponent.builder()
+        .todoListPresenterModule(new TodoListPresenterModule(this))
+        .build().inject(this);
+
+        _presenter.doStuff();
     }
 }

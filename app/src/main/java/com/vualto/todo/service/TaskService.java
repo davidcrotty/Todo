@@ -1,5 +1,7 @@
 package com.vualto.todo.service;
 
+import android.util.Log;
+
 import com.vualto.todo.repository.DataRepository;
 
 /**
@@ -15,6 +17,6 @@ public class TaskService implements ITaskService {
 
     @Override
     public void createTaskItem() {
-
+        Log.d("TaskService", "createTaskItem");
     }
 }

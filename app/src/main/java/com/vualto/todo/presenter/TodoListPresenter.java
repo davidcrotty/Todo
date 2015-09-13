@@ -3,6 +3,7 @@ package com.vualto.todo.presenter;
 import android.util.Log;
 
 import com.vualto.todo.TodoListActivity;
+import com.vualto.todo.service.TaskService;
 
 import javax.inject.Inject;
 
@@ -12,12 +13,14 @@ import javax.inject.Inject;
 public class TodoListPresenter {
 
     public TodoListActivity _todolistActivity;
+    public TaskService _taskService;
 
-    public TodoListPresenter(TodoListActivity todolistActivity) {
+    public TodoListPresenter(TodoListActivity todolistActivity, TaskService taskService) {
         _todolistActivity = todolistActivity;
+        _taskService = taskService;
     }
 
     public void doStuff() {
-        Log.d("TodoListPresenter", "working");
+        _taskService.createTaskItem();
     }
 }

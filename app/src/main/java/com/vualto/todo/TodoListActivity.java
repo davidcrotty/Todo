@@ -39,9 +39,6 @@ public class TodoListActivity extends BaseActivity implements View.OnClickListen
         .dataRepositoryComponent(_dataRepositoryComponent)
         .todoListPresenterModule(new TodoListPresenterModule(this))
         .build().inject(this);
-/*        if(_presenter == null) {
-            Toast.makeText(this, "No presenter", Toast.LENGTH_SHORT).show();
-        }*/
     }
 
     @Override

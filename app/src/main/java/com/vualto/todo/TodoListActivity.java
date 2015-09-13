@@ -1,10 +1,6 @@
 package com.vualto.todo;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.vualto.todo.module.DaggerDataRepositoryComponent;
 import com.vualto.todo.module.DaggerTodoListPresenterComponent;
@@ -16,22 +12,20 @@ import com.vualto.todo.presenter.TodoListPresenter;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
 import dagger.Lazy;
 
-public class TodoListActivity extends BaseActivity implements View.OnClickListener {
+public class TodoListActivity extends BaseActivity  {
 
     private DataRepositoryComponent _dataRepositoryComponent;
     private TodoListPresenterComponent _component;
-    @Inject
-    Lazy<TodoListPresenter> _presenter;
-    private Button _instantiatePresenterButton;
+    @Inject Lazy<TodoListPresenter> _presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        _instantiatePresenterButton = (Button) findViewById(R.id.instantiate_presenter_button);
-        _instantiatePresenterButton.setOnClickListener(this);
+        ButterKnife.bind(this);
         _dataRepositoryComponent = DaggerDataRepositoryComponent.builder()
                                    .dataRepositoryModule(new DataRepositoryModule()).build();
 
@@ -44,13 +38,5 @@ public class TodoListActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
-        if(_presenter == null) {
-            Toast.makeText(this, "No presenter", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        _presenter.get().doStuff();
     }
 }

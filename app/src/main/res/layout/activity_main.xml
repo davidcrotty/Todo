@@ -14,10 +14,11 @@
         android:textSize="@dimen/large_text"
         android:layout_gravity="center" />
 
-    <Button
+    <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Instantiate presenter"
-        android:id="@+id/instantiate_presenter_button"
-        android:layout_gravity="center_horizontal|top" />
+        android:layout_gravity="bottom|center"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add_white_18dp"
+        android:clickable="true" />
 </FrameLayout>

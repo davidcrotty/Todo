@@ -13,4 +13,11 @@
         android:id="@+id/no_items_text"
         android:textSize="@dimen/large_text"
         android:layout_gravity="center" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Instantiate presenter"
+        android:id="@+id/instantiate_presenter_button"
+        android:layout_gravity="center_horizontal|top" />
 </FrameLayout>

@@ -34,4 +34,8 @@ public class TodoListActivity extends BaseActivity  {
         .build().inject(this);
         _presenter.get().launchTodoListFragment(this);
     }
+
+    public TodoListPresenter getPresenter() {
+        return _presenter.get();
+    }
 }

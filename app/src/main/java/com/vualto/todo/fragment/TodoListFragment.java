@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
 
 import com.vualto.todo.R;
 import com.vualto.todo.module.component.DaggerTodoListFragmentPresenterComponent;
@@ -82,6 +80,8 @@ public class TodoListFragment extends Fragment implements View.OnLayoutChangeLis
     @Override
     public void onAnimationEnd(Animator animation) {
         _addItemButton.setVisibility(View.INVISIBLE);
+        _todoTodoListFragmentPresenter.removeTodoListFragment(getActivity(), this);
+        _todoTodoListFragmentPresenter.showAddItemFragment(getActivity());
     }
 
     @Override

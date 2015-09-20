@@ -82,6 +82,12 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        _addItemButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
         int finalRadius = Math.max(_addItemButton.getWidth(), _addItemButton.getHeight());
         int cx = _addItemButton.getWidth() / 2;

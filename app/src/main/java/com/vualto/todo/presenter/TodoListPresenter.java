@@ -1,5 +1,8 @@
 package com.vualto.todo.presenter;
 
+import android.content.Intent;
+
+import com.vualto.todo.AddItemActivity;
 import com.vualto.todo.TodoListActivity;
 import com.vualto.todo.service.TaskService;
 
@@ -14,5 +17,10 @@ public class TodoListPresenter {
     public TodoListPresenter(TodoListActivity todolistActivity, TaskService taskService) {
         _todolistActivity = todolistActivity;
         _taskService = taskService;
+    }
+
+    public void launchAdditemActivity() {
+        Intent intent = new Intent(_todolistActivity, AddItemActivity.class);
+        _todolistActivity.startActivity(intent);
     }
 }

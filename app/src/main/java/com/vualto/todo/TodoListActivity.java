@@ -68,7 +68,7 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
     @Override
     public void onAnimationEnd(Animator animation) {
         _addItemButton.setVisibility(View.INVISIBLE);
-
+        _presenter.get().launchAdditemActivity();
     }
 
     @Override

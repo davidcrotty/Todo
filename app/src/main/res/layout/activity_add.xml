@@ -29,6 +29,6 @@
         app:borderWidth="0dp"
         android:id="@+id/save_item_button"
         app:backgroundTint="@color/ColorPrimary"
-        android:src="@drawable/ic_add_white_18dp"
+        android:src="@drawable/ic_done_white_18dp"
         android:clickable="true" />
 </android.support.design.widget.CoordinatorLayout>

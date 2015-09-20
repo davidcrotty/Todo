@@ -17,6 +17,8 @@
             </intent-filter>
         </activity>
         <activity
+            android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="stateHidden"
             android:name=".AddItemActivity"
             android:label="@string/app_name" >
         </activity>

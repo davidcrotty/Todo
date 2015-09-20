@@ -10,14 +10,19 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true">
 
-    <EditText
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/notes_wrapper"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:hint="@string/add_item_hint"
-        android:id="@+id/notes_edit_text"
-        android:gravity="center"
-        android:layout_gravity="center|top" />
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:hint="@string/add_item_hint"
+            android:id="@+id/notes_edit_text"
+            android:gravity="center"
+            android:layout_gravity="center|top" />
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.FloatingActionButton
         xmlns:app="http://schemas.android.com/apk/res-auto"

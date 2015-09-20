@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
@@ -22,6 +23,9 @@ public class AddItemActivity extends BaseActivity implements View.OnLayoutChange
     @Bind(R.id.notes_edit_text)
     EditText _notesText;
 
+    @Bind(R.id.notes_wrapper)
+    TextInputLayout _notesTextWrapper;
+
     @Bind(R.id.save_item_button)
     FloatingActionButton _saveItemButton;
 
@@ -31,6 +35,7 @@ public class AddItemActivity extends BaseActivity implements View.OnLayoutChange
         setContentView(R.layout.activity_add);
         ButterKnife.bind(this);
         _saveItemButton.addOnLayoutChangeListener(this);
+        _notesTextWrapper.setHint("Tap Below to add notes");
     }
 
     @OnClick(R.id.save_item_button)

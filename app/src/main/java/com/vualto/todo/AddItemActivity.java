@@ -31,6 +31,6 @@ public class AddItemActivity extends BaseActivity {
 
     @OnClick(R.id.save_item_button)
     void onClick() {
-        
+
     }
 }

@@ -27,7 +27,6 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
                                                               Animator.AnimatorListener {
 
     private DataRepositoryComponent _dataRepositoryComponent;
-    private TodoListPresenterComponent _component;
     @Inject Lazy<TodoListPresenter> _presenter;
 
     @Bind(R.id.add_item_button)

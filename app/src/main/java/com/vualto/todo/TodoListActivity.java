@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 
+import com.vualto.todo.appstart.AndroidApplication;
 import com.vualto.todo.module.DaggerDataRepositoryComponent;
 import com.vualto.todo.module.DaggerTodoListPresenterComponent;
 import com.vualto.todo.module.DataRepositoryComponent;
@@ -37,14 +38,20 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        initialiseInjector();
         _addItemButton.addOnLayoutChangeListener(this);
-         _dataRepositoryComponent = DaggerDataRepositoryComponent.builder()
-                                   .dataRepositoryModule(new DataRepositoryModule()).build();
+
+    }
+
+    private void initialiseInjector() {
+        _dataRepositoryComponent = DaggerDataRepositoryComponent.builder()
+                .dataRepositoryModule(new DataRepositoryModule((AndroidApplication)getApplicationContext()))
+                .build();
 
         DaggerTodoListPresenterComponent.builder()
-        .dataRepositoryComponent(_dataRepositoryComponent)
-        .todoListPresenterModule(new TodoListPresenterModule(this))
-        .build().inject(this);
+                .dataRepositoryComponent(_dataRepositoryComponent)
+                .todoListPresenterModule(new TodoListPresenterModule(this))
+                .build().inject(this);
     }
 
     @OnClick(R.id.add_item_button)

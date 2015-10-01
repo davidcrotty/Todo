@@ -1,14 +1,15 @@
-package com.vualto.todo;
+package com.vualto.todo.view;
 
 import android.animation.Animator;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.EditText;
+
+import com.vualto.todo.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

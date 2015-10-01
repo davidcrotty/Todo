@@ -1,8 +1,7 @@
 package com.vualto.todo.module;
 
-import com.vualto.todo.TodoListActivity;
+import com.vualto.todo.view.TodoListActivity;
 import com.vualto.todo.presenter.TodoListPresenter;
-import com.vualto.todo.service.TaskService;
 
 import dagger.Component;
 

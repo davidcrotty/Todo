@@ -1,4 +1,4 @@
-package com.vualto.todo;
+package com.vualto.todo.view;
 
 import android.animation.Animator;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 
+import com.vualto.todo.R;
 import com.vualto.todo.appstart.AndroidApplication;
 import com.vualto.todo.module.DaggerDataRepositoryComponent;
 import com.vualto.todo.module.DaggerTodoListPresenterComponent;
@@ -24,7 +25,7 @@ import dagger.Lazy;
 
 public class TodoListActivity extends BaseActivity implements View.OnLayoutChangeListener,
                                                               Animator.AnimatorListener,
-                                                              TodoView {
+        TodoView {
 
     private DataRepositoryComponent _dataRepositoryComponent;
     @Inject Lazy<TodoListPresenter> _presenter;

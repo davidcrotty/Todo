@@ -9,7 +9,7 @@
         android:theme="@style/AppThemeNoActionBar"
         android:name=".appstart.AndroidApplication">
         <activity
-            android:name=".TodoListActivity"
+            android:name=".view.TodoListActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +19,7 @@
         <activity
             android:configChanges="keyboardHidden|orientation"
             android:windowSoftInputMode="stateHidden"
-            android:name=".AddItemActivity"
+            android:name=".view.AddItemActivity"
             android:label="@string/app_name" >
         </activity>
     </application>

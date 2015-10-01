@@ -3,8 +3,8 @@ package com.vualto.todo.presenter;
 import android.content.Context;
 import android.content.Intent;
 
-import com.vualto.todo.AddItemActivity;
-import com.vualto.todo.TodoView;
+import com.vualto.todo.view.AddItemActivity;
+import com.vualto.todo.view.TodoView;
 import com.vualto.todo.service.TaskService;
 
 /**

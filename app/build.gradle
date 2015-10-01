@@ -33,4 +33,5 @@ dependencies {
     apt 'com.google.dagger:dagger-compiler:2.0.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.android.support:design:23.+'
+    compile 'io.realm:realm-android:0.82.2'
 }

@@ -12,7 +12,6 @@ public class DataRepository {
     private AndroidApplication _applicationContext;
 
     public DataRepository(AndroidApplication applicationContext) {
-//        Log.d("DataRepository", "Data repo constructed");
         _applicationContext = applicationContext;
     }
 }

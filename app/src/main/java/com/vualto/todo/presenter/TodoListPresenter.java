@@ -1,9 +1,10 @@
 package com.vualto.todo.presenter;
 
+import android.content.Context;
 import android.content.Intent;
 
 import com.vualto.todo.AddItemActivity;
-import com.vualto.todo.TodoListActivity;
+import com.vualto.todo.TodoView;
 import com.vualto.todo.service.TaskService;
 
 /**
@@ -11,16 +12,16 @@ import com.vualto.todo.service.TaskService;
  */
 public class TodoListPresenter {
 
-    public TodoListActivity _todolistActivity;
+    public TodoView _todoView;
     public TaskService _taskService;
 
-    public TodoListPresenter(TodoListActivity todolistActivity, TaskService taskService) {
-        _todolistActivity = todolistActivity;
+    public TodoListPresenter(TodoView view, TaskService taskService) {
+        _todoView = view;
         _taskService = taskService;
     }
 
-    public void launchAdditemActivity() {
-        Intent intent = new Intent(_todolistActivity, AddItemActivity.class);
-        _todolistActivity.startActivity(intent);
+    public void launchAdditemActivity(Context activityContext) {
+        Intent intent = new Intent(activityContext, AddItemActivity.class);
+        activityContext.startActivity(intent);
     }
 }

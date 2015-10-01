@@ -12,7 +12,6 @@ import com.vualto.todo.module.DaggerDataRepositoryComponent;
 import com.vualto.todo.module.DaggerTodoListPresenterComponent;
 import com.vualto.todo.module.DataRepositoryComponent;
 import com.vualto.todo.module.DataRepositoryModule;
-import com.vualto.todo.module.TodoListPresenterComponent;
 import com.vualto.todo.module.TodoListPresenterModule;
 import com.vualto.todo.presenter.TodoListPresenter;
 
@@ -24,7 +23,8 @@ import butterknife.OnClick;
 import dagger.Lazy;
 
 public class TodoListActivity extends BaseActivity implements View.OnLayoutChangeListener,
-                                                              Animator.AnimatorListener {
+                                                              Animator.AnimatorListener,
+                                                              TodoView {
 
     private DataRepositoryComponent _dataRepositoryComponent;
     @Inject Lazy<TodoListPresenter> _presenter;
@@ -39,7 +39,6 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
         ButterKnife.bind(this);
         initialiseInjector();
         _addItemButton.addOnLayoutChangeListener(this);
-
     }
 
     private void initialiseInjector() {
@@ -74,7 +73,7 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
     @Override
     public void onAnimationEnd(Animator animation) {
         _addItemButton.setVisibility(View.INVISIBLE);
-        _presenter.get().launchAdditemActivity();
+        _presenter.get().launchAdditemActivity(this);
     }
 
     @Override
@@ -103,5 +102,10 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
         anim.setInterpolator(new AccelerateInterpolator());
         anim.setDuration(700);
         anim.start();
+    }
+
+    @Override
+    public void showTodoItems() {
+
     }
 }

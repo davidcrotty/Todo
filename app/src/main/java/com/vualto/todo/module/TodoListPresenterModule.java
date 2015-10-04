@@ -1,9 +1,10 @@
 package com.vualto.todo.module;
 
-import com.vualto.todo.view.TodoListActivity;
 import com.vualto.todo.presenter.TodoListPresenter;
 import com.vualto.todo.repository.DataRepository;
 import com.vualto.todo.service.TaskService;
+import com.vualto.todo.view.AddItemActivity;
+import com.vualto.todo.view.TodoListActivity;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,14 +14,19 @@ import dagger.Provides;
  */
 @Module
 public class TodoListPresenterModule {
-    private final TodoListActivity _activity;
+    private final android.app.Activity _activity;
 
-    public TodoListPresenterModule(TodoListActivity todoListActivity) {
+    public TodoListPresenterModule(android.app.Activity todoListActivity) {
         _activity = todoListActivity;
     }
 
     @Provides
     TodoListPresenter provideTodoListPresenter(DataRepository dataRepository) {
-        return new TodoListPresenter(_activity, new TaskService(dataRepository));
+        if(_activity instanceof TodoListActivity) {
+            return new TodoListPresenter((TodoListActivity)_activity, new TaskService(dataRepository));
+        } else if (_activity instanceof AddItemActivity) {
+            return new TodoListPresenter((AddItemActivity)_activity, new TaskService(dataRepository));
+        }
+        return null;
     }
 }

@@ -24,4 +24,9 @@ public class TodoListPresenter {
         Intent intent = new Intent(activityContext, AddItemActivity.class);
         activityContext.startActivity(intent);
     }
+
+    public void addItem(String description) {
+        if(description.isEmpty()) return;
+        _taskService.createTaskItem(description);
+    }
 }

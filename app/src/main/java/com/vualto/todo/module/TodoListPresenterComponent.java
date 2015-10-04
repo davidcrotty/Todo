@@ -1,5 +1,6 @@
 package com.vualto.todo.module;
 
+import com.vualto.todo.view.AddItemActivity;
 import com.vualto.todo.view.TodoListActivity;
 import com.vualto.todo.presenter.TodoListPresenter;
 
@@ -13,4 +14,5 @@ import dagger.Component;
 public interface TodoListPresenterComponent {
     TodoListPresenter TodoListPresenter();
     void inject(TodoListActivity activity);
+    void inject(AddItemActivity activity);
 }

@@ -27,7 +27,7 @@ public class DataRepository {
         realm.commitTransaction();
     }
 
-    public RealmResults get(RealmQuery realmQuery) {
-        return realmQuery.findAll();
+    public RealmResults getAll(Class clazz) {
+        return Realm.getDefaultInstance().where(clazz).findAll();
     }
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.vualto.todo.domain.TaskItem;
 import com.vualto.todo.repository.DataRepository;
 
+import java.util.UUID;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -22,7 +23,7 @@ public class TaskService implements ITaskService {
 
     @Override
     public void createTaskItem(String description) {
-        TaskItem taskItem = new TaskItem(description);
+        TaskItem taskItem = new TaskItem(UUID.randomUUID().toString(), description);
         _dataRepository.add(taskItem);
         getAllItems();
     }

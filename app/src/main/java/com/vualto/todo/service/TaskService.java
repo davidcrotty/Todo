@@ -5,7 +5,10 @@ import android.util.Log;
 import com.vualto.todo.domain.TaskItem;
 import com.vualto.todo.repository.DataRepository;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.UUID;
+
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -25,13 +28,14 @@ public class TaskService implements ITaskService {
     public void createTaskItem(String description) {
         TaskItem taskItem = new TaskItem(UUID.randomUUID().toString(), description);
         _dataRepository.add(taskItem);
-        getAllItems();
+//        getAllItems();
     }
 
     private void getAllItems() {
-        Realm realm = Realm.getDefaultInstance();
-        RealmQuery<TaskItem> taskItemsQuery = realm.where(TaskItem.class);
-        RealmResults<TaskItem> taskItem = taskItemsQuery.findAll();
-        Log.d("sdf", taskItem.get(0).getDescription());
+        RealmResults<TaskItem> taskItems = _dataRepository.getAll(TaskItem.class);
+
+        for(TaskItem taskItem : taskItems) {
+            Log.d("sdf", taskItem.getDescription());
+        }
     }
 }

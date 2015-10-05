@@ -1,8 +1,8 @@
-package com.vualto.todo.module;
+package com.david.todo.module;
 
-import com.vualto.todo.view.AddItemActivity;
-import com.vualto.todo.view.TodoListActivity;
-import com.vualto.todo.presenter.TodoListPresenter;
+import com.david.todo.view.AddItemActivity;
+import com.david.todo.view.TodoListActivity;
+import com.david.todo.presenter.TodoListPresenter;
 
 import dagger.Component;
 

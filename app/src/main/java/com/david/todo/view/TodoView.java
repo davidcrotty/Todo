@@ -1,4 +1,4 @@
-package com.vualto.todo.view;
+package com.david.todo.view;
 
 /**
  * Created by David on 29/09/2015.

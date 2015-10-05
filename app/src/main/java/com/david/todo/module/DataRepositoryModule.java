@@ -1,9 +1,9 @@
-package com.vualto.todo.module;
+package com.david.todo.module;
 
 import android.app.Application;
 
-import com.vualto.todo.appstart.AndroidApplication;
-import com.vualto.todo.repository.DataRepository;
+import com.david.todo.appstart.AndroidApplication;
+import com.david.todo.repository.DataRepository;
 
 import dagger.Module;
 import dagger.Provides;

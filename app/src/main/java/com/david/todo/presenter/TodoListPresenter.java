@@ -1,11 +1,11 @@
-package com.vualto.todo.presenter;
+package com.david.todo.presenter;
 
 import android.content.Context;
 import android.content.Intent;
 
-import com.vualto.todo.view.AddItemActivity;
-import com.vualto.todo.view.TodoView;
-import com.vualto.todo.service.TaskService;
+import com.david.todo.view.AddItemActivity;
+import com.david.todo.view.TodoView;
+import com.david.todo.service.TaskService;
 
 /**
  * Created by David on 03/09/2015.

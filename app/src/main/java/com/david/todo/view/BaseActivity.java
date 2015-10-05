@@ -1,4 +1,4 @@
-package com.vualto.todo.view;
+package com.david.todo.view;
 
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;

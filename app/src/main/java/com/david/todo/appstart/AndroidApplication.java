@@ -1,12 +1,12 @@
-package com.vualto.todo.appstart;
+package com.david.todo.appstart;
 
 import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
 
-import com.vualto.todo.BuildConfig;
-import com.vualto.todo.R;
-import com.vualto.todo.module.DataRepositoryComponent;
+import com.david.todo.BuildConfig;
+import com.david.todo.R;
+import com.david.todo.module.DataRepositoryComponent;
 
 import java.io.File;
 import java.io.IOException;

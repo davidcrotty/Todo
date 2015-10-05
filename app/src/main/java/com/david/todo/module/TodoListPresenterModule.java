@@ -1,10 +1,10 @@
-package com.vualto.todo.module;
+package com.david.todo.module;
 
-import com.vualto.todo.presenter.TodoListPresenter;
-import com.vualto.todo.repository.DataRepository;
-import com.vualto.todo.service.TaskService;
-import com.vualto.todo.view.AddItemActivity;
-import com.vualto.todo.view.TodoListActivity;
+import com.david.todo.presenter.TodoListPresenter;
+import com.david.todo.repository.DataRepository;
+import com.david.todo.service.TaskService;
+import com.david.todo.view.AddItemActivity;
+import com.david.todo.view.TodoListActivity;
 
 import dagger.Module;
 import dagger.Provides;

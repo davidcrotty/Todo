@@ -1,9 +1,9 @@
-package com.vualto.todo.service;
+package com.david.todo.service;
 
 import android.util.Log;
 
-import com.vualto.todo.domain.TaskItem;
-import com.vualto.todo.repository.DataRepository;
+import com.david.todo.domain.TaskItem;
+import com.david.todo.repository.DataRepository;
 
 import java.util.ArrayList;
 import java.util.Iterator;

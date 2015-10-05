@@ -1,8 +1,8 @@
-package com.vualto.todo.repository;
+package com.david.todo.repository;
 
 import android.util.Log;
 
-import com.vualto.todo.appstart.AndroidApplication;
+import com.david.todo.appstart.AndroidApplication;
 
 import io.realm.Realm;
 import io.realm.RealmObject;

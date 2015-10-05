@@ -12,7 +12,7 @@
 
     <style name="NotesLabel" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColorHint">@color/ColorPrimaryText</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/large_text</item>
         <item name="android:textColor">@color/ColorPrimaryText</item>
         <item name="colorAccent">@color/ColorPrimaryText</item>
         <item name="colorControlNormal">@color/ColorPrimaryText</item>

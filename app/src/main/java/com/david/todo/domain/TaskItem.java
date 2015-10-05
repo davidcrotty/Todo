@@ -1,4 +1,4 @@
-package com.vualto.todo.domain;
+package com.david.todo.domain;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

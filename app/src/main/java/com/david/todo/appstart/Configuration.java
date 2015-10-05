@@ -1,9 +1,9 @@
-package com.vualto.todo.appstart;
+package com.david.todo.appstart;
 
 import android.content.Context;
 import android.os.Environment;
 
-import com.vualto.todo.BuildConfig;
+import com.david.todo.BuildConfig;
 
 /**
  * Created by David on 01/10/2015.

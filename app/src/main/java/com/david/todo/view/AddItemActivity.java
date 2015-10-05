@@ -1,4 +1,4 @@
-package com.vualto.todo.view;
+package com.david.todo.view;
 
 import android.animation.Animator;
 import android.os.Bundle;
@@ -9,14 +9,14 @@ import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.EditText;
 
-import com.vualto.todo.R;
-import com.vualto.todo.appstart.AndroidApplication;
-import com.vualto.todo.module.DaggerDataRepositoryComponent;
-import com.vualto.todo.module.DaggerTodoListPresenterComponent;
-import com.vualto.todo.module.DataRepositoryComponent;
-import com.vualto.todo.module.DataRepositoryModule;
-import com.vualto.todo.module.TodoListPresenterModule;
-import com.vualto.todo.presenter.TodoListPresenter;
+import com.david.todo.R;
+import com.david.todo.appstart.AndroidApplication;
+import com.david.todo.module.DaggerDataRepositoryComponent;
+import com.david.todo.module.DaggerTodoListPresenterComponent;
+import com.david.todo.module.DataRepositoryComponent;
+import com.david.todo.module.DataRepositoryModule;
+import com.david.todo.module.TodoListPresenterModule;
+import com.david.todo.presenter.TodoListPresenter;
 
 import javax.inject.Inject;
 

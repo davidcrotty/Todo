@@ -1,6 +1,6 @@
-package com.vualto.todo.module;
+package com.david.todo.module;
 
-import com.vualto.todo.repository.DataRepository;
+import com.david.todo.repository.DataRepository;
 
 import dagger.Component;
 

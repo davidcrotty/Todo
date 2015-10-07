@@ -34,6 +34,8 @@ public class AddItemActivity extends BaseActivity implements View.OnLayoutChange
 
     @Bind(R.id.notes_edit_text)
     EditText _notesText;
+    @Bind(R.id.title_edit_text)
+    EditText _titleText;
     @Bind(R.id.notes_wrapper)
     TextInputLayout _notesTextWrapper;
     @Bind(R.id.save_item_button)
@@ -75,7 +77,7 @@ public class AddItemActivity extends BaseActivity implements View.OnLayoutChange
         anim.setInterpolator(new AccelerateInterpolator());
         anim.setDuration(700);
         anim.start();
-        _presenter.get().addItem(_notesText.getText().toString());
+        _presenter.get().addItem(_titleText.getText().toString(), _notesText.getText().toString());
     }
 
     @Override

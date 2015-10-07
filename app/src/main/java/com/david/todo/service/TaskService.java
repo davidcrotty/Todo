@@ -25,8 +25,8 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public void createTaskItem(String description) {
-        TaskItem taskItem = new TaskItem(UUID.randomUUID().toString(), description);
+    public void createTaskItem(String title, String description) {
+        TaskItem taskItem = new TaskItem(UUID.randomUUID().toString(), title, description);
         _dataRepository.add(taskItem);
 //        getAllItems();
     }

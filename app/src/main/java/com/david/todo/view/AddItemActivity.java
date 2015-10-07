@@ -51,7 +51,6 @@ public class AddItemActivity extends BaseActivity implements View.OnLayoutChange
         ButterKnife.bind(this);
         initialiseInjector();
         _saveItemButton.addOnLayoutChangeListener(this);
-        _notesTextWrapper.setHint("Tap Below to add notes");
     }
 
     private void initialiseInjector() {

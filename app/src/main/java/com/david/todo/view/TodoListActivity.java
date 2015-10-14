@@ -1,8 +1,11 @@
 package com.david.todo.view;
 
 import android.animation.Animator;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
@@ -25,13 +28,16 @@ import dagger.Lazy;
 
 public class TodoListActivity extends BaseActivity implements View.OnLayoutChangeListener,
                                                               Animator.AnimatorListener,
-        TodoView {
+                                                              TodoView {
 
     private DataRepositoryComponent _dataRepositoryComponent;
     @Inject Lazy<TodoListPresenter> _presenter;
 
     @Bind(R.id.add_item_button)
     FloatingActionButton _addItemButton;
+
+    @Bind(R.id.todolist_container)
+    CoordinatorLayout _activityContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,15 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
         ButterKnife.bind(this);
         initialiseInjector();
         _addItemButton.addOnLayoutChangeListener(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        _presenter.get().notifySuccessfulItemAdd(requestCode,
+                                                _activityContainer,
+                                                this /* Activity */,
+                                                data);
     }
 
     private void initialiseInjector() {
@@ -74,7 +89,7 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
     @Override
     public void onAnimationEnd(Animator animation) {
         _addItemButton.setVisibility(View.INVISIBLE);
-        _presenter.get().launchAdditemActivity(this);
+        _presenter.get().launchAdditemActivity(this /* Activity */);
     }
 
     @Override
@@ -108,5 +123,10 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
     @Override
     public void showTodoItems() {
 
+    }
+
+    @Override
+    public void showSnackbar(Snackbar snackbar) {
+        snackbar.show();
     }
 }

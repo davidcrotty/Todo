@@ -3,6 +3,7 @@ package com.david.todo.view;
 import android.animation.Animator;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -77,7 +78,7 @@ public class AddItemActivity extends BaseActivity implements View.OnLayoutChange
         anim.setInterpolator(new AccelerateInterpolator());
         anim.setDuration(700);
         anim.start();
-        _presenter.get().addItem(_titleText.getText().toString(), _notesText.getText().toString());
+        _presenter.get().addItem(_titleText.getText().toString(), _notesText.getText().toString(), this /* Activity */);
     }
 
     @Override
@@ -114,6 +115,11 @@ public class AddItemActivity extends BaseActivity implements View.OnLayoutChange
 
     @Override
     public void showTodoItems() {
+
+    }
+
+    @Override
+    public void showSnackbar(Snackbar snackbar) {
 
     }
 }

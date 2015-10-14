@@ -44,6 +44,7 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        _addItemButton.setEnabled(true);
         initialiseInjector();
         _addItemButton.addOnLayoutChangeListener(this);
     }
@@ -70,6 +71,7 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
 
     @OnClick(R.id.add_item_button)
     void onClick() {
+        _addItemButton.setEnabled(false);
         int startRadius = Math.max(_addItemButton.getWidth(), _addItemButton.getHeight());
         int cx = _addItemButton.getWidth() / 2;
         int cy = _addItemButton.getHeight() / 2;

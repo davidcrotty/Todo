@@ -31,6 +31,10 @@ public class TodoListPresenter {
     public TodoView _todoView;
     public TaskService _taskService;
 
+    public TodoListPresenter(TaskService taskService) {
+        _taskService = taskService;
+    }
+
     public TodoListPresenter(TodoView view, TaskService taskService) {
         _todoView = view;
         _taskService = taskService;
@@ -41,9 +45,11 @@ public class TodoListPresenter {
         activityContext.startActivityForResult(intent, ADD_ITEM_ACTIVITY);
     }
 
-    public void addItem(String title, String description, Activity activity) {
-        if(description.isEmpty()) return;
-        if(title.isEmpty()) return;
+    public void addItem(String title, String description, AddItemActivity activity) {
+        if(title.isEmpty()) {
+            activity.showError(activity.getString(R.string.title_empty));
+            return;
+        }
         _taskService.createTaskItem(title, description);
         activity.setResult(ADD_ITEM_ACTIVITY, new Intent().putExtra(ITEM_WAS_ADDED, true));
         activity.finish();

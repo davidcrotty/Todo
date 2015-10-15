@@ -25,7 +25,7 @@ public class TodoListPresenterModule {
         if(_activity instanceof TodoListActivity) {
             return new TodoListPresenter((TodoListActivity)_activity, new TaskService(dataRepository));
         } else if (_activity instanceof AddItemActivity) {
-            return new TodoListPresenter((AddItemActivity)_activity, new TaskService(dataRepository));
+            return new TodoListPresenter(new TaskService(dataRepository));
         }
         return null;
     }

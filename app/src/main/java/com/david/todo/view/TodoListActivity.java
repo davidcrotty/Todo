@@ -108,6 +108,7 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
     protected void onResume() {
         super.onResume();
         _addItemButton.setVisibility(View.VISIBLE);
+        _addItemButton.setEnabled(true);
     }
 
     @Override

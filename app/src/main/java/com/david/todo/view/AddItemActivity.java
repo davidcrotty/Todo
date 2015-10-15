@@ -30,8 +30,7 @@ import dagger.Lazy;
  * Created by David on 20/09/2015.
  */
 public class AddItemActivity extends BaseActivity implements View.OnLayoutChangeListener,
-                                                             Animator.AnimatorListener,
-                                                             TodoView {
+                                                             Animator.AnimatorListener {
 
     @Bind(R.id.notes_edit_text)
     EditText _notesText;
@@ -78,7 +77,9 @@ public class AddItemActivity extends BaseActivity implements View.OnLayoutChange
         anim.setInterpolator(new AccelerateInterpolator());
         anim.setDuration(700);
         anim.start();
-        _presenter.get().addItem(_titleText.getText().toString(), _notesText.getText().toString(), this /* Activity */);
+        _presenter.get().addItem(_titleText.getText().toString(),
+                                _notesText.getText().toString(),
+                                this /* Activity */);
     }
 
     @Override
@@ -113,13 +114,7 @@ public class AddItemActivity extends BaseActivity implements View.OnLayoutChange
         anim.start();
     }
 
-    @Override
-    public void showTodoItems() {
-
-    }
-
-    @Override
-    public void showSnackbar(Snackbar snackbar) {
-
+    public void showError(String text) {
+        _titleText.setError(text);
     }
 }

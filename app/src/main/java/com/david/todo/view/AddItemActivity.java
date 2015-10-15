@@ -68,18 +68,9 @@ public class AddItemActivity extends BaseActivity implements View.OnLayoutChange
 
     @OnClick(R.id.save_item_button)
     void onClick() {
-        int startRadius = Math.max(_saveItemButton.getWidth(), _saveItemButton.getHeight());
-        int cx = _saveItemButton.getWidth() / 2;
-        int cy = _saveItemButton.getHeight() / 2;
-
-        Animator anim = ViewAnimationUtils.createCircularReveal(_saveItemButton, cx, cy, startRadius, 0);
-        anim.addListener(this);
-        anim.setInterpolator(new AccelerateInterpolator());
-        anim.setDuration(700);
-        anim.start();
         _presenter.get().addItem(_titleText.getText().toString(),
-                                _notesText.getText().toString(),
-                                this /* Activity */);
+                _notesText.getText().toString(),
+                this /* Activity */);
     }
 
     @Override

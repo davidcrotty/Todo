@@ -67,24 +67,24 @@ public class TodoListPresenter {
         }
     }
 
-    public void fetchTodoItems() {
+    public void fetchTodoItems(final Context context) {
         _taskService.getAllTaskItems()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<ArrayList<TaskItemModel>>() {
                     @Override
                     public void onCompleted() {
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
                     }
 
                     @Override
                     public void onNext(ArrayList<TaskItemModel> taskItemModelList) {
-                        for(TaskItemModel taskItemModel : taskItemModelList) {
-                            Log.d("TodoListPresenter", "Item: " + taskItemModel._title);
+                        if(taskItemModelList.size() == 0) {
+                            _todoView.noTodoItems(context.getString(R.string.no_items));
+                        } else {
+                            _todoView.showTodoItems();
                         }
                     }
             });

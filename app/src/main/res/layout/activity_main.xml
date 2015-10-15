@@ -12,14 +12,12 @@
         android:background="@color/ColorPrimary">
     </android.support.v7.widget.Toolbar>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="You have no todo items!"
-        android:id="@+id/no_items_text"
-        android:textSize="@dimen/no_item_text"
-        android:layout_gravity="center" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/todo_item_container">
+
+    </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
         xmlns:app="http://schemas.android.com/apk/res-auto"

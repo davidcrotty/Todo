@@ -6,9 +6,13 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.david.todo.R;
 import com.david.todo.appstart.AndroidApplication;
@@ -39,6 +43,9 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
     @Bind(R.id.todolist_container)
     CoordinatorLayout _activityContainer;
 
+    @Bind(R.id.todo_item_container)
+    FrameLayout _todoItemContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +54,7 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
         _addItemButton.setEnabled(true);
         initialiseInjector();
         _addItemButton.addOnLayoutChangeListener(this);
+        _presenter.get().fetchTodoItems(getApplicationContext());
     }
 
     @Override
@@ -131,5 +139,15 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
     @Override
     public void showSnackbar(Snackbar snackbar) {
         snackbar.show();
+    }
+
+    @Override
+    public void noTodoItems(String text) {
+        _todoItemContainer.removeAllViews();
+        TextView textView = (TextView) LayoutInflater.from(this).inflate(R.layout.no_todo_textview, null);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams( FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT );
+        layoutParams.gravity = Gravity.CENTER;
+        _todoItemContainer.addView(textView, layoutParams);
+        textView.setText(text);
     }
 }

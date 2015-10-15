@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:text="You have no todo items!"
+    android:id="@+id/no_items_text"
+    android:textSize="@dimen/no_item_text"
+    android:layout_gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

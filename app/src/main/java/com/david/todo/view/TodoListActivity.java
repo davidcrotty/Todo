@@ -34,7 +34,6 @@ import butterknife.OnClick;
 import dagger.Lazy;
 
 public class TodoListActivity extends BaseActivity implements View.OnLayoutChangeListener,
-                                                              Animator.AnimatorListener,
                                                               TodoView {
 
     private DataRepositoryComponent _dataRepositoryComponent;
@@ -83,36 +82,7 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
     @OnClick(R.id.add_item_button)
     void onClick() {
         _addItemButton.setEnabled(false);
-        int startRadius = Math.max(_addItemButton.getWidth(), _addItemButton.getHeight());
-        int cx = _addItemButton.getWidth() / 2;
-        int cy = _addItemButton.getHeight() / 2;
-
-        Animator anim = ViewAnimationUtils.createCircularReveal(_addItemButton, cx, cy, startRadius, 0);
-        anim.addListener(this);
-        anim.setInterpolator(new AccelerateInterpolator());
-        anim.setDuration(700);
-        anim.start();
-    }
-
-    @Override
-    public void onAnimationStart(Animator animation) {
-
-    }
-
-    @Override
-    public void onAnimationEnd(Animator animation) {
-        _addItemButton.setVisibility(View.INVISIBLE);
         _presenter.get().launchAdditemActivity(this /* Activity */);
-    }
-
-    @Override
-    public void onAnimationCancel(Animator animation) {
-
-    }
-
-    @Override
-    public void onAnimationRepeat(Animator animation) {
-
     }
 
     @Override

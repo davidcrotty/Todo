@@ -5,6 +5,7 @@ import com.david.todo.model.TaskItemModel;
 import com.david.todo.repository.DataRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.UUID;
 
 import io.realm.RealmResults;
@@ -43,7 +44,7 @@ public class TaskService implements ITaskService {
                 for(TaskItem taskItem : taskItemList) {
                     modelList.add(new TaskItemModel(taskItem.getTitle(), taskItem.getDescription()));
                 }
-
+                Collections.reverse(modelList);
                 return modelList;
             }
         });

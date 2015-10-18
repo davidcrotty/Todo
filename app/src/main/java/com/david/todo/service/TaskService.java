@@ -27,7 +27,6 @@ public class TaskService implements ITaskService {
     public void createTaskItem(String title, String description) {
         TaskItem taskItem = new TaskItem(UUID.randomUUID().toString(), title, description);
         _dataRepository.add(taskItem);
-//        getAllItems();
     }
 
     public Observable<ArrayList<TaskItemModel>> getAllTaskItems() {

@@ -26,7 +26,6 @@
 
         <TextView
             android:id="@+id/title_text"
-            android:text="Title"
             android:textSize="@dimen/large_text"
             android:textColor="@color/ColorPrimaryText"
             android:paddingBottom="@dimen/item_padding"
@@ -40,7 +39,6 @@
             android:textColor="@color/ColorSecondaryText"
             android:maxLines="3"
             android:ellipsize="end"
-            android:text="Description"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         </LinearLayout>

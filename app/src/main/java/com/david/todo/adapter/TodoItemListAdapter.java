@@ -44,7 +44,7 @@ public class TodoItemListAdapter extends RecyclerView.Adapter<TodoItemListAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         TaskItemModel taskItemModel = _taskItemModelList.get(position);
-        holder._description.setText(taskItemModel._title);
+        holder._title.setText(taskItemModel._title);
         holder._description.setText(taskItemModel._description);
     }
 

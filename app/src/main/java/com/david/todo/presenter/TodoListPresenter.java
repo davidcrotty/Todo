@@ -62,6 +62,7 @@ public class TodoListPresenter {
                 if(intent != null) {
                     if(intent.hasExtra(ITEM_WAS_ADDED)) {
                         _todoView.showSnackbar(Snackbar.make(coordinatorLayout, activityContext.getString(R.string.item_added_succesfully), Snackbar.LENGTH_SHORT));
+                        fetchTodoItems(activityContext);
                     }
                 }
                 break;

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.david.todo.R;
+import com.david.todo.adapter.TodoItemListAdapter;
 import com.david.todo.appstart.AndroidApplication;
 import com.david.todo.module.DaggerDataRepositoryComponent;
 import com.david.todo.module.DaggerTodoListPresenterComponent;
@@ -132,8 +135,17 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
     }
 
     @Override
-    public void showTodoItems() {
+    public void showTodoItems(TodoItemListAdapter adapter) {
+        _todoItemContainer.removeAllViews();
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
+        RecyclerView recyclerView = (RecyclerView) LayoutInflater.from(this).inflate(R.layout.todo_list, null);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams( FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT );
+        layoutParams.gravity = Gravity.CENTER;
+        _todoItemContainer.addView(recyclerView, layoutParams);
     }
 
     @Override

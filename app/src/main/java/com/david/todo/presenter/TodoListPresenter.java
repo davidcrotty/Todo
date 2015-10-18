@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.david.todo.R;
+import com.david.todo.adapter.TodoItemListAdapter;
 import com.david.todo.model.TaskItemModel;
 import com.david.todo.view.AddItemActivity;
 import com.david.todo.view.TodoView;
@@ -84,7 +85,8 @@ public class TodoListPresenter {
                         if(taskItemModelList.size() == 0) {
                             _todoView.noTodoItems(context.getString(R.string.no_items));
                         } else {
-                            _todoView.showTodoItems();
+                            TodoItemListAdapter adapter= new TodoItemListAdapter(taskItemModelList);
+                            _todoView.showTodoItems(adapter);
                         }
                     }
             });

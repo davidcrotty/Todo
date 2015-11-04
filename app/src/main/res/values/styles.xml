@@ -19,4 +19,6 @@
         <item name="colorControlActivated">@color/ColorPrimaryDark</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="Base.Theme.AppCompat.Light.DarkActionBar"/>
+
 </resources>

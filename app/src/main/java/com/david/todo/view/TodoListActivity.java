@@ -130,6 +130,7 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams( FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT );
         layoutParams.gravity = Gravity.CENTER;
         _todoItemContainer.addView(textView, layoutParams);
+        textView.setTextColor(getResources().getColor(R.color.ColorPrimaryText));
         textView.setText(text);
     }
 }

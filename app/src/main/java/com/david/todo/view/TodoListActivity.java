@@ -125,12 +125,10 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
 
     @Override
     public void noTodoItems(String text) {
-/*        _todoItemContainer.removeAllViews();
-        TextView textView = (TextView) LayoutInflater.from(this).inflate(R.layout.no_todo_textview, null);
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams( FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT );
+        _todoItemContainer.removeAllViews();
+        NoTodoItemsView noTodoItemsView = new NoTodoItemsView(this);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams( FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT );
         layoutParams.gravity = Gravity.CENTER;
-        _todoItemContainer.addView(textView, layoutParams);
-        textView.setTextColor(getResources().getColor(R.color.ColorPrimaryText));
-        textView.setText(text);*/
+        _todoItemContainer.addView(noTodoItemsView, layoutParams);
     }
 }

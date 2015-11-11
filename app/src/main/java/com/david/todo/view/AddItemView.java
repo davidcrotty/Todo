@@ -1,6 +1,7 @@
 package com.david.todo.view;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.david.todo.R;
@@ -10,8 +11,14 @@ import com.david.todo.R;
  */
 public class AddItemView extends LinearLayout {
 
-    public AddItemView(Context context) {
+    public AddItemView(Context context, int textBoxPadding) {
         super(context);
-        inflate(getContext(), R.layout.add_item_view, this);
+        init(textBoxPadding);
+    }
+
+    private void init(int textBoxPadding) {
+        View view = inflate(getContext(), R.layout.add_item_view, this);
+        LinearLayout editTextContainer = (LinearLayout) view.findViewById(R.id.edit_text_container);
+        editTextContainer.setPadding(textBoxPadding, 0, textBoxPadding, 0);
     }
 }

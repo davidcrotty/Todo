@@ -11,10 +11,11 @@
     android:background="@drawable/panel_background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_gravity="center"
+        android:layout_gravity="left"
+        android:id="@+id/edit_text_container"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical">
 

@@ -3,7 +3,6 @@ package com.david.todo.view;
 import android.animation.Animator;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -49,7 +48,7 @@ public class AddItemActivity extends BaseActivity implements View.OnLayoutChange
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        setContentView(R.layout.add_item_view);
         ButterKnife.bind(this);
         initialiseInjector();
         _saveItemButton.addOnLayoutChangeListener(this);

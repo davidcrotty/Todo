@@ -85,10 +85,7 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
 
     @OnClick(R.id.add_item_button)
     void onClick() {
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams( FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        AddItemView addItemView = new AddItemView(this, _addItemButton.getHeight());
-        addItemView.setLayoutParams(layoutParams);
-        _bottomSheetCoordinator.showWithSheetView(addItemView);
+        _presenter.get().showAddItemSheet(this, _addItemButton.getHeight(), _bottomSheetCoordinator);
     }
 
     @Override

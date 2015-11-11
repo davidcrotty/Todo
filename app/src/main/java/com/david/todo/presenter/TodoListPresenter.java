@@ -7,13 +7,16 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.david.todo.R;
 import com.david.todo.adapter.TodoItemListAdapter;
 import com.david.todo.model.TaskItemModel;
 import com.david.todo.view.AddItemActivity;
+import com.david.todo.view.AddItemView;
 import com.david.todo.view.TodoView;
 import com.david.todo.service.TaskService;
+import com.flipboard.bottomsheet.BottomSheetLayout;
 
 import java.util.ArrayList;
 
@@ -39,6 +42,13 @@ public class TodoListPresenter {
     public TodoListPresenter(TodoView view, TaskService taskService) {
         _todoView = view;
         _taskService = taskService;
+    }
+
+    public void showAddItemSheet(Context activityContext, int addItemButtonHeight, BottomSheetLayout bottomSheetLayout) {
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams( FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        AddItemView addItemView = new AddItemView(activityContext, addItemButtonHeight);
+        addItemView.setLayoutParams(layoutParams);
+        bottomSheetLayout.showWithSheetView(addItemView);
     }
 
     public void launchAdditemActivity(Activity activityContext) {

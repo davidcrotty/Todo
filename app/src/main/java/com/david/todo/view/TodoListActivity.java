@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.david.todo.R;
 import com.david.todo.adapter.TodoItemListAdapter;
@@ -25,6 +24,7 @@ import com.david.todo.module.DataRepositoryComponent;
 import com.david.todo.module.DataRepositoryModule;
 import com.david.todo.module.TodoListPresenterModule;
 import com.david.todo.presenter.TodoListPresenter;
+import com.flipboard.bottomsheet.BottomSheetLayout;
 
 import javax.inject.Inject;
 
@@ -47,6 +47,9 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
 
     @Bind(R.id.todo_item_container)
     FrameLayout _todoItemContainer;
+
+    @Bind(R.id.add_item_sheet_coordinator)
+    BottomSheetLayout _bottomSheetCoordinator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +84,7 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
 
     @OnClick(R.id.add_item_button)
     void onClick() {
-        _addItemButton.setEnabled(false);
-        _presenter.get().launchAdditemActivity(this /* Activity */);
+        _bottomSheetCoordinator.showWithSheetView(LayoutInflater.from(this).inflate(R.layout.add_item_view, _bottomSheetCoordinator, false));
     }
 
     @Override

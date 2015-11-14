@@ -25,7 +25,6 @@ import com.david.todo.module.DataRepositoryComponent;
 import com.david.todo.module.DataRepositoryModule;
 import com.david.todo.module.TodoListPresenterModule;
 import com.david.todo.presenter.TodoListPresenter;
-import com.flipboard.bottomsheet.BottomSheetLayout;
 
 import javax.inject.Inject;
 
@@ -34,14 +33,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.Lazy;
 
-public class TodoListActivity extends BaseActivity implements View.OnLayoutChangeListener,
-                                                              TodoView {
+public class TodoListActivity extends BaseActivity implements TodoView {
 
     private DataRepositoryComponent _dataRepositoryComponent;
     @Inject Lazy<TodoListPresenter> _presenter;
-
-    @Bind(R.id.add_item_button)
-    FloatingActionButton _addItemButton;
 
     @Bind(R.id.todolist_container)
     CoordinatorLayout _activityContainer;
@@ -49,17 +44,12 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
     @Bind(R.id.todo_item_container)
     FrameLayout _todoItemContainer;
 
-    @Bind(R.id.add_item_sheet_coordinator)
-    BottomSheetLayout _bottomSheetCoordinator;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        _addItemButton.setEnabled(true);
         initialiseInjector();
-        _addItemButton.addOnLayoutChangeListener(this);
         _presenter.get().fetchTodoItems(getApplicationContext());
     }
 
@@ -81,30 +71,6 @@ public class TodoListActivity extends BaseActivity implements View.OnLayoutChang
                 .dataRepositoryComponent(_dataRepositoryComponent)
                 .todoListPresenterModule(new TodoListPresenterModule(this))
                 .build().inject(this);
-    }
-
-    @OnClick(R.id.add_item_button)
-    void onClick() {
-        _presenter.get().showAddItemSheet(this, _addItemButton.getHeight(), _bottomSheetCoordinator);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        _addItemButton.setVisibility(View.VISIBLE);
-        _addItemButton.setEnabled(true);
-    }
-
-    @Override
-    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-        int finalRadius = Math.max(_addItemButton.getWidth(), _addItemButton.getHeight());
-        int cx = _addItemButton.getWidth() / 2;
-        int cy = _addItemButton.getHeight() / 2;
-
-        Animator anim = ViewAnimationUtils.createCircularReveal(_addItemButton, cx, cy, 0, finalRadius);
-        anim.setInterpolator(new AccelerateInterpolator());
-        anim.setDuration(700);
-        anim.start();
     }
 
     @Override

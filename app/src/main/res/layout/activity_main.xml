@@ -40,6 +40,14 @@
                 android:layout_height="match_parent"
                 android:id="@+id/items_pane">
 
+                    <com.david.todo.view.NoTodoItemsView
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/notodo_top_margin"
+                        android:layout_gravity="bottom">
+
+                    </com.david.todo.view.NoTodoItemsView>
+
             </FrameLayout>
 
         </LinearLayout>

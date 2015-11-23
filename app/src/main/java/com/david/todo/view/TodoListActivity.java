@@ -1,20 +1,15 @@
 package com.david.todo.view;
 
-import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.david.todo.R;
 import com.david.todo.adapter.TodoItemListAdapter;
@@ -30,7 +25,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import dagger.Lazy;
 
 public class TodoListActivity extends BaseActivity implements TodoView {
@@ -41,8 +35,11 @@ public class TodoListActivity extends BaseActivity implements TodoView {
     @Bind(R.id.todolist_container)
     CoordinatorLayout _activityContainer;
 
-    @Bind(R.id.todo_item_container)
-    FrameLayout _todoItemContainer;
+    @Bind(R.id.todo_item_view_frame)
+    LinearLayout _todoItemViewFrame;
+
+    @Bind(R.id.items_pane)
+    FrameLayout _itemsPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +72,7 @@ public class TodoListActivity extends BaseActivity implements TodoView {
 
     @Override
     public void showTodoItems(TodoItemListAdapter adapter) {
-        _todoItemContainer.removeAllViews();
+        _itemsPane.removeAllViews();
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -84,7 +81,7 @@ public class TodoListActivity extends BaseActivity implements TodoView {
         recyclerView.setLayoutManager(layoutManager);
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams( FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT );
         layoutParams.gravity = Gravity.CENTER;
-        _todoItemContainer.addView(recyclerView, layoutParams);
+        _itemsPane.addView(recyclerView, layoutParams);
     }
 
     @Override
@@ -94,10 +91,10 @@ public class TodoListActivity extends BaseActivity implements TodoView {
 
     @Override
     public void noTodoItems(String text) {
-        _todoItemContainer.removeAllViews();
+        _itemsPane.removeAllViews();
         NoTodoItemsView noTodoItemsView = new NoTodoItemsView(this);
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams( FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT );
         layoutParams.gravity = Gravity.CENTER;
-        _todoItemContainer.addView(noTodoItemsView, layoutParams);
+        _itemsPane.addView(noTodoItemsView, layoutParams);
     }
 }

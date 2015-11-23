@@ -27,11 +27,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/editText"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
+                    android:paddingLeft="@dimen/enter_text_short"
+                    android:paddingRight="@dimen/enter_text_short"
                     android:background="@android:color/transparent"
                     android:gravity="left|center"
-                    android:hint="Begin your note here"
+                    android:hint="@string/begin_here"
                     android:layout_gravity="center_vertical" />
             </LinearLayout>
 

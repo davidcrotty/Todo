@@ -4,4 +4,7 @@
     <string name="item_added_succesfully">Item has been added!</string>
     <string name="title_empty">Title cannot be empty</string>
     <string name="no_items">You have no todo items!</string>
+    <string name="empty_todo">Todo list is empty</string>
+    <string name="get_started">Touch above to get started</string>
+    <string name="begin_here">Begin your note here</string>
 </resources>

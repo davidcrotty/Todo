@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Todo list is empty"
+            android:text="@string/empty_todo"
             android:id="@+id/textView"
             android:textColor="@android:color/white"
             android:paddingBottom="16dp"
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Touch above to get started"
+            android:text="@string/get_started"
             android:textColor="@android:color/white"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>

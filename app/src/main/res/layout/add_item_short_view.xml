@@ -33,6 +33,9 @@
                     android:paddingRight="@dimen/enter_text_short"
                     android:background="@android:color/transparent"
                     android:gravity="left|center"
+                    android:fontFamily="sans-serif-thin"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
                     android:hint="@string/begin_here"
                     android:layout_gravity="center_vertical" />
             </LinearLayout>

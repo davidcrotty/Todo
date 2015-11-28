@@ -9,4 +9,7 @@
     <dimen name="enter_text_short">20dp</dimen>
 
     <dimen name="notodo_top_margin">20dp</dimen>
+    <dimen name="icon_padding">15dp</dimen>
+    <dimen name="icon_text">14dp</dimen>
+
 </resources>

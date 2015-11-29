@@ -11,10 +11,23 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/ColorPrimary"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 android:elevation="4dp">
+
+<!--                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="POST"
+                    android:textSize="16sp"
+                    android:layout_marginRight="14dp"
+                    android:textColor="@android:color/white"
+                    android:fontFamily="sans-serif-black"
+                    android:id="@+id/textView2"
+                    android:layout_gravity="right" />-->
 
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>

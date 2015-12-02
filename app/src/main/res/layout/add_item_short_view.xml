@@ -27,7 +27,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/editText"
+                    android:id="@+id/short_note_text"
                     android:paddingLeft="@dimen/enter_text_short"
                     android:paddingRight="@dimen/enter_text_short"
                     android:background="@android:color/transparent"
@@ -62,6 +62,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/options_divider"
                     android:background="@drawable/vertical_gradient"/>
 
                 <LinearLayout
@@ -69,6 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.8"
+                    android:id="@+id/options_panel"
                     android:layout_gravity="center_vertical">
 
                     <LinearLayout

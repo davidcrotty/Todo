@@ -7,9 +7,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -29,7 +32,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import dagger.Lazy;
 
-public class TodoListActivity extends BaseActivity implements TodoView {
+public class TodoListActivity extends BaseActivity implements TodoView,
+                                                              TextWatcher {
 
     private DataRepositoryComponent _dataRepositoryComponent;
     @Inject Lazy<TodoListPresenter> _presenter;
@@ -46,6 +50,12 @@ public class TodoListActivity extends BaseActivity implements TodoView {
     @Bind(R.id.toolbar)
     Toolbar _toolbar;
 
+    @Bind(R.id.add_item_short_view)
+    AddItemShortView _addItemView;
+
+    @Bind(R.id.short_note_text)
+    EditText _shortNoteText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +65,7 @@ public class TodoListActivity extends BaseActivity implements TodoView {
         setSupportActionBar(_toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         _presenter.get().fetchTodoItems(getApplicationContext());
+        _shortNoteText.addTextChangedListener(this);
     }
 
     @Override
@@ -79,7 +90,7 @@ public class TodoListActivity extends BaseActivity implements TodoView {
 
         DaggerTodoListPresenterComponent.builder()
                 .dataRepositoryComponent(_dataRepositoryComponent)
-                .todoListPresenterModule(new TodoListPresenterModule(this))
+                .todoListPresenterModule(new TodoListPresenterModule(this, _addItemView))
                 .build().inject(this);
     }
 
@@ -109,5 +120,20 @@ public class TodoListActivity extends BaseActivity implements TodoView {
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams( FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT );
         layoutParams.gravity = Gravity.CENTER;
         _itemsPane.addView(noTodoItemsView, layoutParams);
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        _presenter.get().textChanged(s);
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }

@@ -47,6 +47,7 @@
             <com.david.todo.view.AddItemShortView
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
+                android:id="@+id/add_item_short_view"
                 android:layout_marginBottom="16dp">
             </com.david.todo.view.AddItemShortView>
 

@@ -61,7 +61,7 @@ public class AddItemActivity extends BaseActivity implements View.OnLayoutChange
 
         DaggerTodoListPresenterComponent.builder()
                 .dataRepositoryComponent(_dataRepositoryComponent)
-                .todoListPresenterModule(new TodoListPresenterModule(this))
+                .todoListPresenterModule(new TodoListPresenterModule(this, null))
                 .build().inject(this);
     }
 

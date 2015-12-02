@@ -10,7 +10,9 @@ import com.david.todo.R;
 import com.david.todo.adapter.TodoItemListAdapter;
 import com.david.todo.model.TaskItemModel;
 import com.david.todo.service.TaskService;
+import com.david.todo.service.TextEntryService;
 import com.david.todo.view.AddItemActivity;
+import com.david.todo.view.AddItemShortView;
 import com.david.todo.view.TodoView;
 
 import java.util.ArrayList;
@@ -27,21 +29,34 @@ public class TodoListPresenter {
     public static final int ADD_ITEM_ACTIVITY = 1;
     public static final String ITEM_WAS_ADDED = "ITEM_WAS_ADDED";
 
-    public TodoView _todoView;
-    public TaskService _taskService;
+    private TodoView _todoView;
+    private TaskService _taskService;
+    private AddItemShortView _addItemShortView;
+    private TextEntryService _textEntryService;
 
     public TodoListPresenter(TaskService taskService) {
         _taskService = taskService;
     }
 
-    public TodoListPresenter(TodoView view, TaskService taskService) {
+    public TodoListPresenter(TodoView view, AddItemShortView addItemShortView, TaskService taskService, TextEntryService textEntryService) {
         _todoView = view;
         _taskService = taskService;
+        _addItemShortView = addItemShortView;
+        _textEntryService = textEntryService;
     }
 
+    @Deprecated
     public void launchAdditemActivity(Activity activityContext) {
         Intent intent = new Intent(activityContext, AddItemActivity.class);
         activityContext.startActivityForResult(intent, ADD_ITEM_ACTIVITY);
+    }
+
+    public void textChanged(CharSequence sequence) {
+        if(_textEntryService.textHasBeenEntered(sequence.toString())) {
+            _addItemShortView.fadeOptions();
+        } else {
+            _addItemShortView.showOptions();
+        }
     }
 
     public void addItem(String title, String description, AddItemActivity activity) {

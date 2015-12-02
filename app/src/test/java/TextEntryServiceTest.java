@@ -35,4 +35,25 @@ public class TextEntryServiceTest {
         System.out.println("Text Should be entered");
         Assert.assertEquals(true, result);
     }
+
+    @Test
+    public void when_checking_if_text_entered_invalid() {
+        System.out.println("Given a null String");
+        String text = null;
+
+        System.out.println("When checking is text has been entered");
+        boolean result = _textEntryService.textHasBeenEntered(text);
+
+        System.out.println("Text Should not be be entered");
+        Assert.assertEquals(false, result);
+
+        System.out.println("Given an empty String");
+        text = "";
+
+        System.out.println("When checking is text has been entered");
+        result = _textEntryService.textHasBeenEntered(text);
+
+        System.out.println("Text Should not be be entered");
+        Assert.assertEquals(false, result);
+    }
 }

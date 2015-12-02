@@ -7,6 +7,6 @@ public class TextEntryService implements ITextEntryService{
 
     @Override
     public boolean textHasBeenEntered(String text) {
-        return false;
+        return text == null || text.isEmpty() ? false : true;
     }
 }

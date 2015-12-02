@@ -3,6 +3,9 @@ package com.david.todo.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.LinearLayout;
 
 import com.david.todo.R;
@@ -13,13 +16,16 @@ import butterknife.ButterKnife;
 /**
  * Created by David Crotty on 18/11/2015.
  */
-public class AddItemShortView extends LinearLayout {
+public class AddItemShortView extends LinearLayout implements Animation.AnimationListener {
 
     @Bind(R.id.options_panel)
     LinearLayout _optionsPanel;
 
     @Bind(R.id.options_divider)
     View _optionsDivider;
+
+    private Animation _fadeAnimation;
+    private final int _animationDuration = 300;
 
     public AddItemShortView(Context context) {
         super(context);
@@ -32,18 +38,44 @@ public class AddItemShortView extends LinearLayout {
     }
 
     public void fadeOptions() {
-        _optionsPanel.setVisibility(View.INVISIBLE);
-        _optionsDivider.setVisibility(View.INVISIBLE);
+        if(_fadeAnimation.hasStarted() || _optionsPanel.getVisibility() == View.INVISIBLE) return;
+        _optionsPanel.startAnimation(_fadeAnimation);
+        _optionsDivider.startAnimation(_fadeAnimation);
     }
 
     public void showOptions() {
-        if(_optionsPanel.getVisibility() == View.VISIBLE) return;
+        _fadeAnimation.cancel();
+        setupAnimation();
         _optionsPanel.setVisibility(View.VISIBLE);
         _optionsDivider.setVisibility(View.VISIBLE);
+    }
+
+    private void setupAnimation() {
+        _fadeAnimation = new AlphaAnimation(1, 0);
+        _fadeAnimation.setInterpolator(new AccelerateInterpolator());
+        _fadeAnimation.setDuration(_animationDuration);
+        _fadeAnimation.setAnimationListener(this);
     }
 
     private void init() {
         inflate(getContext(), R.layout.add_item_short_view, this);
         ButterKnife.bind(this);
+        setupAnimation();
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        _optionsPanel.setVisibility(View.INVISIBLE);
+        _optionsDivider.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 }

@@ -11,11 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <FrameLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.1"
             android:layout_gravity="center_vertical">
 
             <LinearLayout
@@ -32,7 +31,8 @@
                     android:paddingLeft="@dimen/enter_text_short"
                     android:paddingRight="@dimen/enter_text_short"
                     android:background="@android:color/transparent"
-                    android:gravity="left|center"
+                    android:paddingTop="14dp"
+                    android:gravity="left|top"
                     android:fontFamily="sans-serif-thin"
                     android:textStyle="bold"
                     android:textSize="20sp"
@@ -46,100 +46,121 @@
                 android:background="@android:color/darker_gray"/>
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.8"
                 android:layout_gravity="center_vertical">
+            </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/vertical_gradient"/>
 
                 <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_description_black_24dp"
-                        android:layout_gravity="center"
-                        android:padding="@dimen/icon_padding"
-                        android:layout_weight="1"
-                        android:id="@+id/imageView" />
-                    <TextView
+                    android:layout_weight="0.8"
+                    android:layout_gravity="center_vertical">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textSize="@dimen/icon_text"
-                        android:fontFamily="sans-serif-black"
-                        android:gravity="left|center"
-                        android:text="@string/icon_expand"/>
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_description_black_24dp"
+                            android:layout_gravity="center"
+                            android:padding="@dimen/icon_padding"
+                            android:layout_weight="1"
+                            android:id="@+id/imageView" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/icon_text"
+                            android:fontFamily="sans-serif-black"
+                            android:gravity="left|center"
+                            android:text="@string/icon_expand"/>
 
-                    <View
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/vertical_gradient"/>
+                        <View
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/vertical_gradient"/>
 
-                </LinearLayout>
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_description_black_24dp"
-                        android:layout_gravity="center"
-                        android:padding="@dimen/icon_padding"
-                        android:layout_weight="1"
-                        android:id="@+id/imageView1" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="@dimen/icon_text"
-                        android:fontFamily="sans-serif-black"
-                        android:gravity="left|center"
-                        android:text="@string/icon_list"/>
-
-                    <View
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/vertical_gradient"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_description_black_24dp"
-                        android:layout_gravity="center"
-                        android:padding="@dimen/icon_padding"
-                        android:layout_weight="1"
-                        android:id="@+id/imageView2" />
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textSize="@dimen/icon_text"
-                        android:fontFamily="sans-serif-black"
-                        android:gravity="left|center"
-                        android:text="@string/icon_photo"/>
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_description_black_24dp"
+                            android:layout_gravity="center"
+                            android:padding="@dimen/icon_padding"
+                            android:layout_weight="1"
+                            android:id="@+id/imageView1" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/icon_text"
+                            android:fontFamily="sans-serif-black"
+                            android:gravity="left|center"
+                            android:text="@string/icon_list"/>
+
+                        <View
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/vertical_gradient"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_description_black_24dp"
+                            android:layout_gravity="center"
+                            android:padding="@dimen/icon_padding"
+                            android:layout_weight="1"
+                            android:id="@+id/imageView2" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/icon_text"
+                            android:fontFamily="sans-serif-black"
+                            android:gravity="left|center"
+                            android:text="@string/icon_photo"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </FrameLayout>
     </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.david.todo.view;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -12,9 +13,11 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.david.todo.R;
 import com.david.todo.adapter.TodoItemListAdapter;
@@ -120,6 +123,22 @@ public class TodoListActivity extends BaseActivity implements TodoView,
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams( FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT );
         layoutParams.gravity = Gravity.CENTER;
         _itemsPane.addView(noTodoItemsView, layoutParams);
+    }
+
+    @Override
+    public void showPostOption() {
+        TextView textView = (TextView) LayoutInflater.from(this).inflate(R.layout.post_text, null, false);
+        Toolbar.LayoutParams layoutParams = new Toolbar.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParams.gravity = Gravity.RIGHT;
+        _toolbar.addView(textView, layoutParams);
+    }
+
+    @Override
+    public void hidePostOption() {
+        TextView textView = (TextView) findViewById(R.id.post_text);
+        if(textView != null) {
+            _toolbar.removeView(textView);
+        }
     }
 
     @Override

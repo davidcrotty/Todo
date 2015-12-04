@@ -11,4 +11,6 @@ public interface TodoView {
     void showTodoItems(TodoItemListAdapter todoItemListAdapter);
     void showSnackbar(Snackbar snackbar);
     void noTodoItems(String text);
+    void showPostOption();
+    void hidePostOption();
 }

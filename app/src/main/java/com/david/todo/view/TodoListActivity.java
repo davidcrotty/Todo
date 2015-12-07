@@ -127,6 +127,7 @@ public class TodoListActivity extends BaseActivity implements TodoView,
 
     @Override
     public void showPostOption() {
+        if(_toolbar.findViewById(R.id.post_text) != null) return;
         TextView textView = (TextView) LayoutInflater.from(this).inflate(R.layout.post_text, null, false);
         Toolbar.LayoutParams layoutParams = new Toolbar.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParams.gravity = Gravity.RIGHT;

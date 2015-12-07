@@ -18,26 +18,35 @@
             android:layout_gravity="center_vertical">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical">
+                android:orientation="horizontal">
 
-                <EditText
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/short_note_text"
-                    android:paddingLeft="@dimen/enter_text_short"
-                    android:paddingRight="@dimen/enter_text_short"
-                    android:background="@android:color/transparent"
-                    android:paddingTop="14dp"
-                    android:gravity="left|top"
-                    android:fontFamily="sans-serif-thin"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:hint="@string/begin_here"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_weight="0.3"
+                    android:layout_gravity="center_vertical">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/short_note_text"
+                        android:paddingLeft="@dimen/enter_text_short"
+                        android:paddingRight="@dimen/enter_text_short"
+                        android:background="@android:color/transparent"
+                        android:paddingTop="14dp"
+                        android:gravity="left|top"
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:hint="@string/begin_here"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
+
+                <include layout="@layout/short_text_options_view"></include>
+
             </LinearLayout>
 
             <View

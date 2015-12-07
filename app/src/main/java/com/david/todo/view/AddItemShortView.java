@@ -24,6 +24,9 @@ public class AddItemShortView extends LinearLayout implements Animation.Animatio
     @Bind(R.id.options_divider)
     View _optionsDivider;
 
+    @Bind(R.id.inline_options_view)
+    View _inlineOptionsView;
+
     private Animation _fadeAnimation;
     private final int _animationDuration = 300;
 
@@ -44,6 +47,7 @@ public class AddItemShortView extends LinearLayout implements Animation.Animatio
     }
 
     public void showOptions() {
+        hideInlineOptions();
         _fadeAnimation.cancel();
         setupAnimation();
         _optionsPanel.setVisibility(View.VISIBLE);
@@ -63,6 +67,14 @@ public class AddItemShortView extends LinearLayout implements Animation.Animatio
         setupAnimation();
     }
 
+    private void hideInlineOptions() {
+        _inlineOptionsView.setVisibility(View.INVISIBLE);
+    }
+
+    private void showInlineOptions() {
+        _inlineOptionsView.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void onAnimationStart(Animation animation) {
 
@@ -72,6 +84,7 @@ public class AddItemShortView extends LinearLayout implements Animation.Animatio
     public void onAnimationEnd(Animation animation) {
         _optionsPanel.setVisibility(View.INVISIBLE);
         _optionsDivider.setVisibility(View.INVISIBLE);
+        showInlineOptions();
     }
 
     @Override

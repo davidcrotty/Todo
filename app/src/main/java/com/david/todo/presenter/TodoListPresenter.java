@@ -52,7 +52,7 @@ public class TodoListPresenter {
     }
 
     public void textChanged(CharSequence sequence) {
-        if(_textEntryService.textHasBeenEntered(sequence.toString())) {
+        if(_textEntryService.textHasBeenEntered(sequence)) {
             _addItemShortView.fadeOptions();
             _todoView.showPostOption();
         } else {

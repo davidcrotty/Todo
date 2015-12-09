@@ -3,6 +3,7 @@ package com.david.todo.view;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -69,6 +70,9 @@ public class TodoListActivity extends BaseActivity implements TodoView,
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         _presenter.get().fetchTodoItems(getApplicationContext());
         _shortNoteText.addTextChangedListener(this);
+        if(_shortNoteText.getText().toString() == null || _shortNoteText.getText().toString().isEmpty()) {
+            _presenter.get().textChanged(null);
+        }
     }
 
     @Override
@@ -81,9 +85,9 @@ public class TodoListActivity extends BaseActivity implements TodoView,
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         _presenter.get().notifySuccessfulItemAdd(requestCode,
-                                                _activityContainer,
-                                                this /* Activity */,
-                                                data);
+                _activityContainer,
+                this /* Activity */,
+                data);
     }
 
     private void initialiseInjector() {

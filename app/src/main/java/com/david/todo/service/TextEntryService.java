@@ -6,7 +6,7 @@ package com.david.todo.service;
 public class TextEntryService implements ITextEntryService{
 
     @Override
-    public boolean textHasBeenEntered(String text) {
-        return text == null || text.isEmpty() ? false : true;
+    public boolean textHasBeenEntered(CharSequence text) {
+        return text == null || text.toString().isEmpty() ? false : true;
     }
 }

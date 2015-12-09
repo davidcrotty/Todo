@@ -48,6 +48,7 @@ public class AddItemShortView extends LinearLayout implements Animation.Animatio
 
     public void showOptions() {
         hideInlineOptions();
+        _fadeAnimation.setAnimationListener(null);
         _fadeAnimation.cancel();
         setupAnimation();
         _optionsPanel.setVisibility(View.VISIBLE);

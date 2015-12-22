@@ -39,25 +39,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.6"
-        android:layout_gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/empty_todo"
-            android:id="@+id/textView"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-medium"
-            android:textColor="@android:color/white"
-            android:layout_gravity="center_horizontal" />
-    </LinearLayout>
-
     </LinearLayout>
 
 </ScrollView>

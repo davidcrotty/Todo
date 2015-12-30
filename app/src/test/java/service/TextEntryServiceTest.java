@@ -1,3 +1,5 @@
+package service;
+
 import com.david.todo.BuildConfig;
 import com.david.todo.service.ITextEntryService;
 import com.david.todo.service.TextEntryService;

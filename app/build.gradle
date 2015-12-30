@@ -6,6 +6,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         applicationId "com.david.todo"
         minSdkVersion 21
         targetSdkVersion 22
@@ -37,9 +38,18 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.1.0'
     compile 'io.realm:realm-android:0.82.2'
     compile 'io.reactivex:rxandroid:1.0.1'
+
+    //JVM Unit tests has to be named 'test' else gradle is unable to resolve name
     testCompile 'junit:junit:4.12'
     testCompile ('org.robolectric:robolectric:3.0') {
         exclude group: 'commons-logging', module: 'commons-logging'
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
+
+    //UI tests has to be named 'androidTest' else gradle is unable to resolve name
+    androidTestCompile 'com.android.support:support-annotations:23.1.1'
+    androidTestCompile 'com.android.support.test:runner:0.4.1'
+    androidTestCompile 'com.android.support.test:rules:0.4.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    androidTestCompile 'org.hamcrest:hamcrest-library:1.3'
 }

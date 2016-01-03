@@ -11,7 +11,6 @@ import com.david.todo.adapter.TodoItemListAdapter;
 import com.david.todo.model.TaskItemModel;
 import com.david.todo.service.TaskService;
 import com.david.todo.service.TextEntryService;
-import com.david.todo.view.AddItemActivity;
 import com.david.todo.view.AddItemShortView;
 import com.david.todo.view.TodoView;
 
@@ -45,12 +44,6 @@ public class TodoListPresenter {
         _textEntryService = textEntryService;
     }
 
-    @Deprecated
-    public void launchAdditemActivity(Activity activityContext) {
-        Intent intent = new Intent(activityContext, AddItemActivity.class);
-        activityContext.startActivityForResult(intent, ADD_ITEM_ACTIVITY);
-    }
-
     public void textChanged(CharSequence sequence) {
         if(_textEntryService.textHasBeenEntered(sequence)) {
             _addItemShortView.fadeOptions();
@@ -59,16 +52,6 @@ public class TodoListPresenter {
             _addItemShortView.showOptions();
             _todoView.hidePostOption();
         }
-    }
-
-    public void addItem(String title, String description, AddItemActivity activity) {
-        if(title.isEmpty()) {
-            activity.showError(activity.getString(R.string.title_empty));
-            return;
-        }
-        _taskService.createTaskItem(title, description);
-        activity.setResult(ADD_ITEM_ACTIVITY, new Intent().putExtra(ITEM_WAS_ADDED, true));
-        activity.finish();
     }
 
     public void notifySuccessfulItemAdd(int requestCode, View coordinatorLayout, Activity activityContext, Intent intent) {

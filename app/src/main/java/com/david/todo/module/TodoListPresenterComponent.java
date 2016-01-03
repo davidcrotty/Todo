@@ -1,6 +1,5 @@
 package com.david.todo.module;
 
-import com.david.todo.view.AddItemActivity;
 import com.david.todo.view.TodoListActivity;
 import com.david.todo.presenter.TodoListPresenter;
 
@@ -14,5 +13,4 @@ import dagger.Component;
 public interface TodoListPresenterComponent {
     TodoListPresenter TodoListPresenter();
     void inject(TodoListActivity activity);
-    void inject(AddItemActivity activity);
 }

@@ -4,7 +4,6 @@ import com.david.todo.presenter.TodoListPresenter;
 import com.david.todo.repository.DataRepository;
 import com.david.todo.service.TaskService;
 import com.david.todo.service.TextEntryService;
-import com.david.todo.view.AddItemActivity;
 import com.david.todo.view.AddItemShortView;
 import com.david.todo.view.TodoListActivity;
 
@@ -28,8 +27,6 @@ public class TodoListPresenterModule {
     TodoListPresenter provideTodoListPresenter(DataRepository dataRepository) {
         if(_activity instanceof TodoListActivity) {
             return new TodoListPresenter((TodoListActivity)_activity, _addItemView, new TaskService(dataRepository), new TextEntryService());
-        } else if (_activity instanceof AddItemActivity) {
-            return new TodoListPresenter(new TaskService(dataRepository));
         }
         return null;
     }

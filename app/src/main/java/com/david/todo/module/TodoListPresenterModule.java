@@ -16,17 +16,15 @@ import dagger.Provides;
 @Module
 public class TodoListPresenterModule {
     private final android.app.Activity _activity;
-    private final AddItemShortView _addItemView;
 
-    public TodoListPresenterModule(android.app.Activity todoListActivity, AddItemShortView addItemView) {
+    public TodoListPresenterModule(android.app.Activity todoListActivity) {
         _activity = todoListActivity;
-        _addItemView = addItemView;
     }
 
     @Provides
     TodoListPresenter provideTodoListPresenter(DataRepository dataRepository) {
         if(_activity instanceof TodoListActivity) {
-            return new TodoListPresenter((TodoListActivity)_activity, _addItemView, new TaskService(dataRepository), new TextEntryService());
+            return new TodoListPresenter((TodoListActivity)_activity, new TaskService(dataRepository), new TextEntryService());
         }
         return null;
     }

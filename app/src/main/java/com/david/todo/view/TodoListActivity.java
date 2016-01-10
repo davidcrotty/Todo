@@ -2,22 +2,18 @@ package com.david.todo.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,8 +34,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import dagger.Lazy;
 
-public class TodoListActivity extends BaseActivity implements TodoView,
-                                                              TextWatcher {
+public class TodoListActivity extends BaseActivity implements TodoView {
 
     private DataRepositoryComponent _dataRepositoryComponent;
     @Inject Lazy<TodoListPresenter> _presenter;
@@ -56,11 +51,7 @@ public class TodoListActivity extends BaseActivity implements TodoView,
     @Bind(R.id.toolbar)
     Toolbar _toolbar;
 
-    @Bind(R.id.add_item_short_view)
-    AddItemShortView _addItemView;
-
-    @Bind(R.id.short_note_text)
-    EditText _shortNoteText;
+    AddItemShortView _addItemShortView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +61,17 @@ public class TodoListActivity extends BaseActivity implements TodoView,
         initialiseInjector();
         setSupportActionBar(_toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        addItemShortView();
         _presenter.get().fetchTodoItems(getApplicationContext());
-        _shortNoteText.addTextChangedListener(this);
-        if(_shortNoteText.getText().toString() == null || _shortNoteText.getText().toString().isEmpty()) {
-            _presenter.get().textChanged(null);
+    }
+
+    private void addItemShortView() {
+        if(_addItemShortView == null) {
+            _addItemShortView = new AddItemShortView(this, _presenter.get());
+            int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 110, getResources().getDisplayMetrics());
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
+            _todoItemViewFrame.addView(_addItemShortView, 0,layoutParams); // z-ordering
+//            _shortNoteText = (EditText) findViewById(R.id.short_note_text); //TODO move this behaviour to inside view
         }
     }
 
@@ -99,7 +97,7 @@ public class TodoListActivity extends BaseActivity implements TodoView,
 
         DaggerTodoListPresenterComponent.builder()
                 .dataRepositoryComponent(_dataRepositoryComponent)
-                .todoListPresenterModule(new TodoListPresenterModule(this, _addItemView))
+                .todoListPresenterModule(new TodoListPresenterModule(this))
                 .build().inject(this);
     }
 
@@ -146,21 +144,6 @@ public class TodoListActivity extends BaseActivity implements TodoView,
         if(textView != null) {
             _toolbar.removeView(textView);
         }
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        _presenter.get().textChanged(s);
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-
     }
 
     public void hideKeyboard() {

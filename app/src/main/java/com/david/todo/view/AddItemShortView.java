@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -11,10 +13,12 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.david.todo.R;
+import com.david.todo.presenter.TodoListPresenter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,7 +27,8 @@ import butterknife.ButterKnife;
  * Created by David Crotty on 18/11/2015.
  */
 public class AddItemShortView extends LinearLayout implements Animation.AnimationListener,
-                                                              View.OnClickListener {
+                                                              View.OnClickListener,
+        TextWatcher {
 
     @Bind(R.id.options_panel)
     LinearLayout _optionsPanel;
@@ -37,16 +42,16 @@ public class AddItemShortView extends LinearLayout implements Animation.Animatio
     @Bind(R.id.expand_edit_button)
     ImageView _expandEditButton;
 
+    @Bind(R.id.short_note_text)
+    EditText _shortNoteText;
+
     private Animation _fadeAnimation;
     private final int _animationDuration = 300;
+    private TodoListPresenter _presenter;
 
-    public AddItemShortView(Context context) {
+    public AddItemShortView(Context context, TodoListPresenter presenter) {
         super(context);
-        init();
-    }
-
-    public AddItemShortView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        _presenter = presenter;
         init();
     }
 
@@ -73,10 +78,15 @@ public class AddItemShortView extends LinearLayout implements Animation.Animatio
     }
 
     private void init() {
+        setId(R.id.add_item_short_view);
         inflate(getContext(), R.layout.add_item_short_view, this);
         ButterKnife.bind(this);
+        _shortNoteText.addTextChangedListener(this);
         setupAnimation();
         _expandEditButton.setOnClickListener(this);
+        if(_shortNoteText.getText().toString() == null || _shortNoteText.getText().toString().isEmpty()) {
+            _presenter.textChanged(null, this);
+        }
     }
 
     private void hideInlineOptions() {
@@ -108,7 +118,6 @@ public class AddItemShortView extends LinearLayout implements Animation.Animatio
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.expand_edit_button:
-                //Prevents animation happening twice on inital run
                 ((TodoListActivity) getContext()).hideKeyboard();
 
                 Intent intent = new Intent(getContext(), AddItemActivity.class);
@@ -116,5 +125,20 @@ public class AddItemShortView extends LinearLayout implements Animation.Animatio
 
                 break;
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        _presenter.textChanged(s, this); //TODO is it possible to grab the lazy version?
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }

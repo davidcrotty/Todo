@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.david.todo.R;
 import com.david.todo.adapter.TodoItemListAdapter;
@@ -30,26 +32,24 @@ public class TodoListPresenter {
 
     private TodoView _todoView;
     private TaskService _taskService;
-    private AddItemShortView _addItemShortView;
     private TextEntryService _textEntryService;
 
     public TodoListPresenter(TaskService taskService) {
         _taskService = taskService;
     }
 
-    public TodoListPresenter(TodoView view, AddItemShortView addItemShortView, TaskService taskService, TextEntryService textEntryService) {
+    public TodoListPresenter(TodoView view, TaskService taskService, TextEntryService textEntryService) {
         _todoView = view;
         _taskService = taskService;
-        _addItemShortView = addItemShortView;
         _textEntryService = textEntryService;
     }
 
-    public void textChanged(CharSequence sequence) {
+    public void textChanged(CharSequence sequence, AddItemShortView itemShortView) {
         if(_textEntryService.textHasBeenEntered(sequence)) {
-            _addItemShortView.fadeOptions();
+            itemShortView.fadeOptions();
             _todoView.showPostOption();
         } else {
-            _addItemShortView.showOptions();
+            itemShortView.showOptions();
             _todoView.hidePostOption();
         }
     }

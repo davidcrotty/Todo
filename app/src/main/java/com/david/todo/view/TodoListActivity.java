@@ -1,5 +1,6 @@
 package com.david.todo.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -159,5 +161,12 @@ public class TodoListActivity extends BaseActivity implements TodoView,
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    public void hideKeyboard() {
+        TextView addItemShortView = (TextView) findViewById(R.id.short_note_text);
+
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(addItemShortView.getWindowToken(), 0);
     }
 }

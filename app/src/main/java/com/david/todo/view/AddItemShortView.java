@@ -108,9 +108,12 @@ public class AddItemShortView extends LinearLayout implements Animation.Animatio
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.expand_edit_button:
+                //Prevents animation happening twice on inital run
+                ((TodoListActivity) getContext()).hideKeyboard();
+
                 Intent intent = new Intent(getContext(), AddItemActivity.class);
                 getContext().startActivity(intent);
-                
+
                 break;
         }
     }

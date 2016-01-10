@@ -3,6 +3,7 @@ package com.david.todo.view;
 import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -107,24 +108,9 @@ public class AddItemShortView extends LinearLayout implements Animation.Animatio
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.expand_edit_button:
-
-                //In Activity animation
-                /*View reveal_animation_container = ((Activity) getContext()).findViewById(R.id.todolist_container);
-
-                int cx = (reveal_animation_container.getLeft() + reveal_animation_container.getRight()) / 2;
-                int cy = (reveal_animation_container.getTop() + reveal_animation_container.getBottom()) / 2;
-
-                int dx = Math.max(cx, reveal_animation_container.getWidth() - cx);
-                int dy = Math.max(cy, reveal_animation_container.getHeight() - cy);
-                float finalRadius = (float) Math.hypot(dx, dy);
-
-                int[] location = new int[2];
-                _expandEditButton.getLocationOnScreen(location);
-                Animator animator =
-                        ViewAnimationUtils.createCircularReveal(reveal_animation_container, location[0],  location[1], 0, finalRadius);
-                animator.setInterpolator(new AccelerateDecelerateInterpolator());
-                animator.setDuration(1500);
-                animator.start();*/
+                Intent intent = new Intent(getContext(), AddItemActivity.class);
+                getContext().startActivity(intent);
+                
                 break;
         }
     }

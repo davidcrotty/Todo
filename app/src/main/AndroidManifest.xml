@@ -23,7 +23,7 @@
 
         <activity
             android:name=".view.AddItemActivity"
-            android:theme="@style/AppTheme.Transparent"
+            android:theme="@style/AppThemeNoActionBar.Transparent"
             android:launchMode="singleTask"
             />
     </application>

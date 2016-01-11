@@ -2,6 +2,7 @@ package com.david.todo.view;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
@@ -19,12 +20,12 @@ import io.codetail.widget.RevealFrameLayout;
 /**
  * Created by DavidHome on 10/01/2016.
  */
-public class AddItemActivity extends Activity {
+public class AddItemActivity extends BaseActivity {
 
     public static String ANIMATE_START_INTENT_KEY = "ANIMATE_START_INTENT_KEY";
 
     @Bind(R.id.add_item_root)
-    FrameLayout _rootView;
+    CoordinatorLayout _rootView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -7,5 +7,6 @@
     <color name="ColorAccent">#448AFF</color>
     <color name="ColorItemAdd">#448AFF</color>
     <color name="Background">#fafafa</color>
+    <color name="AddItemStatusBar">#BDBDBD</color>
 
 </resources>

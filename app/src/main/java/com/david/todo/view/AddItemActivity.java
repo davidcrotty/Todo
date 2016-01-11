@@ -27,6 +27,8 @@ public class AddItemActivity extends BaseActivity {
     @Bind(R.id.add_item_root)
     CoordinatorLayout _rootView;
 
+    private SupportAnimator _circularReveal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,10 @@ public class AddItemActivity extends BaseActivity {
 
     private void circularRevealLayout() {
         if(getIntent() == null) return;
-        if(getIntent().hasExtra(ANIMATE_START_INTENT_KEY) == false) return;
+        if(getIntent().hasExtra(ANIMATE_START_INTENT_KEY) == false) {
+            _rootView.setVisibility(View.VISIBLE);
+            return;
+        }
 
         AnimateLocationCoordinatesModel animateModel = (AnimateLocationCoordinatesModel) getIntent()
                                                                                          .getExtras()
@@ -56,10 +61,20 @@ public class AddItemActivity extends BaseActivity {
 
         float finalRadius = Math.max(_rootView.getWidth(), _rootView.getHeight());
 
-        SupportAnimator circularReveal = ViewAnimationUtils.createCircularReveal(_rootView, cx, cy, 0, finalRadius);
-        circularReveal.setDuration(500);
+        _circularReveal = ViewAnimationUtils.createCircularReveal(_rootView, cx, cy, 0, finalRadius);
+        _circularReveal.setDuration(500);
 
         _rootView.setVisibility(View.VISIBLE);
-        circularReveal.start();
+        _circularReveal.start();
+        _circularReveal.reverse();
+        getIntent().removeExtra(ANIMATE_START_INTENT_KEY);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(_circularReveal != null) {
+            _circularReveal.reverse();
+        }
     }
 }

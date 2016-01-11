@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.david.todo.R;
+import com.david.todo.model.AnimateLocationCoordinatesModel;
 import com.david.todo.presenter.TodoListPresenter;
 
 import butterknife.Bind;
@@ -121,6 +123,12 @@ public class AddItemShortView extends LinearLayout implements Animation.Animatio
                 ((TodoListActivity) getContext()).hideKeyboard();
 
                 Intent intent = new Intent(getContext(), AddItemActivity.class);
+                int[] viewLocation = new int[2];
+                _expandEditButton.getLocationOnScreen(viewLocation);
+                intent.putExtra(AddItemActivity.ANIMATE_START_INTENT_KEY, new AnimateLocationCoordinatesModel(viewLocation[0],
+                                                                                                              viewLocation[1],
+                                                                                                              _expandEditButton.getWidth(),
+                                                                                                              _expandEditButton.getHeight()));
                 getContext().startActivity(intent);
 
                 break;

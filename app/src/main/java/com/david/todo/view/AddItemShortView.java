@@ -120,17 +120,14 @@ public class AddItemShortView extends LinearLayout implements Animation.Animatio
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.expand_edit_button:
-                ((TodoListActivity) getContext()).hideKeyboard();
-
-                Intent intent = new Intent(getContext(), AddItemActivity.class);
+                _presenter.hideKeyboard(getContext());
                 int[] viewLocation = new int[2];
                 _expandEditButton.getLocationOnScreen(viewLocation);
-                intent.putExtra(AddItemActivity.ANIMATE_START_INTENT_KEY, new AnimateLocationCoordinatesModel(viewLocation[0],
-                                                                                                              viewLocation[1],
-                                                                                                              _expandEditButton.getWidth(),
-                                                                                                              _expandEditButton.getHeight()));
-                getContext().startActivity(intent);
-
+                _presenter.startAddItemActivity(new AnimateLocationCoordinatesModel(viewLocation[0],
+                        viewLocation[1],
+                        _expandEditButton.getWidth(),
+                        _expandEditButton.getHeight()),
+                        getContext());
                 break;
         }
     }

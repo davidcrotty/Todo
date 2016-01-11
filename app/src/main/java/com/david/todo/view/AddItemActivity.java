@@ -42,7 +42,7 @@ public class AddItemActivity extends Activity {
         //top bar... white, grey spin arrow on entry, options menu will eventually have lots of items
     }
 
-    public void circularRevealLayout() {
+    private void circularRevealLayout() {
         if(getIntent() == null) return;
         if(getIntent().hasExtra(ANIMATE_START_INTENT_KEY) == false) return;
 

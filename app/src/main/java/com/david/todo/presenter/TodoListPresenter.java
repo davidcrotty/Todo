@@ -10,10 +10,13 @@ import android.widget.TextView;
 
 import com.david.todo.R;
 import com.david.todo.adapter.TodoItemListAdapter;
+import com.david.todo.model.AnimateLocationCoordinatesModel;
 import com.david.todo.model.TaskItemModel;
 import com.david.todo.service.TaskService;
 import com.david.todo.service.TextEntryService;
+import com.david.todo.view.AddItemActivity;
 import com.david.todo.view.AddItemShortView;
+import com.david.todo.view.TodoListActivity;
 import com.david.todo.view.TodoView;
 
 import java.util.ArrayList;
@@ -65,6 +68,18 @@ public class TodoListPresenter {
                 }
                 break;
         }
+    }
+
+    public void hideKeyboard(Context activityContext) {
+        ((TodoListActivity) activityContext).hideKeyboard();
+    }
+
+    public void startAddItemActivity(AnimateLocationCoordinatesModel animationCoordinateModel,
+                                     Context activityContext) {
+        Intent intent = new Intent(activityContext, AddItemActivity.class);
+
+        intent.putExtra(AddItemActivity.ANIMATE_START_INTENT_KEY, animationCoordinateModel);
+        activityContext.startActivity(intent);
     }
 
     public void fetchTodoItems(final Context context) {

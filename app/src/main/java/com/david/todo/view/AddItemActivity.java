@@ -32,7 +32,6 @@ public class AddItemActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item_full_view);
         ButterKnife.bind(this);
-        setSupportActionBar(_toolbar);
 
         _rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override

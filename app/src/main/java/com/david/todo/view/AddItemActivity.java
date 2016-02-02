@@ -70,9 +70,11 @@ public class AddItemActivity extends BaseActivity {
         });
 
         _collapsingContainer.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            final float toolbarFadeInThreshold = 0.7f;
+            final float toolbarFadeInSpeed = 3f;
+
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-//                Log.d("AddItemActivity", "offset: " + verticalOffset + " | collapsing container height: " + _collapsingContainer.getHeight());
                 if(_verticalOffsetMaxHeight == -1) return;
                 if(verticalOffset == 0) return;
                 float delta = ((float)Math.abs(verticalOffset) / (float)_verticalOffsetMaxHeight) * 100f;
@@ -84,16 +86,15 @@ public class AddItemActivity extends BaseActivity {
                     float percentScrolledUp = (delta / 100);
                     float alpha = 1.0f - percentScrolledUp;
                     _headerInputContainer.setAlpha(alpha);
-                    Log.d("AddItemActivity", "Alpha: " + Math.abs(alpha));
+
                     _titleInputLayout.setVisibility(View.VISIBLE);
                     _descriptionInputLayout.setVisibility(View.VISIBLE);
-                    if(percentScrolledUp > 0.7f) {
-                        float a = 1.0f - percentScrolledUp;
-                        float b = a * 3f;
+                    if(percentScrolledUp > toolbarFadeInThreshold) {
+                        float parentScrolledDown = 1.0f - percentScrolledUp;
+                        float scalarAlpha = parentScrolledDown * toolbarFadeInSpeed;
 
                         _titleShortContainer.setVisibility(View.VISIBLE);
-//                        _titleShortContainer.setAlpha(percentScrolledUp);
-                        _titleShortContainer.setAlpha(Math.abs(1.0f - b));
+                        _titleShortContainer.setAlpha(Math.abs(1.0f - scalarAlpha));
                     } else {
                         _titleShortContainer.setVisibility(View.INVISIBLE);
                     }

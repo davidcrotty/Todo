@@ -82,6 +82,8 @@ public class AddItemActivity extends BaseActivity {
                 if ((_collapsingContainer.getHeight() + verticalOffset) <= _toolbar.getHeight()) {
                     _titleInputLayout.setVisibility(View.INVISIBLE);
                     _descriptionInputLayout.setVisibility(View.INVISIBLE);
+                    _titleShortContainer.setAlpha(1.0f);
+                    _titleShortContainer.setVisibility(View.VISIBLE);
                 } else {
                     float percentScrolledUp = (delta / 100);
                     float alpha = 1.0f - percentScrolledUp;

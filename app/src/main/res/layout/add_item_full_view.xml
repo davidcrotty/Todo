@@ -124,7 +124,8 @@
             app:rippleColor="#00796B"
             app:fabSize="normal"
             android:clickable="true"
-            app:layout_anchor="@id/app_bar_layout"
+            app:layout_anchor="@id/collapsing_container"
+            app:layout_collapseMode="none"
             app:layout_anchorGravity="bottom|right|end"/>
 
         <android.support.v4.widget.NestedScrollView

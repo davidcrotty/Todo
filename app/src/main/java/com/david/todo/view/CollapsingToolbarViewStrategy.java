@@ -18,11 +18,14 @@ public class CollapsingToolbarViewStrategy implements AppBarLayout.OnOffsetChang
     private final Toolbar _toolbar;
     private final ViewGroup _expandedFormLayout;
     private final ViewGroup _collapsedToolbarTitleLayout;
+    private final AddItemActivity _addItemActivity;
 
-    public CollapsingToolbarViewStrategy(AppBarLayout appBarLayout,
+    public CollapsingToolbarViewStrategy(AddItemActivity addItemActivity,
+                                         AppBarLayout appBarLayout,
                                          Toolbar toolbar,
                                          ViewGroup collapsedToolbarTitleLayout,
                                          ViewGroup expandedFormLayout) {
+        _addItemActivity = addItemActivity;
         _appbarLayout = appBarLayout;
         _toolbar = toolbar;
         _collapsedToolbarTitleLayout = collapsedToolbarTitleLayout;
@@ -45,6 +48,7 @@ public class CollapsingToolbarViewStrategy implements AppBarLayout.OnOffsetChang
             _expandedFormLayout.setVisibility(View.INVISIBLE);
             _collapsedToolbarTitleLayout.setAlpha(1.0f);
             _collapsedToolbarTitleLayout.setVisibility(View.VISIBLE);
+            _addItemActivity.hideKeyboard();
         } else {
             float percentScrolledUp = (delta / 100);
             float alpha = 1.0f - percentScrolledUp;

@@ -1,6 +1,9 @@
 package com.david.todo.view;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -8,6 +11,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -64,11 +68,16 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
             }
         });
 
-        new CollapsingToolbarViewStrategy(_appBarLayout,
+        new CollapsingToolbarViewStrategy(this,
+                                          _appBarLayout,
                                           _toolbar,
                                           _collapsedToolbarTitleLayout,
                                           _headerInputContainer);
         _backArrowImage.setOnClickListener(this);
+        //on scroll up, dismiss keyboard.
+        //editing input text changes description text
+        //update add item icon
+        //take intent passed through and fill in title.
     }
 
     private void circularRevealLayout() {
@@ -94,6 +103,12 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         _circularReveal.start();
         _circularReveal.reverse();
         getIntent().removeExtra(ANIMATE_START_INTENT_KEY);
+    }
+
+    public void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if(imm.isAcceptingText() == false) return;
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
     @Override

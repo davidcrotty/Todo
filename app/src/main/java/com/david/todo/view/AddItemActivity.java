@@ -1,9 +1,7 @@
 package com.david.todo.view;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -12,11 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.david.todo.R;
 import com.david.todo.model.AnimateLocationCoordinatesModel;
+import com.david.todo.view.eventlisteners.EditTextChangeListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -53,8 +54,21 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
 
     @Bind(R.id.header_input_container)
     LinearLayout _headerInputContainer;
+
+    @Bind(R.id.collapsed_title_text)
+    TextView _collapsedTitleText;
+
+    @Bind(R.id.collapsed_description_text)
+    TextView _collapsedDescriptionText;
+
+    @Bind(R.id.expanded_title_text)
+    EditText _expandedTitleText;
+
+    @Bind(R.id.expanded_description_text)
+    EditText _expandedDescriptionText;
     
     private SupportAnimator _circularReveal;
+//    private AddItemPresenter _addItemPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +88,24 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                                           _collapsedToolbarTitleLayout,
                                           _headerInputContainer);
         _backArrowImage.setOnClickListener(this);
-        //on scroll up, dismiss keyboard.
-        //editing input text changes description text
-        //update add item icon
+        _expandedTitleText.addTextChangedListener(new EditTextChangeListener() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                _collapsedTitleText.setText(s.toString());
+            }
+        });
+        _expandedDescriptionText.addTextChangedListener(new EditTextChangeListener() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                _collapsedDescriptionText.setText(s.toString());
+            }
+        });
         //take intent passed through and fill in title.
+        //increment fading threshold
+        // two text listener instances.
+        //hits activity on change
+
+        //AB class, add it in line.
     }
 
     private void circularRevealLayout() {
@@ -111,7 +139,15 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
-    @Override
+    public void updateCollapsedToolbarTitle(String text) {
+        _collapsedTitleText.setText(text);
+    }
+
+    public void updateCollapsedToolbarDescription(String text) {
+        _collapsedDescriptionText.setText(text);
+    }
+
+        @Override
     public void onBackPressed() {
         super.onBackPressed();
         if(_circularReveal != null) {

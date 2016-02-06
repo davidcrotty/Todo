@@ -127,7 +127,8 @@ public class AddItemShortView extends LinearLayout implements Animation.Animatio
                         viewLocation[1],
                         _expandEditButton.getWidth(),
                         _expandEditButton.getHeight()),
-                        getContext());
+                        getContext(),
+                        _shortNoteText.getText().toString());
                 break;
         }
     }

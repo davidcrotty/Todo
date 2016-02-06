@@ -75,9 +75,10 @@ public class TodoListPresenter {
     }
 
     public void startAddItemActivity(AnimateLocationCoordinatesModel animationCoordinateModel,
-                                     Context activityContext) {
+                                     Context activityContext,
+                                     String shortText) {
         Intent intent = new Intent(activityContext, AddItemActivity.class);
-
+        intent.putExtra(AddItemActivity.TITLE_TEXT_INTENT_KEY, shortText);
         intent.putExtra(AddItemActivity.ANIMATE_START_INTENT_KEY, animationCoordinateModel);
         activityContext.startActivity(intent);
     }

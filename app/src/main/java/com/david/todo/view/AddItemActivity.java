@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.david.todo.R;
 import com.david.todo.model.AnimateLocationCoordinatesModel;
+import com.david.todo.presenter.AddItemPresenter;
 import com.david.todo.view.eventlisteners.EditTextChangeListener;
 
 import butterknife.Bind;
@@ -27,6 +28,7 @@ import io.codetail.animation.ViewAnimationUtils;
 public class AddItemActivity extends BaseActivity implements View.OnClickListener {
 
     public static String ANIMATE_START_INTENT_KEY = "ANIMATE_START_INTENT_KEY";
+    public static String TITLE_TEXT_INTENT_KEY = "TITLE_TEXT_INTENT_KEY";
 
     @Bind(R.id.add_item_root)
     CoordinatorLayout _rootView;
@@ -68,13 +70,15 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     EditText _expandedDescriptionText;
     
     private SupportAnimator _circularReveal;
-//    private AddItemPresenter _addItemPresenter;
+    private AddItemPresenter _addItemPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item_full_view);
         ButterKnife.bind(this);
+        _addItemPresenter = new AddItemPresenter(this);
+        _addItemPresenter.updateTitleWithIntent();
         _rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -102,10 +106,6 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         });
         //take intent passed through and fill in title.
         //increment fading threshold
-        // two text listener instances.
-        //hits activity on change
-
-        //AB class, add it in line.
     }
 
     private void circularRevealLayout() {
@@ -137,6 +137,10 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         if(imm.isAcceptingText() == false) return;
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
+    public void setExpandedTitleText(String text) {
+        _expandedTitleText.setText(text);
     }
 
     public void updateCollapsedToolbarTitle(String text) {

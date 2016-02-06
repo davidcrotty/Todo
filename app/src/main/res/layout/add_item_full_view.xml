@@ -65,6 +65,7 @@
                             android:scrollHorizontally="true"
                             android:ellipsize="end"
                             android:maxLines="1"
+                            android:text="Description DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription"/>
                     </LinearLayout>
 
                 </android.support.v7.widget.Toolbar>

@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.david.todo.R;
@@ -18,7 +19,7 @@ import butterknife.ButterKnife;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 
-public class AddItemActivity extends BaseActivity {
+public class AddItemActivity extends BaseActivity implements View.OnClickListener {
 
     public static String ANIMATE_START_INTENT_KEY = "ANIMATE_START_INTENT_KEY";
 
@@ -36,6 +37,9 @@ public class AddItemActivity extends BaseActivity {
 
     @Bind(R.id.description_input_layout)
     TextInputLayout _descriptionInputLayout;
+
+    @Bind(R.id.back_arrow_image)
+    ImageView _backArrowImage;
 
     @Bind(R.id.toolbar)
     Toolbar _toolbar;
@@ -64,6 +68,7 @@ public class AddItemActivity extends BaseActivity {
                                           _toolbar,
                                           _collapsedToolbarTitleLayout,
                                           _headerInputContainer);
+        _backArrowImage.setOnClickListener(this);
     }
 
     private void circularRevealLayout() {
@@ -96,6 +101,15 @@ public class AddItemActivity extends BaseActivity {
         super.onBackPressed();
         if(_circularReveal != null) {
             _circularReveal.reverse();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.back_arrow_image:
+                finish();
+                break;
         }
     }
 }

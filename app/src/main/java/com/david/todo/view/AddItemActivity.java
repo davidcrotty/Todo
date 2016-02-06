@@ -6,7 +6,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
@@ -27,10 +26,10 @@ public class AddItemActivity extends BaseActivity {
     CoordinatorLayout _rootView;
 
     @Bind(R.id.app_bar_layout)
-    AppBarLayout _collapsingContainer;
+    AppBarLayout _appBarLayout;
 
     @Bind(R.id.title_input_layout)
-    TextInputLayout _titleInputLayout;
+    TextInputLayout _expandedFormLayout;
 
     @Bind(R.id.collapsing_container)
     CollapsingToolbarLayout _toolbarLayout;
@@ -42,13 +41,12 @@ public class AddItemActivity extends BaseActivity {
     Toolbar _toolbar;
 
     @Bind(R.id.title_short_container)
-    LinearLayout _titleShortContainer;
+    LinearLayout _collapsedToolbarTitleLayout;
 
     @Bind(R.id.header_input_container)
     LinearLayout _headerInputContainer;
     
     private SupportAnimator _circularReveal;
-    private int _verticalOffsetMaxHeight = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,47 +60,10 @@ public class AddItemActivity extends BaseActivity {
             }
         });
 
-        _collapsingContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                _verticalOffsetMaxHeight = _collapsingContainer.getHeight() - _toolbar.getHeight();
-            }
-        });
-
-        _collapsingContainer.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            final float toolbarFadeInThreshold = 0.7f;
-            final float toolbarFadeInSpeed = 3f;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if(_verticalOffsetMaxHeight == -1) return;
-                if(verticalOffset == 0) return;
-                float delta = ((float)Math.abs(verticalOffset) / (float)_verticalOffsetMaxHeight) * 100f;
-
-                if ((_collapsingContainer.getHeight() + verticalOffset) <= _toolbar.getHeight()) {
-                    _titleInputLayout.setVisibility(View.INVISIBLE);
-                    _descriptionInputLayout.setVisibility(View.INVISIBLE);
-                    _titleShortContainer.setAlpha(1.0f);
-                    _titleShortContainer.setVisibility(View.VISIBLE);
-                } else {
-                    float percentScrolledUp = (delta / 100);
-                    float alpha = 1.0f - percentScrolledUp;
-                    _headerInputContainer.setAlpha(alpha);
-
-                    _titleInputLayout.setVisibility(View.VISIBLE);
-                    _descriptionInputLayout.setVisibility(View.VISIBLE);
-                    if(percentScrolledUp > toolbarFadeInThreshold) {
-                        float parentScrolledDown = 1.0f - percentScrolledUp;
-                        float scalarAlpha = parentScrolledDown * toolbarFadeInSpeed;
-
-                        _titleShortContainer.setVisibility(View.VISIBLE);
-                        _titleShortContainer.setAlpha(Math.abs(1.0f - scalarAlpha));
-                    } else {
-                        _titleShortContainer.setVisibility(View.INVISIBLE);
-                    }
-                }
-            }
-        });
+        new CollapsingToolbarViewStrategy(_appBarLayout,
+                                          _toolbar,
+                                          _collapsedToolbarTitleLayout,
+                                          _headerInputContainer);
     }
 
     private void circularRevealLayout() {

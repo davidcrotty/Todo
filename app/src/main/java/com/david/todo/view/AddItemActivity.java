@@ -78,7 +78,6 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.add_item_full_view);
         ButterKnife.bind(this);
         _addItemPresenter = new AddItemPresenter(this);
-        _addItemPresenter.updateTitleWithIntent();
         _rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -104,7 +103,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                 _collapsedDescriptionText.setText(s.toString());
             }
         });
-        //take intent passed through and fill in title.
+        _addItemPresenter.updateTitleWithIntent();
         //increment fading threshold
     }
 

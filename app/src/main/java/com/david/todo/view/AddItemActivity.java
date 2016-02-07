@@ -142,14 +142,6 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         _expandedTitleText.setText(text);
     }
 
-    public void updateCollapsedToolbarTitle(String text) {
-        _collapsedTitleText.setText(text);
-    }
-
-    public void updateCollapsedToolbarDescription(String text) {
-        _collapsedDescriptionText.setText(text);
-    }
-
         @Override
     public void onBackPressed() {
         super.onBackPressed();

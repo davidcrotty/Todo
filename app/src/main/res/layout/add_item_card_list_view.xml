@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:style="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -23,6 +22,7 @@
 
                 <ImageView
                     android:src="@drawable/inbox_icon"
+                    android:paddingTop="16dp"
                     android:layout_alignParentEnd="true"
                     android:layout_width="100dp"
                     android:layout_height="100dp" />
@@ -45,62 +45,13 @@
 
                     <TextView
                         android:text="Time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-                
-                <LinearLayout
-                    android:elevation="4dp"
-                    android:background="@color/ColorPrimary"
-                    android:layout_alignParentBottom="true"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:padding="8dp">
-                    
-                    <ImageView
-                        android:src="@drawable/ic_add_white_18dp"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp" />
-                </LinearLayout>
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_vertical_margin">
-            <RelativeLayout
-                android:background="@android:color/white"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="160dp">
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:paddingTop="24dp"
-                    android:paddingLeft="24dp"
-                    android:paddingBottom="8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="Date"
-                        android:textColor="@android:color/black"
-                        android:paddingBottom="8dp"
-                        android:textSize="24sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:text="Time"
+                        android:textSize="18sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:elevation="4dp"
-                    android:background="@color/ColorPrimary"
+                    android:id="@+id/date_options_strip"
                     android:layout_alignParentBottom="true"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -108,67 +59,12 @@
                     android:padding="8dp">
 
                     <ImageView
-                        android:src="@drawable/ic_add_white_18dp"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp" />
-                </LinearLayout>
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_vertical_margin">
-            <RelativeLayout
-                android:background="@android:color/white"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="160dp">
-
-                <ImageView
-                    android:src="@drawable/inbox_icon"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp" />
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:paddingTop="24dp"
-                    android:paddingLeft="24dp"
-                    android:paddingBottom="8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="Date"
-                        android:textColor="@android:color/black"
-                        android:paddingBottom="8dp"
-                        android:textSize="24sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:text="Time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/options_strip"
-                    android:layout_alignParentBottom="true"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:padding="8dp">
-
-                    <ImageView
-                        android:id="@+id/plus_invert_image"
                         android:src="@drawable/add_grey"
                         android:layout_width="32dp"
                         android:layout_height="32dp" />
                 </LinearLayout>
 
-                <View android:layout_above="@id/options_strip"
+                <View android:layout_above="@id/date_options_strip"
                       android:layout_width="match_parent"
                       android:layout_height="1dp"
                       android:background="@drawable/vertical_gradient"/>
@@ -187,17 +83,18 @@
                 android:layout_height="160dp">
 
                 <ImageView
-                    android:id="@+id/event_black"
-                    android:src="@drawable/event_black"
-                    android:layout_alignParentEnd="true"
-                    android:layout_margin="16dp"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp" />
+                    android:id="@+id/inbox_icon"
+                    android:src="@drawable/inbox_icon"
+                    android:paddingTop="16dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
 
                 <LinearLayout
+                    android:layout_toRightOf="@id/inbox_icon"
                     android:orientation="vertical"
                     android:paddingTop="24dp"
-                    android:paddingLeft="24dp"
+                    android:paddingLeft="8dp"
                     android:paddingBottom="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -212,17 +109,20 @@
 
                     <TextView
                         android:text="Time"
+                        android:textSize="18sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/options_strip2"
+                    android:id="@+id/date_options_strip2"
                     android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
                     android:orientation="horizontal"
-                    android:layout_width="match_parent"
+                    android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    android:layout_alignParentStart="false">
 
                     <ImageView
                         android:src="@drawable/add_grey"
@@ -230,7 +130,7 @@
                         android:layout_height="32dp" />
                 </LinearLayout>
 
-                <View android:layout_above="@id/options_strip2"
+                <View android:layout_above="@id/date_options_strip2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@drawable/vertical_gradient"/>
@@ -238,6 +138,378 @@
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin">
+            <RelativeLayout
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="160dp">
+
+                <RelativeLayout
+                    android:id="@+id/date_options_strip6"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/add_grey"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp" />
+                </RelativeLayout>
+
+                <View android:layout_below="@id/date_options_strip6"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/vertical_gradient"/>
+
+                <RelativeLayout
+                    android:layout_below="@id/date_options_strip6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/inbox_icon5"
+                        android:src="@drawable/inbox_icon"
+                        android:paddingTop="16dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <LinearLayout
+                        android:layout_toRightOf="@id/inbox_icon5"
+                        android:orientation="vertical"
+                        android:paddingTop="24dp"
+                        android:paddingLeft="8dp"
+                        android:paddingBottom="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="Date"
+                            android:textColor="@android:color/black"
+                            android:paddingBottom="8dp"
+                            android:textSize="24sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:text="Time"
+                            android:textSize="18sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin">
+            <RelativeLayout
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="160dp">
+
+                <RelativeLayout
+                    android:id="@+id/date_options_strip4"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/ColorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/add_white"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp" />
+                </RelativeLayout>
+
+                <View android:layout_below="@id/date_options_strip4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/vertical_gradient"/>
+
+                <RelativeLayout
+                    android:layout_below="@id/date_options_strip4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/inbox_icon2"
+                        android:src="@drawable/inbox_icon"
+                        android:paddingTop="16dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <LinearLayout
+                        android:layout_toRightOf="@id/inbox_icon2"
+                        android:orientation="vertical"
+                        android:paddingTop="24dp"
+                        android:paddingLeft="8dp"
+                        android:paddingBottom="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="Date"
+                            android:textColor="@android:color/black"
+                            android:paddingBottom="8dp"
+                            android:textSize="24sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:text="Time"
+                            android:textSize="18sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin">
+            <RelativeLayout
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="160dp">
+
+                <ImageView
+                    android:id="@+id/inbox_icon4"
+                    android:src="@drawable/inbox_icon"
+                    android:paddingTop="16dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+
+                <LinearLayout
+                    android:layout_toRightOf="@id/inbox_icon4"
+                    android:orientation="vertical"
+                    android:paddingTop="24dp"
+                    android:paddingLeft="8dp"
+                    android:paddingBottom="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Date"
+                        android:textColor="@android:color/black"
+                        android:paddingBottom="8dp"
+                        android:textSize="24sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:text="Time"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/date_options_strip3"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/ColorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/add_white"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp" />
+                </RelativeLayout>
+
+                <View android:layout_above="@id/date_options_strip3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/vertical_gradient"/>
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin">
+            <RelativeLayout
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="160dp">
+
+                <ImageView
+                    android:paddingTop="16dp"
+                    android:src="@drawable/inbox_icon"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:paddingTop="24dp"
+                    android:paddingLeft="24dp"
+                    android:paddingBottom="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Checklist"
+                        android:textColor="@android:color/black"
+                        android:paddingBottom="8dp"
+                        android:textSize="24sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/checklist_options_strip"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/add_check_item_image"
+                        android:src="@drawable/add_grey"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/checklist_information_strip"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="8dp"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/checked_items_image"
+                        android:src="@drawable/check_box"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp" />
+
+                    <TextView
+                        android:layout_width="48dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:padding="8dp"
+                        android:text="1/12"/>
+                </LinearLayout>
+
+                <View android:layout_above="@id/checklist_options_strip"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/vertical_gradient"/>
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin">
+            <RelativeLayout
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="160dp">
+
+                <ImageView
+                    android:paddingTop="16dp"
+                    android:src="@drawable/inbox_icon"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:paddingTop="24dp"
+                    android:paddingLeft="24dp"
+                    android:paddingBottom="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Comments"
+                        android:textColor="@android:color/black"
+                        android:paddingBottom="8dp"
+                        android:textSize="24sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/comments_options_strip"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/add_comment_item_image"
+                        android:src="@drawable/add_grey"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/comments_strip"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="8dp"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/comments_image"
+                        android:src="@drawable/mode_comment"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp" />
+
+                    <TextView
+                        android:layout_width="48dp"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:gravity="right"
+                        android:text="12"/>
+                </LinearLayout>
+
+                <View android:layout_above="@id/comments_strip"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/vertical_gradient"/>
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 
 </RelativeLayout>

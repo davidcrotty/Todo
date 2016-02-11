@@ -15,4 +15,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="toolbar_text_view_margin">76dp</dimen>
 
+    <!-- Interactive Cards-->
+    <dimen name="card_title">20sp</dimen>
+    <dimen name="card_subtitle">14sp</dimen>
 </resources>

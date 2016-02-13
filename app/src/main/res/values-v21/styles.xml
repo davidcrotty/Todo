@@ -7,7 +7,7 @@
 
     <style name="AppThemeNoActionBar.Transparent" parent="AppThemeNoActionBar">
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:statusBarColor">@color/AddItemStatusBar</item>
+        <item name="android:statusBarColor">#2c3e50</item>
         <item name="colorPrimaryDark">@android:color/white</item>
         <item name="colorPrimary">@android:color/white</item>
     </style>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.codetail.widget.RevealFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -10,12 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:id="@+id/add_item_root">
 
         <android.support.design.widget.AppBarLayout
             android:layout_height="300dp"
             android:layout_width="match_parent"
+            android:background="#34495e"
             android:id="@+id/app_bar_layout">
 
             <android.support.design.widget.CollapsingToolbarLayout
@@ -23,7 +24,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                app:contentScrim="@android:color/white"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <android.support.v7.widget.Toolbar
@@ -37,8 +37,7 @@
                         android:id="@+id/back_arrow_image"
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:layout_marginRight="32dp"
-                        android:src="@drawable/arrow_back"/>
+                        android:layout_marginRight="32dp"/>
 
                     <LinearLayout
                         android:id="@+id/title_short_container"
@@ -86,12 +85,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:theme="@style/NotesLabel"
+                        android:textColorHint="#fff"
                         app:hintTextAppearance="@style/NotesLabel">
 
                         <EditText
                             android:id="@+id/expanded_title_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textColor="#fff"
                             android:hint="Title"/>
                     </android.support.design.widget.TextInputLayout>
 
@@ -99,6 +100,7 @@
                         android:id="@+id/description_input_layout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColorHint="#fff"
                         app:theme="@style/NotesLabel"
                         app:hintTextAppearance="@style/NotesLabel"
                         android:layout_marginBottom="30dp">
@@ -109,6 +111,7 @@
                             android:layout_height="match_parent"
                             android:maxLines="3"
                             android:gravity="top"
+                            android:textColor="#fff"
                             android:hint="Description"/>
                     </android.support.design.widget.TextInputLayout>
 
@@ -123,7 +126,6 @@
             android:layout_height="4dp"
             android:background="@drawable/drop_shadow"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"></View>
-
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="@dimen/fab_size"
@@ -134,26 +136,43 @@
             app:rippleColor="#00796B"
             android:clickable="true"
             app:layout_anchor="@id/collapsing_container"
-            app:layout_collapseMode="none"
-            app:layout_anchorGravity="bottom|right|end"/>
+            app:layout_collapseMode="pin"
+            app:layout_anchorGravity="bottom|left|start"/>
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/Background"
+            android:fillViewport="true"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <com.david.todo.view.AddItemCardListView
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            </com.david.todo.view.AddItemCardListView>
+                <View
+                    android:id="@+id/main_action_view"
+                    android:background="@android:color/holo_green_light"
+                    android:layout_width="90dp"
+                    android:layout_height="match_parent">
+
+                </View>
+
+                <LinearLayout
+                    android:layout_toRightOf="@id/main_action_view"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
         </android.support.v4.widget.NestedScrollView>
 
     </android.support.design.widget.CoordinatorLayout>
 
-</io.codetail.widget.RevealFrameLayout>
+</FrameLayout>

@@ -81,7 +81,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         _rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                circularRevealLayout();
+//                circularRevealLayout();
             }
         });
 

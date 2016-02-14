@@ -161,7 +161,7 @@
                     <View
                         android:id="@+id/line1"
                         android:layout_width="1dp"
-                        android:layout_height="100dp"
+                        android:layout_height="60dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:layout_centerHorizontal="true"
@@ -174,7 +174,76 @@
                         android:scaleType="fitCenter"
                         android:layout_centerHorizontal="true"
                         app:backgroundTint="#8BC34A"
+                        android:src="@drawable/check_box_white"
+                        app:elevation="4dp"
+                        app:rippleColor="#00796B"
+                        android:id="@+id/checklist_fab"
+                        android:clickable="true"/>
+
+                    <View
+                        android:layout_below="@+id/checklist_fab"
+                        android:id="@+id/line2"
+                        android:layout_width="1dp"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="#aaa"></View>
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/comment_fab"
+                        android:layout_below="@id/line2"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitCenter"
+                        android:layout_centerHorizontal="true"
+                        app:backgroundTint="#03A9F4"
                         android:src="@drawable/mode_comment"
+                        app:elevation="4dp"
+                        app:rippleColor="#00796B"
+                        android:clickable="true"/>
+
+                    <View
+                        android:layout_below="@+id/comment_fab"
+                        android:id="@+id/line3"
+                        android:layout_width="1dp"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="#aaa"></View>
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:layout_below="@id/line3"
+                        android:id="@+id/tags_fab"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitCenter"
+                        android:layout_centerHorizontal="true"
+                        app:backgroundTint="#9C27B0"
+                        android:src="@drawable/label_white"
+                        app:elevation="4dp"
+                        app:rippleColor="#00796B"
+                        android:clickable="true"/>
+
+                    <View
+                        android:layout_below="@+id/tags_fab"
+                        android:id="@+id/line4"
+                        android:layout_width="1dp"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="#aaa"></View>
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:layout_below="@id/line4"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitCenter"
+                        android:layout_centerHorizontal="true"
+                        app:backgroundTint="#f44336"
+                        android:src="@drawable/photo_camera_white"
                         app:elevation="4dp"
                         app:rippleColor="#00796B"
                         android:clickable="true"/>
@@ -221,7 +290,51 @@
                         android:paddingTop="10dp"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="80dp">
+                        android:layout_height="110dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5"
+                            android:textSize="14dp"
+                            android:paddingBottom="4dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="32dp"
+                            android:text="Checklist"
+                            android:fontFamily="sans-serif-condensed"
+                            android:textColor="@android:color/black"
+                            android:textSize="22dp"
+                            android:paddingBottom="4dp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Get milk"
+                            android:textSize="14dp"
+                            android:paddingBottom="4dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="See more ..."
+                            android:textSize="14dp"
+                            android:paddingBottom="4dp"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@drawable/vertical_gradient"></View>
+
+                    <LinearLayout
+                        android:paddingTop="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -239,6 +352,87 @@
                             android:textSize="22dp"
                             android:paddingBottom="4dp"
                             />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wow this app is so cool... - Patrick Rowlands"
+                            android:textSize="14dp"
+                            android:paddingBottom="4dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="See more ..."
+                            android:textSize="14dp"
+                            android:paddingBottom="4dp"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@drawable/vertical_gradient"></View>
+
+                    <LinearLayout
+                        android:paddingTop="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="32dp"
+                            android:text="Tags"
+                            android:fontFamily="sans-serif-condensed"
+                            android:textColor="@android:color/black"
+                            android:textSize="22dp"
+                            android:paddingBottom="4dp"
+                            />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="#awesome"/>
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="#bacon"/>
+
+                    </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@drawable/vertical_gradient"></View>
+
+                    <LinearLayout
+                        android:paddingTop="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="32dp"
+                            android:text="Photos"
+                            android:fontFamily="sans-serif-condensed"
+                            android:textColor="@android:color/black"
+                            android:textSize="22dp"
+                            android:paddingBottom="4dp"
+                            />
+
+
                     </LinearLayout>
 
                     <View

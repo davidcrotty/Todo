@@ -21,4 +21,8 @@
 
     <!-- Add item activity -->
     <dimen name="item_main_action_list">90dp</dimen>
+
+    <!-- Interactive Card actions-->
+    <dimen name="link_line">40dp</dimen>
+    <dimen name="link_margin">10dp</dimen>
 </resources>

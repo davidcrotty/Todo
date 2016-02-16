@@ -25,7 +25,7 @@ public class AndroidApplication extends Application {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
-        
+
         initialiseRealm();
     }
 

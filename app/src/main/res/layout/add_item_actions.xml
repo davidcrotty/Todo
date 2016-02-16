@@ -9,9 +9,9 @@
     <View
         android:id="@+id/line1"
         android:layout_width="1dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_height="@dimen/link_line"
+        android:layout_marginTop="@dimen/link_margin"
+        android:layout_marginBottom="@dimen/link_margin"
         android:layout_centerHorizontal="true"
         android:background="#aaa"></View>
 
@@ -32,9 +32,9 @@
         android:layout_below="@+id/checklist_fab"
         android:id="@+id/line2"
         android:layout_width="1dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_height="@dimen/link_line"
+        android:layout_marginTop="@dimen/link_margin"
+        android:layout_marginBottom="@dimen/link_margin"
         android:layout_centerHorizontal="true"
         android:background="#aaa"></View>
 
@@ -55,9 +55,9 @@
         android:layout_below="@+id/comment_fab"
         android:id="@+id/line3"
         android:layout_width="1dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_height="@dimen/link_line"
+        android:layout_marginTop="@dimen/link_margin"
+        android:layout_marginBottom="@dimen/link_margin"
         android:layout_centerHorizontal="true"
         android:background="#aaa"></View>
 
@@ -78,9 +78,9 @@
         android:layout_below="@+id/tags_fab"
         android:id="@+id/line4"
         android:layout_width="1dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_height="@dimen/link_line"
+        android:layout_marginTop="@dimen/link_margin"
+        android:layout_marginBottom="@dimen/link_margin"
         android:layout_centerHorizontal="true"
         android:background="#aaa"></View>
 

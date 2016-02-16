@@ -8,11 +8,14 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import com.david.todo.R;
@@ -68,6 +71,9 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
 
     @Bind(R.id.expanded_description_text)
     EditText _expandedDescriptionText;
+
+    @Bind(R.id.action_content_container)
+    RelativeLayout _actionContentContainer;
     
     private SupportAnimator _circularReveal;
     private AddItemPresenter _addItemPresenter;
@@ -81,7 +87,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         _rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-//                circularRevealLayout();
+                circularRevealLayout();
             }
         });
 
@@ -104,7 +110,14 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
             }
         });
         _addItemPresenter.updateTitleWithIntent();
-        //increment fading threshold
+        addItemActions();
+    }
+
+    private void addItemActions() {
+        AddItemActionsView addItemActionsView = new AddItemActionsView(this, _addItemPresenter);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams((int) getResources().getDimension(R.dimen.item_main_action_list),
+                                                                      RelativeLayout.LayoutParams.MATCH_PARENT);
+        _actionContentContainer.addView(addItemActionsView, 0, layoutParams);
     }
 
     private void circularRevealLayout() {

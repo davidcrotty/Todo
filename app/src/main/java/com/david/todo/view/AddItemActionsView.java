@@ -32,6 +32,5 @@ public class AddItemActionsView extends RelativeLayout {
 
     private void init() {
         inflate(getContext(), R.layout.add_item_actions, this);
-        //click action.
     }
 }

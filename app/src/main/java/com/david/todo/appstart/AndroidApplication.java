@@ -13,6 +13,7 @@ import java.io.IOException;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import timber.log.Timber;
 
 /**
  * Created by David on 29/09/2015.
@@ -21,6 +22,10 @@ public class AndroidApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
+        
         initialiseRealm();
     }
 

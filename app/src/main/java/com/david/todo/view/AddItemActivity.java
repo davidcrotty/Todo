@@ -1,11 +1,15 @@
 package com.david.todo.view;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +31,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
+import timber.log.Timber;
 
-public class AddItemActivity extends BaseActivity implements View.OnClickListener {
+public class AddItemActivity extends BaseActivity implements View.OnClickListener,
+                                                              NestedScrollView.OnScrollChangeListener {
 
     public static String ANIMATE_START_INTENT_KEY = "ANIMATE_START_INTENT_KEY";
     public static String TITLE_TEXT_INTENT_KEY = "TITLE_TEXT_INTENT_KEY";
@@ -74,6 +80,12 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
 
     @Bind(R.id.action_content_container)
     RelativeLayout _actionContentContainer;
+
+    @Bind(R.id.scroll_view)
+    NestedScrollView _scrollView;
+
+    @Bind(R.id.focused_action_fab)
+    FloatingActionButton _actionFab;
     
     private SupportAnimator _circularReveal;
     private AddItemPresenter _addItemPresenter;
@@ -91,11 +103,18 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
             }
         });
 
+        addCollapsingToolbarBehaviour();
+        _addItemPresenter.updateTitleWithIntent();
+        addItemActions();
+        _scrollView.setOnScrollChangeListener(this);
+    }
+
+    private void addCollapsingToolbarBehaviour() {
         new CollapsingToolbarViewStrategy(this,
-                                          _appBarLayout,
-                                          _toolbar,
-                                          _collapsedToolbarTitleLayout,
-                                          _headerInputContainer);
+                _appBarLayout,
+                _toolbar,
+                _collapsedToolbarTitleLayout,
+                _headerInputContainer);
         _backArrowImage.setOnClickListener(this);
         _expandedTitleText.addTextChangedListener(new EditTextChangeListener() {
             @Override
@@ -109,8 +128,6 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                 _collapsedDescriptionText.setText(s.toString());
             }
         });
-        _addItemPresenter.updateTitleWithIntent();
-        addItemActions();
     }
 
     private void addItemActions() {
@@ -169,6 +186,28 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
             case R.id.back_arrow_image:
                 finish();
                 break;
+        }
+    }
+
+    @Override
+    public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        Timber.d("Scroll Y %d", scrollY);
+        Resources resources = getResources();
+        int checkListScrollThreshold = resources.getDimensionPixelSize(R.dimen.link_line)
+                                       + resources.getDimensionPixelSize(R.dimen.small_fab)
+                                       + (resources.getDimensionPixelOffset(R.dimen.link_margin) * 2);
+
+        int commentsScrollThreshold = checkListScrollThreshold * 2;
+
+        if(scrollY > checkListScrollThreshold && scrollY < commentsScrollThreshold) {
+            _actionFab.setImageDrawable(resources.getDrawable(R.drawable.check_box_white));
+            _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.green)));
+        } else if(scrollY > checkListScrollThreshold) {
+            _actionFab.setImageDrawable(resources.getDrawable(R.drawable.mode_comment));
+            _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.light_blue)));
+        } else {
+            _actionFab.setImageDrawable(resources.getDrawable(R.drawable.event_white));
+            _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.orange)));
         }
     }
 }

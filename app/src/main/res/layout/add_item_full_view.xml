@@ -128,13 +128,13 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"></View>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/focused_action_fab"
             android:layout_width="@dimen/fab_size"
             android:layout_height="@dimen/fab_size"
             android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/event_white"
             app:elevation="12dp"
-            app:backgroundTint="#f39c12"
+            app:backgroundTint="@color/orange"
             app:rippleColor="#00796B"
             android:clickable="true"
             app:layout_anchor="@id/collapsing_container"
@@ -142,6 +142,7 @@
             app:layout_anchorGravity="bottom|left|start"/>
 
         <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/Background"
@@ -153,7 +154,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <!-- So we can pass AddItemActionsView dynamically-->
+                <!-- create space for overlaying layout -->
                 <Space
                     android:id="@+id/actions_view_filler"
                     android:layout_width="90dp"

@@ -89,6 +89,8 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     
     private SupportAnimator _circularReveal;
     private AddItemPresenter _addItemPresenter;
+    private int _checkListScrollThreshold = 0;
+    private int _commentsScrollThreshold = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +108,17 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         addCollapsingToolbarBehaviour();
         _addItemPresenter.updateTitleWithIntent();
         addItemActions();
+        loadFabScrollThresholds();
         _scrollView.setOnScrollChangeListener(this);
+    }
+
+    private void loadFabScrollThresholds() {
+        Resources resources = getResources();
+        _checkListScrollThreshold = resources.getDimensionPixelSize(R.dimen.link_line)
+                + resources.getDimensionPixelSize(R.dimen.small_fab)
+                + (resources.getDimensionPixelOffset(R.dimen.link_margin) * 2);
+
+        _commentsScrollThreshold = _checkListScrollThreshold * 2;
     }
 
     private void addCollapsingToolbarBehaviour() {
@@ -191,19 +203,15 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-        Timber.d("Scroll Y %d", scrollY);
+        int commentsScrollThreshold = _checkListScrollThreshold * 2;
+        if(_checkListScrollThreshold == 0) return;
         Resources resources = getResources();
-        int checkListScrollThreshold = resources.getDimensionPixelSize(R.dimen.link_line)
-                                       + resources.getDimensionPixelSize(R.dimen.small_fab)
-                                       + (resources.getDimensionPixelOffset(R.dimen.link_margin) * 2);
 
-        int commentsScrollThreshold = checkListScrollThreshold * 2;
-
-        if(scrollY > checkListScrollThreshold && scrollY < commentsScrollThreshold) {
+        if(scrollY > _checkListScrollThreshold && scrollY < commentsScrollThreshold) {
             _actionFab.setImageDrawable(resources.getDrawable(R.drawable.check_box_white));
             _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.green)));
             _actionFab.setRippleColor(resources.getColor(R.color.green_ripple));
-        } else if(scrollY > checkListScrollThreshold) {
+        } else if(scrollY > _checkListScrollThreshold) {
             _actionFab.setImageDrawable(resources.getDrawable(R.drawable.mode_comment));
             _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.light_blue)));
             _actionFab.setRippleColor(resources.getColor(R.color.light_blue_ripple));

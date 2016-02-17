@@ -135,7 +135,7 @@
             android:src="@drawable/event_white"
             app:elevation="12dp"
             app:backgroundTint="@color/orange"
-            app:rippleColor="#00796B"
+            app:rippleColor="@color/orange_ripple"
             android:clickable="true"
             app:layout_anchor="@id/collapsing_container"
             app:layout_collapseMode="pin"

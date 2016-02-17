@@ -202,12 +202,15 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         if(scrollY > checkListScrollThreshold && scrollY < commentsScrollThreshold) {
             _actionFab.setImageDrawable(resources.getDrawable(R.drawable.check_box_white));
             _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.green)));
+            _actionFab.setRippleColor(resources.getColor(R.color.green_ripple));
         } else if(scrollY > checkListScrollThreshold) {
             _actionFab.setImageDrawable(resources.getDrawable(R.drawable.mode_comment));
             _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.light_blue)));
+            _actionFab.setRippleColor(resources.getColor(R.color.light_blue_ripple));
         } else {
             _actionFab.setImageDrawable(resources.getDrawable(R.drawable.event_white));
             _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.orange)));
+            _actionFab.setRippleColor(resources.getColor(R.color.orange_ripple));
         }
     }
 }

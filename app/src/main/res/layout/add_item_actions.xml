@@ -24,7 +24,7 @@
         app:backgroundTint="@color/green"
         android:src="@drawable/check_box_white"
         app:elevation="4dp"
-        app:rippleColor="#00796B"
+        app:rippleColor="@color/green_ripple"
         android:id="@+id/checklist_fab"
         android:clickable="true"/>
 
@@ -48,7 +48,7 @@
         app:backgroundTint="@color/light_blue"
         android:src="@drawable/mode_comment"
         app:elevation="4dp"
-        app:rippleColor="#00796B"
+        app:rippleColor="@color/light_blue_ripple"
         android:clickable="true"/>
 
     <View
@@ -71,7 +71,7 @@
         app:backgroundTint="@color/purple"
         android:src="@drawable/label_white"
         app:elevation="4dp"
-        app:rippleColor="#00796B"
+        app:rippleColor="@color/purple_ripple"
         android:clickable="true"/>
 
     <View
@@ -93,7 +93,7 @@
         app:backgroundTint="@color/red"
         android:src="@drawable/photo_camera_white"
         app:elevation="4dp"
-        app:rippleColor="#00796B"
+        app:rippleColor="@color/red_ripple"
         android:clickable="true"/>
 
 </RelativeLayout>

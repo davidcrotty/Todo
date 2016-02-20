@@ -41,49 +41,34 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
 
     @Bind(R.id.add_item_root)
     CoordinatorLayout _rootView;
-
     @Bind(R.id.app_bar_layout)
     AppBarLayout _appBarLayout;
-
     @Bind(R.id.title_input_layout)
     TextInputLayout _expandedFormLayout;
-
     @Bind(R.id.collapsing_container)
     CollapsingToolbarLayout _toolbarLayout;
-
     @Bind(R.id.description_input_layout)
     TextInputLayout _descriptionInputLayout;
-
     @Bind(R.id.back_arrow_image)
     ImageView _backArrowImage;
-
     @Bind(R.id.toolbar)
     Toolbar _toolbar;
-
     @Bind(R.id.title_short_container)
     LinearLayout _collapsedToolbarTitleLayout;
-
     @Bind(R.id.header_input_container)
     LinearLayout _headerInputContainer;
-
     @Bind(R.id.collapsed_title_text)
     TextView _collapsedTitleText;
-
     @Bind(R.id.collapsed_description_text)
     TextView _collapsedDescriptionText;
-
     @Bind(R.id.expanded_title_text)
     EditText _expandedTitleText;
-
     @Bind(R.id.expanded_description_text)
     EditText _expandedDescriptionText;
-
     @Bind(R.id.action_content_container)
     RelativeLayout _actionContentContainer;
-
     @Bind(R.id.scroll_view)
     NestedScrollView _scrollView;
-
     @Bind(R.id.focused_action_fab)
     FloatingActionButton _actionFab;
     

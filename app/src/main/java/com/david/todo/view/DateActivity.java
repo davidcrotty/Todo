@@ -3,6 +3,7 @@ package com.david.todo.view;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -32,9 +33,10 @@ public class DateActivity extends BaseActivity {
         ButterKnife.bind(this);
         Resources resources = getResources();
         getWindow().setStatusBarColor(resources.getColor(R.color.orange_ripple));
-
-        //if > KITKAT
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
 
         Drawable drawable = resources.getDrawable(R.drawable.event_white);
         drawable.setColorFilter(resources.getColor(R.color.orange), PorterDuff.Mode.SRC_ATOP);

@@ -71,7 +71,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     NestedScrollView _scrollView;
     @Bind(R.id.focused_action_fab)
     FloatingActionButton _actionFab;
-    
+
     private SupportAnimator _circularReveal;
     private AddItemPresenter _addItemPresenter;
     private int _checkListScrollThreshold = 0;

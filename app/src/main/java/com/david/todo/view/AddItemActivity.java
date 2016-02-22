@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -103,19 +104,27 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                 float finalRadius = Math.max(_rootView.getWidth(), _rootView.getHeight());
                 int[] fabLocation = new int[2];
                 _actionFab.getLocationOnScreen(fabLocation);
-
-                EventView eventView = new EventView(AddItemActivity.this,
-                                                    new AnimateLocationCoordinatesModel(fabLocation[0],
-                                                                                        fabLocation[1],
-                                                                                        _actionFab.getWidth(),
-                                                                                        _actionFab.getHeight()),
-                                                    finalRadius);
-                _actionContainer.bringToFront();
-                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                                                                               FrameLayout.LayoutParams.MATCH_PARENT);
-                _actionContainer.addView(eventView, params);
+                addEventView(new AnimateLocationCoordinatesModel(fabLocation[0],
+                                fabLocation[1],
+                                _actionFab.getWidth(),
+                                _actionFab.getHeight(), finalRadius));
             }
         });
+    }
+
+    private void addEventView(@Nullable AnimateLocationCoordinatesModel coordinatesModel) {
+        EventView eventView = null;
+        if(coordinatesModel == null) {
+            eventView = new EventView(this);
+        } else {
+            eventView = new EventView(AddItemActivity.this, coordinatesModel);
+        }
+
+        _actionContainer.bringToFront();
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT);
+        _actionContainer.addView(eventView, params);
+        getIntent().putExtra(EventView.PRESERVE_VIEW, true);
     }
 
     private void loadFabScrollThresholds() {

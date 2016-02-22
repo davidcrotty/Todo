@@ -20,6 +20,8 @@ import io.codetail.animation.ViewAnimationUtils;
 
 public class EventView extends RelativeLayout {
 
+    public static final String PRESERVE_VIEW = "PRESERVE_VIEW";
+
     @Bind(R.id.root_view)
     LinearLayout _rootView;
     @Bind(R.id.today_image)
@@ -35,24 +37,28 @@ public class EventView extends RelativeLayout {
 
     private SupportAnimator _circularReveal;
     private AnimateLocationCoordinatesModel _animateModel;
-    float _finalRadius;
 
     private boolean _firedAnimation = false;
 
-    public EventView(Context context,
-                     AnimateLocationCoordinatesModel animateModel,
-                     float finalRadius) {
+    public EventView(Context context) {
         super(context);
         inflate(context, R.layout.event_view, this);
         ButterKnife.bind(this);
         init();
-        _finalRadius = finalRadius;
+    }
+
+    public EventView(Context context,
+                     AnimateLocationCoordinatesModel animateModel) {
+        super(context);
+        inflate(context, R.layout.event_view, this);
+        ButterKnife.bind(this);
+        init();
         _animateModel = animateModel;
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 if(_firedAnimation == false) {
-                    circularRevealLayout(_animateModel, _finalRadius);
+                    circularRevealLayout(_animateModel);
                     _firedAnimation = true;
                 }
             }
@@ -83,12 +89,11 @@ public class EventView extends RelativeLayout {
         _customTimeImage.setImageDrawable(drawable5);
     }
 
-    private void circularRevealLayout(AnimateLocationCoordinatesModel animateModel,
-                                      float finalRadius) {
+    private void circularRevealLayout(AnimateLocationCoordinatesModel animateModel) {
         int cx = animateModel.getX() + animateModel.getWidth()  / 2;
         int cy = animateModel.getY() + animateModel.getHeight() / 2;
 
-        _circularReveal = ViewAnimationUtils.createCircularReveal(_rootView, cx, cy, 0, finalRadius);
+        _circularReveal = ViewAnimationUtils.createCircularReveal(_rootView, cx, cy, 0, animateModel._finalRadius);
         _circularReveal.setDuration(500);
 
         _rootView.setVisibility(View.VISIBLE);

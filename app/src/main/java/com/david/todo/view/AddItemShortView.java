@@ -126,7 +126,8 @@ public class AddItemShortView extends LinearLayout implements Animation.Animatio
                 _presenter.startAddItemActivity(new AnimateLocationCoordinatesModel(viewLocation[0],
                         viewLocation[1],
                         _expandEditButton.getWidth(),
-                        _expandEditButton.getHeight()),
+                        _expandEditButton.getHeight(),
+                        ((Activity)getContext()).getWindow().getDecorView().getHeight()),
                         getContext(),
                         _shortNoteText.getText().toString());
                 break;

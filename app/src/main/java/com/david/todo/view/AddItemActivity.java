@@ -75,6 +75,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     @Bind(R.id.action_container)
     FrameLayout _actionContainer;
 
+    private EventView _eventView;
     private SupportAnimator _circularReveal;
     private AddItemPresenter _addItemPresenter;
     private int _checkListScrollThreshold = 0;
@@ -113,17 +114,17 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void addEventView(@Nullable AnimateLocationCoordinatesModel coordinatesModel) {
-        EventView eventView = null;
+        _eventView = null;
         if(coordinatesModel == null) {
-            eventView = new EventView(this);
+            _eventView = new EventView(this);
         } else {
-            eventView = new EventView(AddItemActivity.this, coordinatesModel);
+            _eventView = new EventView(AddItemActivity.this, coordinatesModel);
         }
 
         _actionContainer.bringToFront();
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT);
-        _actionContainer.addView(eventView, params);
+        _actionContainer.addView(_eventView, params);
         getIntent().putExtra(EventView.PRESERVE_VIEW, true);
     }
 
@@ -199,11 +200,25 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         _expandedTitleText.setText(text);
     }
 
-        @Override
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(getIntent().hasExtra(EventView.PRESERVE_VIEW)) {
+            addEventView(null);
+        }
+    }
+
+    @Override
     public void onBackPressed() {
-        super.onBackPressed();
         if(_circularReveal != null) {
             _circularReveal.reverse();
+        }
+        if(_eventView != null) {
+            _actionContainer.removeView(_eventView);
+            _eventView = null;
+            getIntent().removeExtra(EventView.PRESERVE_VIEW);
+        } else {
+            super.onBackPressed();
         }
     }
 

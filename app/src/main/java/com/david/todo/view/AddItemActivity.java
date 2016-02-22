@@ -14,12 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Space;
 import android.widget.TextView;
 
 import com.david.todo.R;
@@ -31,7 +31,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
-import timber.log.Timber;
 
 public class AddItemActivity extends BaseActivity implements View.OnClickListener,
                                                               NestedScrollView.OnScrollChangeListener {
@@ -95,6 +94,24 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         addItemActions();
         loadFabScrollThresholds();
         _scrollView.setOnScrollChangeListener(this);
+        _actionFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float finalRadius = Math.max(_rootView.getWidth(), _rootView.getHeight());
+                int[] fabLocation = new int[2];
+                _actionFab.getLocationOnScreen(fabLocation);
+
+                EventView eventView = new EventView(AddItemActivity.this,
+                                                    new AnimateLocationCoordinatesModel(fabLocation[0],
+                                                                                        fabLocation[1],
+                                                                                        _actionFab.getWidth(),
+                                                                                        _actionFab.getHeight()),
+                                                    finalRadius);
+                Window window = getWindow();
+                ViewGroup decorView = (ViewGroup) window.getDecorView();
+                decorView.addView(eventView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            }
+        });
     }
 
     private void loadFabScrollThresholds() {

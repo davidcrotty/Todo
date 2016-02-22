@@ -90,8 +90,8 @@ public class EventView extends RelativeLayout {
     }
 
     private void circularRevealLayout(AnimateLocationCoordinatesModel animateModel) {
-        int cx = animateModel.getX() + animateModel.getWidth()  / 2;
-        int cy = animateModel.getY() + animateModel.getHeight() / 2;
+        int cx = animateModel._x + animateModel._width  / 2;
+        int cy = animateModel._y + animateModel._height / 2;
 
         _circularReveal = ViewAnimationUtils.createCircularReveal(_rootView, cx, cy, 0, animateModel._finalRadius);
         _circularReveal.setDuration(500);

@@ -175,8 +175,8 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                                                                                          .getExtras()
                                                                                          .getSerializable(ANIMATE_START_INTENT_KEY);
 
-        int cx = animateModel.getX() + animateModel.getWidth()  / 2;
-        int cy = animateModel.getY() + animateModel.getHeight() / 2;
+        int cx = animateModel._x + animateModel._width  / 2;
+        int cy = animateModel._y + animateModel._height / 2;
 
         float finalRadius = Math.max(_rootView.getWidth(), _rootView.getHeight());
 

@@ -5,6 +5,11 @@
     android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <FrameLayout
+        android:id="@+id/action_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
     <android.support.design.widget.CoordinatorLayout
         android:background="@color/Background"
         android:layout_width="match_parent"

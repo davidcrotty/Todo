@@ -17,6 +17,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -70,6 +71,8 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     NestedScrollView _scrollView;
     @Bind(R.id.focused_action_fab)
     FloatingActionButton _actionFab;
+    @Bind(R.id.action_container)
+    FrameLayout _actionContainer;
 
     private SupportAnimator _circularReveal;
     private AddItemPresenter _addItemPresenter;
@@ -107,9 +110,10 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                                                                                         _actionFab.getWidth(),
                                                                                         _actionFab.getHeight()),
                                                     finalRadius);
-                Window window = getWindow();
-                ViewGroup decorView = (ViewGroup) window.getDecorView();
-                decorView.addView(eventView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                _actionContainer.bringToFront();
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                                                                               FrameLayout.LayoutParams.MATCH_PARENT);
+                _actionContainer.addView(eventView, params);
             }
         });
     }

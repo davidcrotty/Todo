@@ -9,6 +9,8 @@
     <color name="Background">#fafafa</color>
     <color name="AddItemStatusBar">#BDBDBD</color>
 
+    <color name="add_activity_status_bar">#2c3e50</color>
+
     <!-- Color action items -->
     <color name="orange">#f39c12</color>
     <color name="orange_ripple">#EF6C00</color>

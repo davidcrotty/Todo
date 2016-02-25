@@ -129,6 +129,13 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         getWindow().setStatusBarColor(getResources().getColor(R.color.orange_ripple));
     }
 
+    private void removeEventView() {
+        _actionContainer.removeView(_eventView);
+        getIntent().removeExtra(EventView.PRESERVE_VIEW);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.add_activity_status_bar));
+        _eventView = null;
+    }
+
     private void loadFabScrollThresholds() {
         Resources resources = getResources();
         _checkListScrollThreshold = resources.getDimensionPixelSize(R.dimen.link_line)
@@ -215,9 +222,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
             _circularReveal.reverse();
         }
         if(_eventView != null) {
-            _actionContainer.removeView(_eventView);
-            _eventView = null;
-            getIntent().removeExtra(EventView.PRESERVE_VIEW);
+            removeEventView();
         } else {
             super.onBackPressed();
         }

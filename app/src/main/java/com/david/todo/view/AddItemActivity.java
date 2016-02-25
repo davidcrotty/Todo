@@ -126,6 +126,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                 FrameLayout.LayoutParams.MATCH_PARENT);
         _actionContainer.addView(_eventView, params);
         getIntent().putExtra(EventView.PRESERVE_VIEW, true);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.orange_ripple));
     }
 
     private void loadFabScrollThresholds() {

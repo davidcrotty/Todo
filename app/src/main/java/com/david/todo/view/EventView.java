@@ -4,15 +4,20 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.david.todo.R;
 import com.david.todo.model.AnimateLocationCoordinatesModel;
+import com.david.todo.model.EventModel;
 import com.david.todo.presenter.AddItemPresenter;
+
+import org.joda.time.DateTime;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,9 +41,18 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
     @Bind(R.id.custom_time_image)
     ImageView _customTimeImage;
 
+    @Bind(R.id.today_card)
+    CardView _todayCard;
+
+    @Bind(R.id.date_text)
+    TextView _dateText;
+    @Bind(R.id.time_text)
+    TextView _timeText;
+
     private final AddItemPresenter _presenter;
     private SupportAnimator _circularReveal;
     private AnimateLocationCoordinatesModel _animateModel;
+    private EventModel _eventModel;
 
     private boolean _firedAnimation = false;
 
@@ -96,6 +110,12 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
         _customTimeImage.setImageDrawable(drawable5);
 
         _rootView.setOnClickListener(this);
+        _todayCard.setOnClickListener(this);
+
+        _eventModel = _presenter.getDateModelIntent();
+        if(_eventModel != null) {
+            _dateText.setText(_eventModel._dateText);
+        }
     }
 
     private void circularRevealLayout(AnimateLocationCoordinatesModel animateModel) {
@@ -115,6 +135,11 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.root_view:
                 _presenter.removeEventView();
+                break;
+            case R.id.today_card:
+                String todayText = getResources().getString(R.string.today_text);
+                _dateText.setText(todayText);
+                _presenter.updateEvent(new DateTime().toDate(), todayText);
                 break;
         }
     }

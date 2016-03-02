@@ -12,4 +12,5 @@
     <string name="icon_list">List</string>
     <string name="icon_photo">Photo</string>
 
+    <string name="today_text">Today</string>
 </resources>

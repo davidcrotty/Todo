@@ -111,6 +111,7 @@
     <orderEntry type="library" exported="" scope="TEST" name="rules-0.4.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="exposed-instrumentation-api-publish-0.4.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="jsr305-2.0.1" level="project" />
+    <orderEntry type="library" exported="" name="joda-time-2.9.2" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="timber-4.1.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="runner-0.4.1" level="project" />

@@ -2,7 +2,10 @@ package com.david.todo.presenter;
 
 import android.content.Intent;
 
+import com.david.todo.model.EventModel;
 import com.david.todo.view.AddItemActivity;
+
+import java.util.Date;
 
 public class AddItemPresenter {
 
@@ -24,5 +27,13 @@ public class AddItemPresenter {
 
     public void removeEventView() {
         _addItemActivity.removeEventView();
+    }
+
+    public void updateEvent(Date date, String displayText) {
+        _addItemActivity.setEventIntentKey(new EventModel(date, displayText));
+    }
+
+    public EventModel getDateModelIntent() {
+        return _addItemActivity.getDateModelIntent();
     }
 }

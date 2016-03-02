@@ -13,9 +13,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -26,6 +24,7 @@ import android.widget.TextView;
 
 import com.david.todo.R;
 import com.david.todo.model.AnimateLocationCoordinatesModel;
+import com.david.todo.model.EventModel;
 import com.david.todo.presenter.AddItemPresenter;
 import com.david.todo.view.eventlisteners.EditTextChangeListener;
 
@@ -39,6 +38,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
 
     public static String ANIMATE_START_INTENT_KEY = "ANIMATE_START_INTENT_KEY";
     public static String TITLE_TEXT_INTENT_KEY = "TITLE_TEXT_INTENT_KEY";
+    public static String EVENT_INTENT_KEY = "EVENT_INTENT_KEY";
 
     @Bind(R.id.add_item_root)
     CoordinatorLayout _rootView;
@@ -139,6 +139,14 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         _eventView = null;
     }
 
+    public void setEventIntentKey(EventModel dateTimeModel) {
+        getIntent().putExtra(EVENT_INTENT_KEY, dateTimeModel);
+    }
+
+    public EventModel getDateModelIntent() {
+        return (EventModel) getIntent().getSerializableExtra(EVENT_INTENT_KEY);
+    }
+
     private void loadFabScrollThresholds() {
         Resources resources = getResources();
         _checkListScrollThreshold = resources.getDimensionPixelSize(R.dimen.link_line)
@@ -227,6 +235,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         if(_eventView != null) {
             removeEventView();
         } else {
+            getIntent().removeExtra(EVENT_INTENT_KEY);
             super.onBackPressed();
         }
     }

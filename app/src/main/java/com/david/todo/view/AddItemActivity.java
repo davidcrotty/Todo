@@ -106,9 +106,9 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                 int[] fabLocation = new int[2];
                 _actionFab.getLocationOnScreen(fabLocation);
                 addEventView(new AnimateLocationCoordinatesModel(fabLocation[0],
-                                fabLocation[1],
-                                _actionFab.getWidth(),
-                                _actionFab.getHeight(), finalRadius));
+                        fabLocation[1],
+                        _actionFab.getWidth(),
+                        _actionFab.getHeight(), finalRadius));
             }
         });
     }

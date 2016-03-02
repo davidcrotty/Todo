@@ -74,7 +74,8 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
     private void init() {
         Resources resources = getResources();
 
-        Drawable drawable = resources.getDrawable(R.drawable.event_white);
+        //directly grabbing resource will affect ALL usages of this drawable
+        Drawable drawable = resources.getDrawable(R.drawable.event_white).getConstantState().newDrawable().mutate();
         drawable.setColorFilter(resources.getColor(R.color.orange), PorterDuff.Mode.SRC_ATOP);
         _todayImage.setImageDrawable(drawable);
 

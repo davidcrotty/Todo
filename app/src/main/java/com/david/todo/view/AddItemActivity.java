@@ -132,8 +132,8 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         getWindow().setStatusBarColor(getResources().getColor(R.color.orange_ripple));
     }
 
-    public void removeEventView() {
-        _actionContainer.removeView(_eventView);
+    public void removeAllActionViews() {
+        _actionContainer.removeAllViews();
         getIntent().removeExtra(EventView.PRESERVE_VIEW);
         getWindow().setStatusBarColor(getResources().getColor(R.color.add_activity_status_bar));
         _eventView = null;
@@ -233,7 +233,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
             _circularReveal.reverse();
         }
         if(_eventView != null) {
-            removeEventView();
+            removeAllActionViews();
         } else {
             getIntent().removeExtra(EVENT_INTENT_KEY);
             super.onBackPressed();

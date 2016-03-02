@@ -26,7 +26,7 @@ public class AddItemPresenter {
     }
 
     public void removeEventView() {
-        _addItemActivity.removeEventView();
+        _addItemActivity.removeAllActionViews();
     }
 
     public void updateEvent(Date date, String displayText) {

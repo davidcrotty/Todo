@@ -21,4 +21,8 @@ public class AddItemPresenter {
             }
         }
     }
+
+    public void removeEventView() {
+        _addItemActivity.removeEventView();
+    }
 }

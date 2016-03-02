@@ -113,12 +113,15 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         });
     }
 
+    /**
+     * @param coordinatesModel - nullable as this can be called on resume, animation would be unnecessary
+     */
     private void addEventView(@Nullable AnimateLocationCoordinatesModel coordinatesModel) {
         _eventView = null;
         if(coordinatesModel == null) {
-            _eventView = new EventView(this);
+            _eventView = new EventView(this, _addItemPresenter);
         } else {
-            _eventView = new EventView(AddItemActivity.this, coordinatesModel);
+            _eventView = new EventView(AddItemActivity.this, coordinatesModel, _addItemPresenter);
         }
 
         _actionContainer.bringToFront();
@@ -129,7 +132,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         getWindow().setStatusBarColor(getResources().getColor(R.color.orange_ripple));
     }
 
-    private void removeEventView() {
+    public void removeEventView() {
         _actionContainer.removeView(_eventView);
         getIntent().removeExtra(EventView.PRESERVE_VIEW);
         getWindow().setStatusBarColor(getResources().getColor(R.color.add_activity_status_bar));

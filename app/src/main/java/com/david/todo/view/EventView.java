@@ -12,13 +12,14 @@ import android.widget.RelativeLayout;
 
 import com.david.todo.R;
 import com.david.todo.model.AnimateLocationCoordinatesModel;
+import com.david.todo.presenter.AddItemPresenter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 
-public class EventView extends RelativeLayout {
+public class EventView extends RelativeLayout implements View.OnClickListener {
 
     public static final String PRESERVE_VIEW = "PRESERVE_VIEW";
 
@@ -35,21 +36,26 @@ public class EventView extends RelativeLayout {
     @Bind(R.id.custom_time_image)
     ImageView _customTimeImage;
 
+    private final AddItemPresenter _presenter;
     private SupportAnimator _circularReveal;
     private AnimateLocationCoordinatesModel _animateModel;
 
     private boolean _firedAnimation = false;
 
-    public EventView(Context context) {
+    public EventView(Context context,
+                     AddItemPresenter presenter) {
         super(context);
+        _presenter = presenter;
         inflate(context, R.layout.event_view, this);
         ButterKnife.bind(this);
         init();
     }
 
     public EventView(Context context,
-                     AnimateLocationCoordinatesModel animateModel) {
+                     AnimateLocationCoordinatesModel animateModel,
+                     AddItemPresenter presenter) {
         super(context);
+        _presenter = presenter;
         inflate(context, R.layout.event_view, this);
         ButterKnife.bind(this);
         init();
@@ -87,6 +93,8 @@ public class EventView extends RelativeLayout {
         Drawable drawable5 = resources.getDrawable(R.drawable.custom_time);
         drawable5.setColorFilter(resources.getColor(R.color.orange), PorterDuff.Mode.SRC_ATOP);
         _customTimeImage.setImageDrawable(drawable5);
+
+        _rootView.setOnClickListener(this);
     }
 
     private void circularRevealLayout(AnimateLocationCoordinatesModel animateModel) {
@@ -99,5 +107,14 @@ public class EventView extends RelativeLayout {
         _rootView.setVisibility(View.VISIBLE);
         _circularReveal.start();
         _circularReveal.reverse();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.root_view:
+                _presenter.removeEventView();
+                break;
+        }
     }
 }

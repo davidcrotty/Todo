@@ -43,6 +43,8 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
 
     @Bind(R.id.today_card)
     CardView _todayCard;
+    @Bind(R.id.tomorrow_card)
+    CardView _tomorrowCard;
 
     @Bind(R.id.date_text)
     TextView _dateText;
@@ -111,7 +113,9 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
 
         _rootView.setOnClickListener(this);
         _todayCard.setOnClickListener(this);
+        _tomorrowCard.setOnClickListener(this);
 
+        //This is logic and should be set by the presenter.
         _eventModel = _presenter.getDateModelIntent();
         if(_eventModel != null) {
             _dateText.setText(_eventModel._dateText);
@@ -140,6 +144,12 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
                 String todayText = getResources().getString(R.string.today_text);
                 _dateText.setText(todayText);
                 _presenter.updateEvent(new DateTime().toDate(), todayText);
+                break;
+            case R.id.tomorrow_card:
+                DateTime dateTime = new DateTime().plusDays(1);
+                String dayOfWeekText = dateTime.dayOfWeek().getAsText();
+                _dateText.setText(dayOfWeekText);
+                _presenter.updateEvent(dateTime.toDate(), dayOfWeekText);
                 break;
         }
     }

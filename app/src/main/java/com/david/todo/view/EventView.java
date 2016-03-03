@@ -18,6 +18,8 @@ import com.david.todo.model.EventModel;
 import com.david.todo.presenter.AddItemPresenter;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,6 +47,8 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
     CardView _todayCard;
     @Bind(R.id.tomorrow_card)
     CardView _tomorrowCard;
+    @Bind(R.id.next_week_card)
+    CardView _nextWeekCard;
 
     @Bind(R.id.date_text)
     TextView _dateText;
@@ -52,6 +56,9 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
     TextView _timeText;
 
     private final AddItemPresenter _presenter;
+    private final int _today = 1;
+    private final int _nextWeek = 7;
+    private final String _dateFormat = "MMM - dd";
     private SupportAnimator _circularReveal;
     private AnimateLocationCoordinatesModel _animateModel;
     private EventModel _eventModel;
@@ -79,7 +86,7 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                if(_firedAnimation == false) {
+                if (_firedAnimation == false) {
                     circularRevealLayout(_animateModel);
                     _firedAnimation = true;
                 }
@@ -114,6 +121,7 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
         _rootView.setOnClickListener(this);
         _todayCard.setOnClickListener(this);
         _tomorrowCard.setOnClickListener(this);
+        _nextWeekCard.setOnClickListener(this);
 
         //This is logic and should be set by the presenter.
         _eventModel = _presenter.getDateModelIntent();
@@ -146,10 +154,16 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
                 _presenter.updateEvent(new DateTime().toDate(), todayText);
                 break;
             case R.id.tomorrow_card:
-                DateTime dateTime = new DateTime().plusDays(1);
-                String dayOfWeekText = dateTime.dayOfWeek().getAsText();
+                DateTime tomorrowsDateTime = new DateTime().plusDays(_today);
+                String dayOfWeekText = tomorrowsDateTime.dayOfWeek().getAsText();
                 _dateText.setText(dayOfWeekText);
-                _presenter.updateEvent(dateTime.toDate(), dayOfWeekText);
+                _presenter.updateEvent(tomorrowsDateTime.toDate(), dayOfWeekText);
+                break;
+            case R.id.next_week_card:
+                DateTime dateTime = new DateTime().plusDays(_nextWeek);
+                String dateFormatText = dateTime.toString(DateTimeFormat.forPattern(_dateFormat));
+                _dateText.setText(dateFormatText);
+                _presenter.updateEvent(dateTime.toDate(), dateFormatText);
                 break;
         }
     }

@@ -25,6 +25,19 @@ public class AddItemPresenter {
         }
     }
 
+    /**
+     * Checks data store or if there is an event intent to be used to fill out some/all of
+     * the forms contents
+     */
+    public void updateListText() {
+        EventModel eventModel = getDateModelIntent();
+        if(eventModel == null) return;
+        //if is today or tomorrow display
+        //if > tomorrow && <= a week display weekday
+        //else MMM - dd format
+
+    }
+
     public void removeEventView() {
         _addItemActivity.removeAllActionViews();
     }

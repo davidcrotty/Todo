@@ -225,6 +225,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         if(getIntent().hasExtra(EventView.PRESERVE_VIEW)) {
             addEventView(null);
         }
+        _addItemPresenter.updateListText();
     }
 
     @Override

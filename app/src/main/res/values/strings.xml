@@ -13,4 +13,5 @@
     <string name="icon_photo">Photo</string>
 
     <string name="today_text">Today</string>
+    <string name="tomorrow_text">Tomorrow></string>
 </resources>

@@ -1,7 +1,11 @@
 package service;
 
 
+import android.app.Application;
+import android.content.res.Resources;
+
 import com.david.todo.BuildConfig;
+import com.david.todo.R;
 import com.david.todo.service.EventService;
 import com.david.todo.service.TextEntryService;
 
@@ -14,31 +18,47 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLog;
 
 import java.util.Date;
+
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 18)
 public class EventServiceTest {
 
     private EventService _eventService;
+    private Resources _resourceMock;
 
     @Before
     public void setup_fixture() {
         ShadowLog.stream = System.out;
         _eventService = new EventService();
+
+        Application app = spy(RuntimeEnvironment.application);
+
+        _resourceMock = spy(app.getResources());
+        when(app.getResources())
+                .thenReturn(_resourceMock);
+
+        when(_resourceMock.getString(R.string.today_text))
+                .thenReturn("Today");
+
+        when(_resourceMock.getString(R.string.tomorrow_text))
+                .thenReturn("Tomorrow");
     }
 
     @Test
     public void when_getting_date_to_display() {
-        //TODO mock resources
         System.out.println("Given a valid date of today");
         Date date = new DateTime().toDate();
 
         System.out.println("When getting text to display");
-        String dateText = _eventService.retreiveDateDisplayText(date);
+        String dateText = _eventService.retreiveDateDisplayText(date, _resourceMock);
 
         System.out.println("Should display Today");
         Assert.assertEquals("Today", dateText);
@@ -47,20 +67,24 @@ public class EventServiceTest {
         date = new DateTime().plusDays(1).toDate();
 
         System.out.println("When getting text to display");
-        dateText = _eventService.retreiveDateDisplayText(date);
+        dateText = _eventService.retreiveDateDisplayText(date, _resourceMock);
 
         System.out.println("Should display Tomorrow");
         Assert.assertEquals("Tomorrow", dateText);
 
         System.out.println("Given a valid date of 4 days after 6/03/2016");
-        DateTimeUtils.setCurrentMillisFixed(1457306452755L);
+        long feb_10_2016 = 1455141162000L;
+        DateTimeUtils.setCurrentMillisFixed(feb_10_2016);
         DateTime dateTimeWeekday = new DateTime();
         date = dateTimeWeekday.toDate();
 
-        System.out.println("When getting text to display");
-        dateText = _eventService.retreiveDateDisplayText(date);
+        //reset date so all dates from here on are read normally
+        DateTimeUtils.setCurrentMillisFixed(System.currentTimeMillis());
 
-        System.out.println("Should display Mar - 10");
+        System.out.println("When getting text to display");
+        dateText = _eventService.retreiveDateDisplayText(date, _resourceMock);
+
+        System.out.println("Should display Feb - 10");
         Assert.assertEquals(dateTimeWeekday.toString(DateTimeFormat.forPattern(BuildConfig.DATE_FORMAT)), dateText);
     }
 
@@ -70,7 +94,7 @@ public class EventServiceTest {
         Date date = null;
 
         System.out.println("When getting text to display");
-        String dateText = _eventService.retreiveDateDisplayText(date);
+        String dateText = _eventService.retreiveDateDisplayText(date, _resourceMock);
 
         System.out.println("Should display null");
         Assert.assertNull(dateText);

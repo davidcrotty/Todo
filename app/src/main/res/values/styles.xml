@@ -20,6 +20,25 @@
         <item name="colorControlActivated">#fff</item>
     </style>
 
+    <style name="PickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/orange_ripple</item>
+
+        <item name="android:datePickerStyle">@style/PickerStyle</item>
+        <item name="android:colorAccent">@color/orange_ripple</item>
+    </style>
+
+    <style name="PickerStyle" parent="@android:style/Widget.Material.Light.DatePicker">
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryDark">@color/orange_ripple</item>
+
+        <item name="android:headerBackground">@color/orange</item>
+        <item name="android:calendarTextColor">@color/orange_ripple</item>
+        <item name="android:dayOfWeekBackground">@android:color/white</item>
+        <item name="android:yearListSelectorColor">@color/orange_ripple</item>
+        <item name="android:datePickerMode">calendar</item>
+        <item name="android:minDate">01/01/2000</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="Base.Theme.AppCompat.Light.DarkActionBar"/>
 
     <style name="TextLabel" parent="TextAppearance.AppCompat">

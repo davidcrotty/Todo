@@ -178,6 +178,7 @@ public class EventView extends RelativeLayout implements View.OnClickListener,
                 //stop dismissal on rotate
                 //disable invalid times < today (what does todoist do?)
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                                                                        R.style.PickerTheme,
                                                                         this,
                                                                         datePickerTime.getYear(),
                                                                         datePickerTime.getMonthOfYear(),

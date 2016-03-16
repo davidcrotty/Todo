@@ -228,9 +228,10 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         DatePickerDialog datePickerDialog =
                 DatePickerDialog.newInstance(this,
                         datePickerTime.getYear(),
-                        datePickerTime.getMonthOfYear(),
+                        datePickerTime.getMonthOfYear() - 1, //bug in library where dates do not start from 0
                         datePickerTime.getDayOfMonth());
         datePickerDialog.setAccentColor(getResources().getColor(R.color.orange_ripple));
+        datePickerDialog.setMinDate(datePickerTime.toCalendar(null));
         datePickerDialog.show(getFragmentManager(), DatePickerDialog.class.getName());
     }
 

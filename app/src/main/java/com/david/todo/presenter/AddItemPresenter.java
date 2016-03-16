@@ -25,6 +25,10 @@ public class AddItemPresenter {
         }
     }
 
+    public void delegateDatePickerCreation() {
+        _addItemActivity.createDatePicker();
+    }
+
     /**
      * Checks data store or if there is an event intent to be used to fill out some/all of
      * the forms contents

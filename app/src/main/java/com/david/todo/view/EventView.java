@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -28,8 +27,7 @@ import butterknife.ButterKnife;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 
-public class EventView extends RelativeLayout implements View.OnClickListener,
-                                                         DatePickerDialog.OnDateSetListener {
+public class EventView extends RelativeLayout implements View.OnClickListener {
 
     public static final String PRESERVE_VIEW = "PRESERVE_VIEW";
 
@@ -173,23 +171,9 @@ public class EventView extends RelativeLayout implements View.OnClickListener,
                 _presenter.updateEvent(dateTime.toDate(), dateFormatText);
                 break;
             case R.id.date_pick_card:
-                DateTime datePickerTime = new DateTime();
-                //set up custom theme
-                //stop dismissal on rotate
                 //disable invalid times < today (what does todoist do?)
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
-                                                                        R.style.PickerTheme,
-                                                                        this,
-                                                                        datePickerTime.getYear(),
-                                                                        datePickerTime.getMonthOfYear(),
-                                                                        datePickerTime.getDayOfMonth());
-                datePickerDialog.show();
+                _presenter.delegateDatePickerCreation();
                 break;
         }
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
     }
 }

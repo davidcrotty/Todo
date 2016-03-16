@@ -27,6 +27,9 @@ import com.david.todo.model.AnimateLocationCoordinatesModel;
 import com.david.todo.model.EventModel;
 import com.david.todo.presenter.AddItemPresenter;
 import com.david.todo.view.eventlisteners.EditTextChangeListener;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+
+import org.joda.time.DateTime;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,7 +37,8 @@ import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 
 public class AddItemActivity extends BaseActivity implements View.OnClickListener,
-                                                              NestedScrollView.OnScrollChangeListener {
+                                                             NestedScrollView.OnScrollChangeListener,
+                                                             DatePickerDialog.OnDateSetListener{
 
     public static String ANIMATE_START_INTENT_KEY = "ANIMATE_START_INTENT_KEY";
     public static String TITLE_TEXT_INTENT_KEY = "TITLE_TEXT_INTENT_KEY";
@@ -217,6 +221,22 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
 
     public void setExpandedTitleText(String text) {
         _expandedTitleText.setText(text);
+    }
+
+    public void createDatePicker() {
+        DateTime datePickerTime = new DateTime();
+        DatePickerDialog datePickerDialog =
+                DatePickerDialog.newInstance(this,
+                        datePickerTime.getYear(),
+                        datePickerTime.getMonthOfYear(),
+                        datePickerTime.getDayOfMonth());
+        datePickerDialog.setAccentColor(getResources().getColor(R.color.orange_ripple));
+        datePickerDialog.show(getFragmentManager(), DatePickerDialog.class.getName());
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+
     }
 
     @Override

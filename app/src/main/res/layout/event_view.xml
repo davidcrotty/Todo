@@ -187,6 +187,7 @@
                 android:layout_marginLeft="8dp" />
 
             <android.support.v7.widget.CardView
+                android:id="@+id/date_pick_card"
                 android:layout_weight="0.1"
                 android:layout_gravity="top"
                 android:layout_width="110dp"

@@ -1,5 +1,6 @@
 package com.david.todo.view;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
@@ -7,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -26,7 +28,8 @@ import butterknife.ButterKnife;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 
-public class EventView extends RelativeLayout implements View.OnClickListener {
+public class EventView extends RelativeLayout implements View.OnClickListener,
+                                                         DatePickerDialog.OnDateSetListener {
 
     public static final String PRESERVE_VIEW = "PRESERVE_VIEW";
 
@@ -49,6 +52,8 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
     CardView _tomorrowCard;
     @Bind(R.id.next_week_card)
     CardView _nextWeekCard;
+    @Bind(R.id.date_pick_card)
+    CardView _datePickCard;
 
     @Bind(R.id.date_text)
     TextView _dateText;
@@ -59,6 +64,7 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
     private final int _today = 1;
     private final int _nextWeek = 7;
     private final String _dateFormat = "MMM - dd";
+    private final int _circularRevealDurationMs = 500;
     private SupportAnimator _circularReveal;
     private AnimateLocationCoordinatesModel _animateModel;
     private EventModel _eventModel;
@@ -122,6 +128,7 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
         _todayCard.setOnClickListener(this);
         _tomorrowCard.setOnClickListener(this);
         _nextWeekCard.setOnClickListener(this);
+        _datePickCard.setOnClickListener(this);
 
         //This is logic and should be set by the presenter.
         _eventModel = _presenter.getDateModelIntent();
@@ -135,7 +142,7 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
         int cy = animateModel._y + animateModel._height / 2;
 
         _circularReveal = ViewAnimationUtils.createCircularReveal(_rootView, cx, cy, 0, animateModel._finalRadius);
-        _circularReveal.setDuration(500);
+        _circularReveal.setDuration(_circularRevealDurationMs);
 
         _rootView.setVisibility(View.VISIBLE);
         _circularReveal.start();
@@ -165,6 +172,23 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
                 _dateText.setText(dateFormatText);
                 _presenter.updateEvent(dateTime.toDate(), dateFormatText);
                 break;
+            case R.id.date_pick_card:
+                DateTime datePickerTime = new DateTime();
+                //set up custom theme
+                //stop dismissal on rotate
+                //disable invalid times < today (what does todoist do?)
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                                                                        this,
+                                                                        datePickerTime.getYear(),
+                                                                        datePickerTime.getMonthOfYear(),
+                                                                        datePickerTime.getDayOfMonth());
+                datePickerDialog.show();
+                break;
         }
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
     }
 }

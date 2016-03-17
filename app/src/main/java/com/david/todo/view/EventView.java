@@ -10,7 +10,6 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.david.todo.R;
 import com.david.todo.model.AnimateLocationCoordinatesModel;
@@ -31,6 +30,7 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
 
     @Bind(R.id.root_view)
     LinearLayout _rootView;
+
     @Bind(R.id.today_image)
     ImageView _todayImage;
     @Bind(R.id.tomorrow_image)
@@ -127,14 +127,20 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
 
         _rootView.setVisibility(View.VISIBLE);
         _circularReveal.start();
-        _circularReveal.reverse();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.root_view:
-                _presenter.removeEventView();
+                SupportAnimator animator = _circularReveal.reverse();
+                animator.addListener(new SupportAnimator.SimpleAnimatorListener() {
+                    @Override
+                    public void onAnimationEnd() {
+                        _presenter.removeEventView();
+                    }
+                });
+                animator.start();
                 break;
             case R.id.today_card:
                 String todayText = getResources().getString(R.string.today_text);

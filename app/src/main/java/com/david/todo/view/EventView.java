@@ -1,6 +1,5 @@
 package com.david.todo.view;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
@@ -20,7 +19,6 @@ import com.david.todo.presenter.AddItemPresenter;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,8 +39,6 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
     ImageView _weekImage;
     @Bind(R.id.custom_day_image)
     ImageView _customDayImage;
-    @Bind(R.id.custom_time_image)
-    ImageView _customTimeImage;
 
     @Bind(R.id.today_card)
     CardView _todayCard;
@@ -52,11 +48,6 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
     CardView _nextWeekCard;
     @Bind(R.id.date_pick_card)
     CardView _datePickCard;
-
-    @Bind(R.id.date_text)
-    TextView _dateText;
-    @Bind(R.id.time_text)
-    TextView _timeText;
 
     private final AddItemPresenter _presenter;
     private final int _today = 1;
@@ -117,11 +108,6 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
         Drawable drawable4 = resources.getDrawable(R.drawable.custom_date);
         drawable4.setColorFilter(resources.getColor(R.color.orange), PorterDuff.Mode.SRC_ATOP);
         _customDayImage.setImageDrawable(drawable4);
-
-        Drawable drawable5 = resources.getDrawable(R.drawable.custom_time);
-        drawable5.setColorFilter(resources.getColor(R.color.orange), PorterDuff.Mode.SRC_ATOP);
-        _customTimeImage.setImageDrawable(drawable5);
-
         _rootView.setOnClickListener(this);
         _todayCard.setOnClickListener(this);
         _tomorrowCard.setOnClickListener(this);
@@ -130,9 +116,6 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
 
         //This is logic and should be set by the presenter.
         _eventModel = _presenter.getDateModelIntent();
-        if(_eventModel != null) {
-            _dateText.setText(_eventModel._dateText);
-        }
     }
 
     private void circularRevealLayout(AnimateLocationCoordinatesModel animateModel) {
@@ -155,23 +138,19 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
                 break;
             case R.id.today_card:
                 String todayText = getResources().getString(R.string.today_text);
-                _dateText.setText(todayText);
                 _presenter.updateEvent(new DateTime().toDate(), todayText);
                 break;
             case R.id.tomorrow_card:
                 DateTime tomorrowsDateTime = new DateTime().plusDays(_today);
                 String dayOfWeekText = tomorrowsDateTime.dayOfWeek().getAsText();
-                _dateText.setText(dayOfWeekText);
                 _presenter.updateEvent(tomorrowsDateTime.toDate(), dayOfWeekText);
                 break;
             case R.id.next_week_card:
                 DateTime dateTime = new DateTime().plusDays(_nextWeek);
                 String dateFormatText = dateTime.toString(DateTimeFormat.forPattern(_dateFormat));
-                _dateText.setText(dateFormatText);
                 _presenter.updateEvent(dateTime.toDate(), dateFormatText);
                 break;
             case R.id.date_pick_card:
-                //disable invalid times < today (what does todoist do?)
                 _presenter.delegateDatePickerCreation();
                 break;
         }

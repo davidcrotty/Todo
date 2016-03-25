@@ -82,6 +82,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     private EventView _eventView;
     private SupportAnimator _circularReveal;
     private AddItemPresenter _addItemPresenter;
+    private AnimateLocationCoordinatesModel _coordinatesModel;
     private int _checkListScrollThreshold = 0;
     private int _commentsScrollThreshold = 0;
 
@@ -95,6 +96,8 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onGlobalLayout() {
                 circularRevealLayout();
+                _actionFab.setOnClickListener(AddItemActivity.this);
+                calculateAnimationCoordinates();
             }
         });
 
@@ -103,24 +106,85 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         addItemActions();
         loadFabScrollThresholds();
         _scrollView.setOnScrollChangeListener(this);
-        _actionFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                float finalRadius = Math.max(_rootView.getWidth(), _rootView.getHeight());
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        //selecting option sets back. on list /w circular fade.
+        //date is set, then time if needed
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(getIntent().hasExtra(EventView.PRESERVE_VIEW)) {
+            addEventView(null);
+        }
+        _addItemPresenter.updateListText();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(_circularReveal != null) {
+            _circularReveal.reverse();
+        }
+        if(_eventView != null) {
+            removeAllActionViews();
+        } else {
+            getIntent().removeExtra(EVENT_INTENT_KEY);
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.back_arrow_image:
+                finish();
+                break;
+            case R.id.focused_action_fab:
+                addEventView(_coordinatesModel);
+                break;
+        }
+    }
+
+    @Override
+    public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        int commentsScrollThreshold = _checkListScrollThreshold * 2;
+        if(_checkListScrollThreshold == 0) return;
+        Resources resources = getResources();
+
+        if(scrollY > _checkListScrollThreshold && scrollY < commentsScrollThreshold) {
+            _actionFab.setImageDrawable(resources.getDrawable(R.drawable.check_box_white));
+            _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.green)));
+            _actionFab.setRippleColor(resources.getColor(R.color.green_ripple));
+        } else if(scrollY > _checkListScrollThreshold) {
+            _actionFab.setImageDrawable(resources.getDrawable(R.drawable.mode_comment));
+            _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.light_blue)));
+            _actionFab.setRippleColor(resources.getColor(R.color.light_blue_ripple));
+        } else {
+            _actionFab.setImageDrawable(resources.getDrawable(R.drawable.event_white));
+            _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.orange)));
+            _actionFab.setRippleColor(resources.getColor(R.color.orange_ripple));
+        }
+    }
+
+    private void calculateAnimationCoordinates() {
+        float finalRadius = Math.max(_rootView.getWidth(), _rootView.getHeight());
                 int[] fabLocation = new int[2];
                 _actionFab.getLocationOnScreen(fabLocation);
-                addEventView(new AnimateLocationCoordinatesModel(fabLocation[0],
-                        fabLocation[1],
-                        _actionFab.getWidth(),
-                        _actionFab.getHeight(), finalRadius));
-            }
-        });
+                _coordinatesModel = new AnimateLocationCoordinatesModel(fabLocation[0],
+                                                                        fabLocation[1],
+                                                                        _actionFab.getWidth(),
+                                                                        _actionFab.getHeight(),
+                                                                        finalRadius);
     }
 
     /**
      * @param coordinatesModel - nullable as this can be called on resume, animation would be unnecessary
      */
     private void addEventView(@Nullable AnimateLocationCoordinatesModel coordinatesModel) {
+        //on pause needs to store prior coords, but will be from prior rotation, so before going back needs to grab both land/port coords
         _eventView = null;
         if(coordinatesModel == null) {
             _eventView = new EventView(this, _addItemPresenter);
@@ -233,63 +297,5 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         datePickerDialog.setAccentColor(getResources().getColor(R.color.orange_ripple));
         datePickerDialog.setMinDate(datePickerTime.toCalendar(null));
         datePickerDialog.show(getFragmentManager(), DatePickerDialog.class.getName());
-    }
-
-    @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        //selecting option sets back. on list /w circular fade.
-        //date is set, then time if needed
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(getIntent().hasExtra(EventView.PRESERVE_VIEW)) {
-            addEventView(null);
-        }
-        _addItemPresenter.updateListText();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(_circularReveal != null) {
-            _circularReveal.reverse();
-        }
-        if(_eventView != null) {
-            removeAllActionViews();
-        } else {
-            getIntent().removeExtra(EVENT_INTENT_KEY);
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.back_arrow_image:
-                finish();
-                break;
-        }
-    }
-
-    @Override
-    public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-        int commentsScrollThreshold = _checkListScrollThreshold * 2;
-        if(_checkListScrollThreshold == 0) return;
-        Resources resources = getResources();
-
-        if(scrollY > _checkListScrollThreshold && scrollY < commentsScrollThreshold) {
-            _actionFab.setImageDrawable(resources.getDrawable(R.drawable.check_box_white));
-            _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.green)));
-            _actionFab.setRippleColor(resources.getColor(R.color.green_ripple));
-        } else if(scrollY > _checkListScrollThreshold) {
-            _actionFab.setImageDrawable(resources.getDrawable(R.drawable.mode_comment));
-            _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.light_blue)));
-            _actionFab.setRippleColor(resources.getColor(R.color.light_blue_ripple));
-        } else {
-            _actionFab.setImageDrawable(resources.getDrawable(R.drawable.event_white));
-            _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.orange)));
-            _actionFab.setRippleColor(resources.getColor(R.color.orange_ripple));
-        }
     }
 }

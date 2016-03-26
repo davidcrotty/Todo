@@ -4,6 +4,7 @@ import android.content.res.Resources;
 
 import com.david.todo.BuildConfig;
 import com.david.todo.R;
+import com.david.todo.model.DateHolderModel;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -18,26 +19,26 @@ public class EventService {
      * @param dateTime
      * @return
      */
-    public String retreiveDateDisplayText(DateTime dateTime, Resources resources) {
+    public DateHolderModel retreiveDateDisplayText(DateTime dateTime, Resources resources) {
         if (dateTime == null) return null;
 
         //if is less than
         LocalDate localDate = new LocalDate();
 
         if (dateTime.toLocalDate().isEqual(localDate)) {
-            return resources.getString(R.string.today_text);
+            return new DateHolderModel(resources.getString(R.string.today_text), resources.getColor(android.R.color.black));
         } else if (dateTime.toLocalDate().isBefore(localDate)) {
-            return formatDate(dateTime);
+            return new DateHolderModel(formatDate(dateTime), resources.getColor(R.color.red));
         } else if(dateTime.toLocalDate().isEqual(localDate.plusDays(1))) {
-            return resources.getString(R.string.tomorrow_text);
+            return new DateHolderModel(resources.getString(R.string.tomorrow_text), resources.getColor(android.R.color.black));
         } else {
             //Check if > today && < 7 days
             DateTime dateRangeCheck = new DateTime();
             if(isWithinSevenDaysFromNow(dateRangeCheck)) {
-                return dateTime.dayOfWeek().getAsText();
+                return new DateHolderModel(dateTime.dayOfWeek().getAsText(), resources.getColor(android.R.color.black));
             } else {
                 //return as format
-                return formatDate(dateTime);
+                return new DateHolderModel(formatDate(dateTime), resources.getColor(android.R.color.black));
             }
         }
     }

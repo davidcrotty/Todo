@@ -6,6 +6,7 @@ import android.content.res.Resources;
 
 import com.david.todo.BuildConfig;
 import com.david.todo.R;
+import com.david.todo.model.DateHolderModel;
 import com.david.todo.service.EventService;
 import com.david.todo.service.TextEntryService;
 
@@ -66,10 +67,10 @@ public class EventServiceTest {
         Date date = new DateTime().toDate();
 
         System.out.println("When getting text to display");
-        String dateText = _eventService.retreiveDateDisplayText(new DateTime(date), _resourceMock);
+        DateHolderModel dateText = _eventService.retreiveDateDisplayText(new DateTime(date), _resourceMock);
 
         System.out.println("Should display Today");
-        Assert.assertEquals("Today", dateText);
+        Assert.assertEquals("Today", dateText.getDateText());
 
         System.out.println("Given a valid date of tomorrow");
         date = new DateTime().plusDays(1).toDate();
@@ -78,7 +79,7 @@ public class EventServiceTest {
         dateText = _eventService.retreiveDateDisplayText(new DateTime(date), _resourceMock);
 
         System.out.println("Should display Tomorrow");
-        Assert.assertEquals("Tomorrow", dateText);
+        Assert.assertEquals("Tomorrow", dateText.getDateText());
 
         System.out.println("Given a valid date of 4 days after 6/03/2016");
         long feb_10_2016 = 1455141162000L;
@@ -93,7 +94,7 @@ public class EventServiceTest {
         dateText = _eventService.retreiveDateDisplayText(new DateTime(date), _resourceMock);
 
         System.out.println("Should display Feb - 10");
-        Assert.assertEquals(dateTimeWeekday.toString(DateTimeFormat.forPattern(BuildConfig.DATE_FORMAT)), dateText);
+        Assert.assertEquals(dateTimeWeekday.toString(DateTimeFormat.forPattern(BuildConfig.DATE_FORMAT)), dateText.getDateText());
     }
 
     @Test
@@ -101,7 +102,7 @@ public class EventServiceTest {
         System.out.println("Given an invalid date, null");
 
         System.out.println("When getting text to display");
-        String dateText = _eventService.retreiveDateDisplayText(null, _resourceMock);
+        DateHolderModel dateText = _eventService.retreiveDateDisplayText(null, _resourceMock);
 
         System.out.println("Should display null");
         Assert.assertNull(dateText);

@@ -45,8 +45,8 @@ public class AddItemPresenter {
         EventModel eventModel = getDateModelIntent();
         if(eventModel == null) return;
         Resources resources = _addItemActivity.getResources();
-        String dateText = _eventService.retreiveDateDisplayText(new DateTime(eventModel._date), resources);
-        _addItemActivity.updateDateWith(dateText, resources.getColor(android.R.color.black));
+        DateHolderModel dateModel = _eventService.retreiveDateDisplayText(new DateTime(eventModel._date), resources);
+        _addItemActivity.updateDateWith(dateModel.getDateText(), dateModel.getColourResource());
     }
 
     public void removeEventView() {

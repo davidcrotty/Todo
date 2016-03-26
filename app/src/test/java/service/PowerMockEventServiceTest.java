@@ -3,6 +3,7 @@ package service;
 import android.content.res.Resources;
 
 import com.david.todo.BuildConfig;
+import com.david.todo.model.DateHolderModel;
 import com.david.todo.service.EventService;
 
 import junit.framework.Assert;
@@ -51,8 +52,8 @@ public class PowerMockEventServiceTest {
         given(dateTime.toString()).willReturn("Feb - 26");
         given(_eventService.retreiveDateDisplayText(any(DateTime.class), any(Resources.class))).willCallRealMethod();
 
-        String dateText = _eventService.retreiveDateDisplayText(dateTime, _resources);
+        DateHolderModel dateText = _eventService.retreiveDateDisplayText(dateTime, _resources);
 
-        Assert.assertEquals(true, dateText.equals("Feb - 26"));
+        Assert.assertEquals(true, dateText.getDateText().equals("Feb - 26"));
     }
 }

@@ -26,6 +26,7 @@ import com.david.todo.R;
 import com.david.todo.model.AnimateLocationCoordinatesModel;
 import com.david.todo.model.EventModel;
 import com.david.todo.presenter.AddItemPresenter;
+import com.david.todo.service.EventService;
 import com.david.todo.view.eventlisteners.EditTextChangeListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -78,6 +79,8 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     FloatingActionButton _actionFab;
     @Bind(R.id.action_container)
     FrameLayout _actionContainer;
+    @Bind(R.id.date_text)
+    TextView _dateText;
 
     private EventView _eventView;
     private SupportAnimator _circularReveal;
@@ -91,7 +94,8 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item_full_view);
         ButterKnife.bind(this);
-        _addItemPresenter = new AddItemPresenter(this);
+        _addItemPresenter = new AddItemPresenter(this,
+                                                new EventService());
         _rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -169,6 +173,27 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
+    public void removeAllActionViews() {
+        _actionContainer.removeAllViews();
+        if(getIntent().hasExtra(EventView.PRESERVE_VIEW)) {
+            getIntent().removeExtra(EventView.PRESERVE_VIEW);
+        }
+        getWindow().setStatusBarColor(getResources().getColor(R.color.add_activity_status_bar));
+        _eventView = null;
+    }
+
+    public void setEventIntentKey(EventModel dateTimeModel) {
+        getIntent().putExtra(EVENT_INTENT_KEY, dateTimeModel);
+    }
+
+    public EventModel getDateModelIntent() {
+        return (EventModel) getIntent().getSerializableExtra(EVENT_INTENT_KEY);
+    }
+
+    public void updateDate(String dateText) {
+        _dateText.setText(dateText);
+    }
+
     private void calculateAnimationCoordinates() {
         float finalRadius = Math.max(_rootView.getWidth(), _rootView.getHeight());
                 int[] fabLocation = new int[2];
@@ -193,23 +218,6 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         _actionContainer.addView(_eventView, params);
         getIntent().putExtra(EventView.PRESERVE_VIEW, true);
         getWindow().setStatusBarColor(getResources().getColor(R.color.orange_ripple));
-    }
-
-    public void removeAllActionViews() {
-        _actionContainer.removeAllViews();
-        if(getIntent().hasExtra(EventView.PRESERVE_VIEW)) {
-            getIntent().removeExtra(EventView.PRESERVE_VIEW);
-        }
-        getWindow().setStatusBarColor(getResources().getColor(R.color.add_activity_status_bar));
-        _eventView = null;
-    }
-
-    public void setEventIntentKey(EventModel dateTimeModel) {
-        getIntent().putExtra(EVENT_INTENT_KEY, dateTimeModel);
-    }
-
-    public EventModel getDateModelIntent() {
-        return (EventModel) getIntent().getSerializableExtra(EVENT_INTENT_KEY);
     }
 
     private void loadFabScrollThresholds() {

@@ -3,16 +3,20 @@ package com.david.todo.presenter;
 import android.content.Intent;
 
 import com.david.todo.model.EventModel;
+import com.david.todo.service.EventService;
 import com.david.todo.view.AddItemActivity;
 
 import java.util.Date;
 
 public class AddItemPresenter {
 
-    private AddItemActivity _addItemActivity;
+    private final AddItemActivity _addItemActivity;
+    private final EventService _eventService;
 
-    public AddItemPresenter(AddItemActivity addItemActivity) {
+    public AddItemPresenter(AddItemActivity addItemActivity,
+                            EventService eventService) {
         _addItemActivity = addItemActivity;
+        _eventService = eventService;
     }
 
     public void updateTitleWithIntent() {
@@ -31,11 +35,13 @@ public class AddItemPresenter {
 
     /**
      * Checks data store or if there is an event intent to be used to fill out some/all of
-     * the forms contents
+     * the forms contents, called onResume or on date change.
      */
     public void updateListText() {
         EventModel eventModel = getDateModelIntent();
         if(eventModel == null) return;
+        String dateText = _eventService.retreiveDateDisplayText(eventModel._date, _addItemActivity.getResources());
+        _addItemActivity.updateDate(dateText);
         //if is today or tomorrow display
         //if > tomorrow && <= a week display weekday
         //else MMM - dd format
@@ -46,7 +52,7 @@ public class AddItemPresenter {
         _addItemActivity.removeAllActionViews();
     }
 
-    public void updateEvent(Date date, String displayText) {
+    public void updateEventMemoryModel(Date date, String displayText) {
         _addItemActivity.setEventIntentKey(new EventModel(date, displayText));
     }
 

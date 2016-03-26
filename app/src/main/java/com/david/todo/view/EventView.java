@@ -133,18 +133,22 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
         _circularReveal.start();
     }
 
+    public void reverseAnimation() {
+        SupportAnimator animator = _circularReveal.reverse();
+        animator.addListener(new SupportAnimator.SimpleAnimatorListener() {
+            @Override
+            public void onAnimationEnd() {
+                _presenter.removeEventView();
+            }
+        });
+        animator.start();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.root_view:
-                SupportAnimator animator = _circularReveal.reverse();
-                animator.addListener(new SupportAnimator.SimpleAnimatorListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        _presenter.removeEventView();
-                    }
-                });
-                animator.start();
+                reverseAnimation();
                 break;
             case R.id.today_card:
                 String todayText = getResources().getString(R.string.today_text);

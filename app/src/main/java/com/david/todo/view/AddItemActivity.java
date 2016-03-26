@@ -98,6 +98,9 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                 circularRevealLayout();
                 _actionFab.setOnClickListener(AddItemActivity.this);
                 calculateAnimationCoordinates();
+                if(getIntent().hasExtra(EventView.PRESERVE_VIEW)) {
+                    addEventView();
+                }
             }
         });
 
@@ -117,9 +120,6 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
-        if(getIntent().hasExtra(EventView.PRESERVE_VIEW)) {
-            addEventView(null);
-        }
         _addItemPresenter.updateListText();
     }
 
@@ -143,7 +143,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.focused_action_fab:
-                addEventView(_coordinatesModel);
+                addEventView();
                 break;
         }
     }
@@ -180,17 +180,12 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                                                                         finalRadius);
     }
 
-    /**
-     * @param coordinatesModel - nullable as this can be called on resume, animation would be unnecessary
-     */
-    private void addEventView(@Nullable AnimateLocationCoordinatesModel coordinatesModel) {
+    private void addEventView() {
         //on pause needs to store prior coords, but will be from prior rotation, so before going back needs to grab both land/port coords
-        _eventView = null;
-        if(coordinatesModel == null) {
-            _eventView = new EventView(this, _addItemPresenter);
-        } else {
-            _eventView = new EventView(AddItemActivity.this, coordinatesModel, _addItemPresenter);
+        if(_eventView != null) {
+            if(_eventView.getVisibility() == View.VISIBLE) return;
         }
+        _eventView = new EventView(AddItemActivity.this, _coordinatesModel, _addItemPresenter);
 
         _actionContainer.bringToFront();
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,

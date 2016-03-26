@@ -61,15 +61,6 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
     private boolean _firedAnimation = false;
 
     public EventView(Context context,
-                     AddItemPresenter presenter) {
-        super(context);
-        _presenter = presenter;
-        inflate(context, R.layout.event_view, this);
-        ButterKnife.bind(this);
-        init();
-    }
-
-    public EventView(Context context,
                      AnimateLocationCoordinatesModel animateModel,
                      AddItemPresenter presenter) {
         super(context);

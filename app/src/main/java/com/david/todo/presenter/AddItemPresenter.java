@@ -1,7 +1,9 @@
 package com.david.todo.presenter;
 
 import android.content.Intent;
+import android.content.res.Resources;
 
+import com.david.todo.model.DateHolderModel;
 import com.david.todo.model.EventModel;
 import com.david.todo.service.EventService;
 import com.david.todo.view.AddItemActivity;
@@ -40,12 +42,9 @@ public class AddItemPresenter {
     public void updateListText() {
         EventModel eventModel = getDateModelIntent();
         if(eventModel == null) return;
-        String dateText = _eventService.retreiveDateDisplayText(eventModel._date, _addItemActivity.getResources());
-        _addItemActivity.updateDate(dateText);
-        //if is today or tomorrow display
-        //if > tomorrow && <= a week display weekday
-        //else MMM - dd format
-
+        Resources resources = _addItemActivity.getResources();
+        String dateText = _eventService.retreiveDateDisplayText(eventModel._date, resources);
+        _addItemActivity.updateDateWith(dateText, resources.getColor(android.R.color.black));
     }
 
     public void removeEventView() {

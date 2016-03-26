@@ -190,8 +190,9 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         return (EventModel) getIntent().getSerializableExtra(EVENT_INTENT_KEY);
     }
 
-    public void updateDate(String dateText) {
+    public void updateDateWith(String dateText, int colour) {
         _dateText.setText(dateText);
+        _dateText.setTextColor(colour);
     }
 
     private void calculateAnimationCoordinates() {

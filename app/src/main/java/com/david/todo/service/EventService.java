@@ -23,6 +23,8 @@ public class EventService {
 
         DateTime dateTime = new DateTime(date);
 
+        //if is less than
+
         if(dateTime.toLocalDate().isEqual(new LocalDate())) {
             return resources.getString(R.string.today_text);
         } else if(dateTime.toLocalDate().isEqual(new LocalDate().plusDays(1))) {

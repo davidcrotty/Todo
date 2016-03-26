@@ -117,8 +117,10 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        //selecting option sets back. on list /w circular fade.
-        //date is set, then time if needed
+        //Bug in library where date starts from 0, add 1 to compensate
+        _addItemPresenter.updateEventMemoryModel(new DateTime(year, monthOfYear + 1, dayOfMonth, 0, 0).toDate(), null);
+        _addItemPresenter.updateListText();
+        _eventView.reverseAnimation();
     }
 
     @Override

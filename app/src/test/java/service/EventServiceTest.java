@@ -13,10 +13,16 @@ import junit.framework.Assert;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
@@ -24,7 +30,9 @@ import org.robolectric.shadows.ShadowLog;
 
 import java.util.Date;
 
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
@@ -58,7 +66,7 @@ public class EventServiceTest {
         Date date = new DateTime().toDate();
 
         System.out.println("When getting text to display");
-        String dateText = _eventService.retreiveDateDisplayText(date, _resourceMock);
+        String dateText = _eventService.retreiveDateDisplayText(new DateTime(date), _resourceMock);
 
         System.out.println("Should display Today");
         Assert.assertEquals("Today", dateText);
@@ -67,7 +75,7 @@ public class EventServiceTest {
         date = new DateTime().plusDays(1).toDate();
 
         System.out.println("When getting text to display");
-        dateText = _eventService.retreiveDateDisplayText(date, _resourceMock);
+        dateText = _eventService.retreiveDateDisplayText(new DateTime(date), _resourceMock);
 
         System.out.println("Should display Tomorrow");
         Assert.assertEquals("Tomorrow", dateText);
@@ -82,7 +90,7 @@ public class EventServiceTest {
         DateTimeUtils.setCurrentMillisFixed(System.currentTimeMillis());
 
         System.out.println("When getting text to display");
-        dateText = _eventService.retreiveDateDisplayText(date, _resourceMock);
+        dateText = _eventService.retreiveDateDisplayText(new DateTime(date), _resourceMock);
 
         System.out.println("Should display Feb - 10");
         Assert.assertEquals(dateTimeWeekday.toString(DateTimeFormat.forPattern(BuildConfig.DATE_FORMAT)), dateText);
@@ -91,10 +99,9 @@ public class EventServiceTest {
     @Test
     public void when_getting_date_to_display_invalid() {
         System.out.println("Given an invalid date, null");
-        Date date = null;
 
         System.out.println("When getting text to display");
-        String dateText = _eventService.retreiveDateDisplayText(date, _resourceMock);
+        String dateText = _eventService.retreiveDateDisplayText(null, _resourceMock);
 
         System.out.println("Should display null");
         Assert.assertNull(dateText);

@@ -8,6 +8,8 @@ import com.david.todo.model.EventModel;
 import com.david.todo.service.EventService;
 import com.david.todo.view.AddItemActivity;
 
+import org.joda.time.DateTime;
+
 import java.util.Date;
 
 public class AddItemPresenter {
@@ -43,7 +45,7 @@ public class AddItemPresenter {
         EventModel eventModel = getDateModelIntent();
         if(eventModel == null) return;
         Resources resources = _addItemActivity.getResources();
-        String dateText = _eventService.retreiveDateDisplayText(eventModel._date, resources);
+        String dateText = _eventService.retreiveDateDisplayText(new DateTime(eventModel._date), resources);
         _addItemActivity.updateDateWith(dateText, resources.getColor(android.R.color.black));
     }
 

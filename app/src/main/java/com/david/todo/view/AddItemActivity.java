@@ -185,7 +185,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         if(_eventView != null) {
             if(_eventView.getVisibility() == View.VISIBLE) return;
         }
-        _eventView = new EventView(AddItemActivity.this, _coordinatesModel, _addItemPresenter);
+        _eventView = new EventView(AddItemActivity.this, _coordinatesModel, _addItemPresenter, getIntent().hasExtra(EventView.PRESERVE_VIEW));
 
         _actionContainer.bringToFront();
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,

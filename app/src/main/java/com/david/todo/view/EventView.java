@@ -59,12 +59,24 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
     private EventModel _eventModel;
 
     private boolean _firedAnimation = false;
+    private final boolean _dontAnimate;
 
+    /**
+     *
+     * @param context
+     * @param animateModel - Coordinates of where to circular reveal too/from.
+     * @param presenter - Acivities presenter.
+     * @param dontAnimate - used when screen is present when coming from a paused/screen rotation state
+     *                      using animateModel as null to detect this will work on entry, but on exit
+     *                      will cause no animation to take place/NPE if not defensively coded for.
+     */
     public EventView(Context context,
                      AnimateLocationCoordinatesModel animateModel,
-                     AddItemPresenter presenter) {
+                     AddItemPresenter presenter,
+                     boolean dontAnimate) {
         super(context);
         _presenter = presenter;
+        _dontAnimate = dontAnimate;
         inflate(context, R.layout.event_view, this);
         ButterKnife.bind(this);
         init();
@@ -116,6 +128,7 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
         _circularReveal = ViewAnimationUtils.createCircularReveal(_rootView, cx, cy, 0, animateModel._finalRadius);
         _circularReveal.setDuration(_circularRevealDurationMs);
 
+        if (_dontAnimate) return;
         _rootView.setVisibility(View.VISIBLE);
         _circularReveal.start();
     }

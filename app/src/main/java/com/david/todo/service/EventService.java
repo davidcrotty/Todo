@@ -5,9 +5,11 @@ import android.content.res.Resources;
 import com.david.todo.BuildConfig;
 import com.david.todo.R;
 import com.david.todo.model.DateHolderModel;
+import com.david.todo.model.TimeHolderModel;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 
 import java.util.Date;

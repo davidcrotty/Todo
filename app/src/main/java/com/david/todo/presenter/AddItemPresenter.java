@@ -9,6 +9,7 @@ import com.david.todo.service.EventService;
 import com.david.todo.view.AddItemActivity;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
 
 import java.util.Date;
 
@@ -33,6 +34,20 @@ public class AddItemPresenter {
         }
     }
 
+    public void updateEventMemoryModelWithTime(int hourOfDay, int minuteOfDay) {
+        EventModel eventModel = getDateModelIntent();
+        if(eventModel == null) throw new IllegalStateException("Day must be selected before time can be set!");
+        DateTime date = new DateTime(eventModel._date);
+        //reset to midnight from prior set
+        date.withHourOfDay(0);
+        date.withMinuteOfHour(0);
+        //add minutes
+        date.plusHours(hourOfDay);
+        date.plusMinutes(minuteOfDay);
+        eventModel.setTime(date.toDate());
+        _addItemActivity.setEventIntentKey(eventModel);
+    }
+
     public void delegateDatePickerCreation() {
         _addItemActivity.createDatePicker();
     }
@@ -53,7 +68,7 @@ public class AddItemPresenter {
         _addItemActivity.removeAllActionViews();
     }
 
-    public void updateEventMemoryModel(Date date, String displayText) {
+    public void updateEventMemoryModelWithDate(Date date, String displayText) {
         _addItemActivity.getIntent().putExtra(AddItemActivity.NON_DEFAULT_DATE_KEY, true);
         _addItemActivity.showTimePickButton();
         _addItemActivity.setEventIntentKey(new EventModel(date, displayText));

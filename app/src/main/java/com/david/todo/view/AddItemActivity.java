@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -29,6 +28,8 @@ import com.david.todo.presenter.AddItemPresenter;
 import com.david.todo.service.EventService;
 import com.david.todo.view.eventlisteners.EditTextChangeListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import org.joda.time.DateTime;
 
@@ -39,7 +40,8 @@ import io.codetail.animation.ViewAnimationUtils;
 
 public class AddItemActivity extends BaseActivity implements View.OnClickListener,
                                                              NestedScrollView.OnScrollChangeListener,
-                                                             DatePickerDialog.OnDateSetListener{
+                                                             DatePickerDialog.OnDateSetListener,
+                                                             TimePickerDialog.OnTimeSetListener {
 
     public static String ANIMATE_START_INTENT_KEY = "ANIMATE_START_INTENT_KEY";
     public static String NON_DEFAULT_DATE_KEY = "NON_DEFAULT_DATE_KEY";
@@ -120,9 +122,15 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         //Bug in library where date starts from 0, add 1 to compensate
-        _addItemPresenter.updateEventMemoryModel(new DateTime(year, monthOfYear + 1, dayOfMonth, 0, 0).toDate(), null);
+        _addItemPresenter.updateEventMemoryModelWithDate(new DateTime(year, monthOfYear + 1, dayOfMonth, 0, 0).toDate(), null);
         _addItemPresenter.updateListText();
         _eventView.reverseAnimation();
+    }
+
+    @Override
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+        _addItemPresenter.updateEventMemoryModelWithTime(hourOfDay, minute);
+        _addItemPresenter.updateListText();
     }
 
     @Override
@@ -155,6 +163,9 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.focused_action_fab:
                 addEventView();
+                break;
+            case R.id.time_select_container:
+                createTimePicker();
                 break;
         }
     }
@@ -204,6 +215,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
 
     public void showTimePickButton() {
         _timeSelectContainer.setVisibility(View.VISIBLE);
+        _timeSelectContainer.setOnClickListener(this);
     }
 
     private void calculateAnimationCoordinates() {
@@ -312,5 +324,16 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         datePickerDialog.setAccentColor(getResources().getColor(R.color.orange_ripple));
         datePickerDialog.setMinDate(datePickerTime.toCalendar(null));
         datePickerDialog.show(getFragmentManager(), DatePickerDialog.class.getName());
+    }
+
+    private void createTimePicker() {
+        DateTime datePickerTime = new DateTime();
+        TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(this,
+                                                                        datePickerTime.getHourOfDay(),
+                                                                        datePickerTime.getMinuteOfDay(),
+                                                                        datePickerTime.getSecondOfDay(),
+                                                                        true);
+        timePickerDialog.setAccentColor(getResources().getColor(R.color.orange_ripple));
+        timePickerDialog.show(getFragmentManager(), TimePickerDialog.class.getName());
     }
 }

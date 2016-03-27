@@ -55,25 +55,25 @@ public class EventService {
 
         if(currentDateTime.isBefore(dateTimeOfEvent)) {
             if(daysFromNow >= 1) {
-                return new TimeHolderModel(String.format("%2d:%2d", hours, minutes - (hours * 60)),
+                return new TimeHolderModel(String.format("%02d:%02d", hours, minutes - (hours * 60)),
                         resources.getColor(R.color.secondary_list_item));
             }
 
             if(hoursFromNow == 0) {
                 int minutesFromNow = p.getMinutes();
-                return new TimeHolderModel(String.format("%2d:%2d ( in %2d minutes)", hours, minutes - (hours * 60), minutesFromNow),
+                return new TimeHolderModel(String.format("%02d:%02d ( in %2d minutes)", hours, minutes - (hours * 60), minutesFromNow),
                         resources.getColor(R.color.secondary_list_item));
             } else {
-                return new TimeHolderModel(String.format("%2d:%2d ( in %2d hours)", hours, minutes - (hours * 60), hoursFromNow),
+                return new TimeHolderModel(String.format("%02d:%02d ( in %2d hours)", hours, minutes - (hours * 60), hoursFromNow),
                         resources.getColor(R.color.secondary_list_item));
             }
         } else if(currentDateTime.isAfter(dateTimeOfEvent)) {
             if(hoursFromNow == 0) {
                 int minutesFromNow = p.getMinutes();
-                return new TimeHolderModel(String.format("%2d:%2d (%2d minutes ago)", hours, minutes - (hours * 60), Math.abs(minutesFromNow)),
+                return new TimeHolderModel(String.format("%02d:%02d (%2d minutes ago)", hours, minutes - (hours * 60), Math.abs(minutesFromNow)),
                         resources.getColor(R.color.red));
             } else {
-                return new TimeHolderModel(String.format("%2d:%2d (%2d hours ago)", hours, minutes - (hours * 60), Math.abs(hoursFromNow)),
+                return new TimeHolderModel(String.format("%02d:%02d (%2d hours ago)", hours, minutes - (hours * 60), Math.abs(hoursFromNow)),
                         resources.getColor(R.color.red));
             }
         }

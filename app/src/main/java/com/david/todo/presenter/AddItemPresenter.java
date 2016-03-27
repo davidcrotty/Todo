@@ -40,11 +40,11 @@ public class AddItemPresenter {
         if(eventModel == null) throw new IllegalStateException("Day must be selected before time can be set!");
         DateTime date = new DateTime(eventModel._date);
         //reset to midnight from prior set
-        date.withHourOfDay(0);
-        date.withMinuteOfHour(0);
+        date = date.withHourOfDay(0);
+        date = date.withMinuteOfHour(0);
         //add minutes
-        date.plusHours(hourOfDay);
-        date.plusMinutes(minuteOfDay);
+        date = date.plusHours(hourOfDay);
+        date = date.plusMinutes(minuteOfDay);
         eventModel.setTime(date.toDate());
         _addItemActivity.setEventIntentKey(eventModel);
     }

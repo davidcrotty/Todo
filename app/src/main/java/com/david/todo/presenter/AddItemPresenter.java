@@ -5,6 +5,7 @@ import android.content.res.Resources;
 
 import com.david.todo.model.DateHolderModel;
 import com.david.todo.model.EventModel;
+import com.david.todo.model.TimeHolderModel;
 import com.david.todo.service.EventService;
 import com.david.todo.view.AddItemActivity;
 
@@ -62,6 +63,8 @@ public class AddItemPresenter {
         Resources resources = _addItemActivity.getResources();
         DateHolderModel dateModel = _eventService.retreiveDateDisplayText(new DateTime(eventModel._date), resources);
         _addItemActivity.updateDateWith(dateModel.getDateText(), dateModel.getColourResource());
+        TimeHolderModel timeHolderModel = _eventService.retreiveTimeDisplaytext(new DateTime(eventModel._date), new DateTime(), resources);
+        _addItemActivity.updateTimeWith(timeHolderModel.getTextToDisplay(), timeHolderModel.getColour());
     }
 
     public void removeEventView() {

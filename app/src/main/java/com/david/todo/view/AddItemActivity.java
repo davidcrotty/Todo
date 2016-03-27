@@ -84,6 +84,8 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     FrameLayout _actionContainer;
     @Bind(R.id.date_text)
     TextView _dateText;
+    @Bind(R.id.time_text)
+    TextView _timeText;
     @Bind(R.id.time_select_container)
     LinearLayout _timeSelectContainer;
 
@@ -189,6 +191,11 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
             _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.orange)));
             _actionFab.setRippleColor(resources.getColor(R.color.orange_ripple));
         }
+    }
+
+    public void updateTimeWith(String textToDisplay, int colour) {
+        _timeText.setText(textToDisplay);
+        _timeText.setTextColor(colour);
     }
 
     public void removeAllActionViews() {

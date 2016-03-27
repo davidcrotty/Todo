@@ -181,10 +181,11 @@
                         <LinearLayout
                             android:id="@+id/date_list_item"
                             android:orientation="vertical"
-                            android:layout_width="110dp"
+                            android:layout_width="150dp"
                             android:layout_height="match_parent">
 
                             <TextView
+                                android:id="@+id/time_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="14dp"
@@ -226,7 +227,7 @@
                                 android:layout_height="32dp"
                                 android:text="@string/set_time"
                                 android:fontFamily="sans-serif-condensed"
-                                android:textColor="#616161"
+                                android:textColor="@color/secondary_list_item"
                                 android:paddingTop="8dp"
                                 android:textSize="14dp"
                                 android:layout_marginRight="24dp"/>

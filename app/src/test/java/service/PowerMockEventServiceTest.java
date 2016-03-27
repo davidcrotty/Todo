@@ -3,7 +3,9 @@ package service;
 import android.content.res.Resources;
 
 import com.david.todo.BuildConfig;
+import com.david.todo.R;
 import com.david.todo.model.DateHolderModel;
+import com.david.todo.model.TimeHolderModel;
 import com.david.todo.service.EventService;
 
 import junit.framework.Assert;
@@ -55,5 +57,69 @@ public class PowerMockEventServiceTest {
         DateHolderModel dateText = _eventService.retreiveDateDisplayText(dateTime, _resources);
 
         Assert.assertEquals(true, dateText.getDateText().equals("Feb - 26"));
+    }
+
+    @Test
+    public void when_greater_than_24_hours() {
+        //Given
+        DateTime currentDateTime = new DateTime(1459104780000L); // Sun, 27 Mar 2016 19:53:00 GMT
+        DateTime eventTime = new DateTime(1459277400000L); //Tue, 29 Mar 2016 19:50:00 GMT
+        given(_eventService.retreiveTimeDisplaytext(any(DateTime.class), any(DateTime.class), any(Resources.class))).willCallRealMethod();
+        given(_resources.getColor(any(int.class))).willReturn(0x000);
+
+        //When
+        TimeHolderModel timeHolderModel = _eventService.retreiveTimeDisplaytext(eventTime, currentDateTime, _resources);
+
+        //Should
+        Assert.assertEquals(true, timeHolderModel.getTextToDisplay().equals("19:50"));
+    }
+
+    @Test
+    public void when_validating_time_ahead_of_now() {
+        //Given
+        DateTime currentDateTime = new DateTime(1459104780000L); // Sun, 27 Mar 2016 19:53:00 GMT
+        DateTime eventTime = new DateTime(1459115580000L); //Su
+        // n, 27 Mar 2016 21:53:00 GMT
+        given(_eventService.retreiveTimeDisplaytext(any(DateTime.class), any(DateTime.class), any(Resources.class))).willCallRealMethod();
+        given(_resources.getColor(any(int.class))).willReturn(0x000);
+
+        //When
+        TimeHolderModel timeHolderModel = _eventService.retreiveTimeDisplaytext(eventTime, currentDateTime, _resources);
+
+        //Should
+        Assert.assertEquals(true, timeHolderModel.getTextToDisplay().replaceAll("\\s+", " ").equals("22:53 ( in 3 hours)"));
+
+        //Given
+        eventTime = new DateTime(1459104960000L); //Sun, 27 Mar 2016 19:56:00 GMT
+
+        //When
+        timeHolderModel = _eventService.retreiveTimeDisplaytext(eventTime, currentDateTime, _resources);
+
+        //Should
+        Assert.assertEquals(true, timeHolderModel.getTextToDisplay().replaceAll("\\s+", " ").equals("19:56 ( in 3 minutes)"));
+    }
+
+    @Test
+    public void when_validating_time_before_now() {
+        //Given
+        DateTime currentDateTime = new DateTime(1459104780000L); // Sun, 27 Mar 2016 19:53:00 GMT
+        DateTime eventTime = new DateTime(1459094160000L); //Sun, 27 Mar 2016 16:56:00 GMT
+        given(_eventService.retreiveTimeDisplaytext(any(DateTime.class), any(DateTime.class), any(Resources.class))).willCallRealMethod();
+        given(_resources.getColor(any(int.class))).willReturn(0x000);
+
+        //When
+        TimeHolderModel timeHolderModel = _eventService.retreiveTimeDisplaytext(eventTime, currentDateTime, _resources);
+
+        //Should
+        Assert.assertEquals(true, timeHolderModel.getTextToDisplay().equals("16:56 ( 2 hours ago)"));
+
+        //Given
+        eventTime = new DateTime(1459104600000L); //Sun, 27 Mar 2016 18:50:00 GMT
+
+        //When
+        timeHolderModel = _eventService.retreiveTimeDisplaytext(eventTime, currentDateTime, _resources);
+
+        //Should
+        Assert.assertEquals(true, timeHolderModel.getTextToDisplay().equals("19:50 ( 3 minutes ago)"));
     }
 }

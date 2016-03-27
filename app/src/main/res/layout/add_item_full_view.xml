@@ -203,6 +203,8 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:visibility="invisible"
+                            android:id="@+id/time_select_container"
                             android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -222,7 +224,7 @@
                                 android:id="@+id/set_time_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="32dp"
-                                android:text="Set time"
+                                android:text="@string/set_time"
                                 android:fontFamily="sans-serif-condensed"
                                 android:textColor="#616161"
                                 android:paddingTop="8dp"

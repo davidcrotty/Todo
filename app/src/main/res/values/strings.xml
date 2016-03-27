@@ -14,4 +14,5 @@
 
     <string name="today_text">Today</string>
     <string name="tomorrow_text">Tomorrow</string>
+    <string name="set_time">Set time</string>
 </resources>

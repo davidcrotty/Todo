@@ -42,6 +42,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                                                              DatePickerDialog.OnDateSetListener{
 
     public static String ANIMATE_START_INTENT_KEY = "ANIMATE_START_INTENT_KEY";
+    public static String NON_DEFAULT_DATE_KEY = "NON_DEFAULT_DATE_KEY";
     public static String TITLE_TEXT_INTENT_KEY = "TITLE_TEXT_INTENT_KEY";
     public static String EVENT_INTENT_KEY = "EVENT_INTENT_KEY";
 
@@ -81,13 +82,14 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     FrameLayout _actionContainer;
     @Bind(R.id.date_text)
     TextView _dateText;
+    @Bind(R.id.time_select_container)
+    LinearLayout _timeSelectContainer;
 
     private EventView _eventView;
     private SupportAnimator _circularReveal;
     private AddItemPresenter _addItemPresenter;
     private AnimateLocationCoordinatesModel _coordinatesModel;
     private int _checkListScrollThreshold = 0;
-    private int _commentsScrollThreshold = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +129,9 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     protected void onResume() {
         super.onResume();
         _addItemPresenter.updateListText();
+        if(getIntent().hasExtra(NON_DEFAULT_DATE_KEY)) {
+            showTimePickButton();
+        }
     }
 
     @Override
@@ -197,6 +202,10 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         _dateText.setTextColor(colour);
     }
 
+    public void showTimePickButton() {
+        _timeSelectContainer.setVisibility(View.VISIBLE);
+    }
+
     private void calculateAnimationCoordinates() {
         float finalRadius = Math.max(_rootView.getWidth(), _rootView.getHeight());
                 int[] fabLocation = new int[2];
@@ -228,8 +237,6 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         _checkListScrollThreshold = resources.getDimensionPixelSize(R.dimen.link_line)
                 + resources.getDimensionPixelSize(R.dimen.small_fab)
                 + (resources.getDimensionPixelOffset(R.dimen.link_margin) * 2);
-
-        _commentsScrollThreshold = _checkListScrollThreshold * 2;
     }
 
     private void addCollapsingToolbarBehaviour() {

@@ -54,6 +54,8 @@ public class AddItemPresenter {
     }
 
     public void updateEventMemoryModel(Date date, String displayText) {
+        _addItemActivity.getIntent().putExtra(AddItemActivity.NON_DEFAULT_DATE_KEY, true);
+        _addItemActivity.showTimePickButton();
         _addItemActivity.setEventIntentKey(new EventModel(date, displayText));
     }
 

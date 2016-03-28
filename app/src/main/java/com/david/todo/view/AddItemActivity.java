@@ -125,20 +125,20 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         //Bug in library where date starts from 0, add 1 to compensate
         _addItemPresenter.updateEventMemoryModelWithDate(new DateTime(year, monthOfYear + 1, dayOfMonth, 0, 0).toDate(), null);
-        _addItemPresenter.updateListText();
+        _addItemPresenter.updateDateText();
         _eventView.reverseAnimation();
     }
 
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
         _addItemPresenter.updateEventMemoryModelWithTime(hourOfDay, minute);
-        _addItemPresenter.updateListText();
+        _addItemPresenter.updateTimeText();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        _addItemPresenter.updateListText();
+        _addItemPresenter.updateDateText();
         if(getIntent().hasExtra(NON_DEFAULT_DATE_KEY)) {
             showTimePickButton();
         }

@@ -57,12 +57,18 @@ public class AddItemPresenter {
      * Checks data store or if there is an event intent to be used to fill out some/all of
      * the forms contents, called onResume or on date change.
      */
-    public void updateListText() {
+    public void updateDateText() {
         EventModel eventModel = getDateModelIntent();
         if(eventModel == null) return;
         Resources resources = _addItemActivity.getResources();
         DateHolderModel dateModel = _eventService.retreiveDateDisplayText(new DateTime(eventModel._date), resources);
         _addItemActivity.updateDateWith(dateModel.getDateText(), dateModel.getColourResource());
+    }
+
+    public void updateTimeText() {
+        EventModel eventModel = getDateModelIntent();
+        if(eventModel == null) return;
+        Resources resources = _addItemActivity.getResources();
         TimeHolderModel timeHolderModel = _eventService.retreiveTimeDisplaytext(new DateTime(eventModel._date), new DateTime(), resources);
         _addItemActivity.updateTimeWith(timeHolderModel.getTextToDisplay(), timeHolderModel.getColour());
     }

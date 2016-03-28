@@ -153,21 +153,21 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
             case R.id.today_card:
                 String todayText = getResources().getString(R.string.today_text);
                 _presenter.updateEventMemoryModelWithDate(new DateTime().toDate(), todayText);
-                _presenter.updateDateText();
+                _presenter.retreiveThenUpdateDateText();
                 reverseAnimation();
                 break;
             case R.id.tomorrow_card:
                 DateTime tomorrowsDateTime = new DateTime().plusDays(_today);
                 String dayOfWeekText = tomorrowsDateTime.dayOfWeek().getAsText();
                 _presenter.updateEventMemoryModelWithDate(tomorrowsDateTime.toDate(), dayOfWeekText);
-                _presenter.updateDateText();
+                _presenter.retreiveThenUpdateDateText();
                 reverseAnimation();
                 break;
             case R.id.next_week_card:
                 DateTime dateTime = new DateTime().plusDays(_nextWeek);
                 String dateFormatText = dateTime.toString(DateTimeFormat.forPattern(_dateFormat));
                 _presenter.updateEventMemoryModelWithDate(dateTime.toDate(), dateFormatText);
-                _presenter.updateDateText();
+                _presenter.retreiveThenUpdateDateText();
                 reverseAnimation();
                 break;
             case R.id.date_pick_card:

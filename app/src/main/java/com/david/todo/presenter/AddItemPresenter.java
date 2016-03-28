@@ -54,12 +54,8 @@ public class AddItemPresenter {
     public void delegateDatePickerCreation() {
         _addItemActivity.createDatePicker();
     }
-
-    /**
-     * Checks data store or if there is an event intent to be used to fill out some/all of
-     * the forms contents, called onResume or on date change.
-     */
-    public void updateDateText() {
+    
+    public void retreiveThenUpdateDateText() {
         EventModel eventModel = getDateModelIntent();
         if(eventModel == null) return;
         Resources resources = _addItemActivity.getResources();
@@ -67,7 +63,7 @@ public class AddItemPresenter {
         _addItemActivity.updateDateWith(dateModel.getDateText(), dateModel.getColourResource());
     }
 
-    public void updateTimeText() {
+    public void retreiveThenUpdateTimeText() {
         EventModel eventModel = getDateModelIntent();
         if(eventModel == null) return;
         Resources resources = _addItemActivity.getResources();

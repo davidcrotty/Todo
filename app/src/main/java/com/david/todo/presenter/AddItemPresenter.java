@@ -37,7 +37,9 @@ public class AddItemPresenter {
 
     public void updateEventMemoryModelWithTime(int hourOfDay, int minuteOfDay) {
         EventModel eventModel = getDateModelIntent();
-        if(eventModel == null) throw new IllegalStateException("Day must be selected before time can be set!");
+        if(eventModel == null) {
+            eventModel = new EventModel(new DateTime().plusDays(1).toDate(), "Tomorrow");
+        }
         DateTime date = new DateTime(eventModel._date);
         //reset to midnight from prior set
         date = date.withHourOfDay(0);
@@ -79,7 +81,6 @@ public class AddItemPresenter {
 
     public void updateEventMemoryModelWithDate(Date date, String displayText) {
         _addItemActivity.getIntent().putExtra(AddItemActivity.NON_DEFAULT_DATE_KEY, true);
-        _addItemActivity.showTimePickButton();
         _addItemActivity.setEventIntentKey(new EventModel(date, displayText));
     }
 

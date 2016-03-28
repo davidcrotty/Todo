@@ -119,6 +119,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         addItemActions();
         loadFabScrollThresholds();
         _scrollView.setOnScrollChangeListener(this);
+        showTimePickButton();
     }
 
     @Override
@@ -139,9 +140,6 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     protected void onResume() {
         super.onResume();
         _addItemPresenter.updateDateText();
-        if(getIntent().hasExtra(NON_DEFAULT_DATE_KEY)) {
-            showTimePickButton();
-        }
     }
 
     @Override
@@ -220,7 +218,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         _dateText.setTextColor(colour);
     }
 
-    public void showTimePickButton() {
+    private void showTimePickButton() {
         _timeText.setVisibility(View.VISIBLE);
         _timeSelectContainer.setVisibility(View.VISIBLE);
         _timeSelectContainer.setOnClickListener(this);

@@ -205,7 +205,6 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:visibility="invisible"
                             android:id="@+id/time_select_container"
                             android:orientation="horizontal"
                             android:layout_width="wrap_content"

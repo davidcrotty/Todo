@@ -10,7 +10,6 @@ import com.david.todo.service.EventService;
 import com.david.todo.view.AddItemActivity;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalTime;
 
 import java.util.Date;
 
@@ -23,6 +22,11 @@ public class AddItemPresenter {
                             EventService eventService) {
         _addItemActivity = addItemActivity;
         _eventService = eventService;
+    }
+
+    public void clearTime() {
+        _addItemActivity.getIntent().removeExtra(AddItemActivity.DATE_KEY);
+        _addItemActivity.clearTime();
     }
 
     public void updateTitleWithIntent() {
@@ -49,6 +53,7 @@ public class AddItemPresenter {
         date = date.plusMinutes(minuteOfDay);
         eventModel.setTime(date.toDate());
         _addItemActivity.setEventIntentKey(eventModel);
+        _addItemActivity.getIntent().putExtra(AddItemActivity.DATE_KEY, true);
     }
 
     public void delegateDatePickerCreation() {
@@ -76,7 +81,7 @@ public class AddItemPresenter {
     }
 
     public void updateEventMemoryModelWithDate(Date date, String displayText) {
-        _addItemActivity.getIntent().putExtra(AddItemActivity.NON_DEFAULT_DATE_KEY, true);
+        _addItemActivity.getIntent().putExtra(AddItemActivity.DATE_KEY, true);
         _addItemActivity.setEventIntentKey(new EventModel(date, displayText));
     }
 

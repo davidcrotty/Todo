@@ -44,7 +44,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                                                              TimePickerDialog.OnTimeSetListener {
 
     public static String ANIMATE_START_INTENT_KEY = "ANIMATE_START_INTENT_KEY";
-    public static String NON_DEFAULT_DATE_KEY = "NON_DEFAULT_DATE_KEY";
+    public static String DATE_KEY = "DATE_KEY";
     public static String TITLE_TEXT_INTENT_KEY = "TITLE_TEXT_INTENT_KEY";
     public static String EVENT_INTENT_KEY = "EVENT_INTENT_KEY";
 
@@ -128,6 +128,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         _addItemPresenter.updateEventMemoryModelWithDate(new DateTime(year, monthOfYear + 1, dayOfMonth, 0, 0).toDate(), null);
         _addItemPresenter.retreiveThenUpdateDateText();
         _eventView.reverseAnimation();
+        _addItemPresenter.clearTime();
     }
 
     @Override
@@ -140,7 +141,9 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     protected void onResume() {
         super.onResume();
         _addItemPresenter.retreiveThenUpdateDateText();
-        _addItemPresenter.retreiveThenUpdateTimeText();
+        if(getIntent().hasExtra(DATE_KEY)) {
+            _addItemPresenter.retreiveThenUpdateTimeText();
+        }
     }
 
     @Override
@@ -212,6 +215,10 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
 
     public EventModel getDateModelIntent() {
         return (EventModel) getIntent().getSerializableExtra(EVENT_INTENT_KEY);
+    }
+    public void clearTime() {
+        getIntent().removeExtra(DATE_KEY);
+        _timeText.setText("");
     }
 
     public void updateDateWith(String dateText, int colour) {

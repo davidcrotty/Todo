@@ -8,6 +8,7 @@ import com.david.todo.model.DateHolderModel;
 import com.david.todo.model.TimeHolderModel;
 
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
@@ -48,7 +49,7 @@ public class EventService {
                                                    DateTime currentDateTime,
                                                    Resources resources) {
         Period p = new Period(currentDateTime, dateTimeOfEvent);
-        int daysFromNow = p.getDays();
+        int daysFromNow = Days.daysBetween(currentDateTime.toLocalDate(), dateTimeOfEvent.toLocalDate()).getDays();
         int hoursFromNow = p.getHours();
         int hours = dateTimeOfEvent.getHourOfDay();
         int minutes = dateTimeOfEvent.getMinuteOfDay();

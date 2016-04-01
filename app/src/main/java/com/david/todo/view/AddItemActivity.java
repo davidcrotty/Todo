@@ -100,8 +100,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item_full_view);
         ButterKnife.bind(this);
-        _addItemPresenter = new AddItemPresenter(this,
-                                                new EventService());
+        _addItemPresenter = new AddItemPresenter(this);
         _rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {

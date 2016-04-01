@@ -6,6 +6,9 @@ import android.content.res.Resources;
 import com.david.todo.model.DateHolderModel;
 import com.david.todo.model.EventModel;
 import com.david.todo.model.TimeHolderModel;
+import com.david.todo.module.DaggerEventServiceComponent;
+import com.david.todo.module.EventServiceComponent;
+import com.david.todo.module.EventServiceModule;
 import com.david.todo.service.EventService;
 import com.david.todo.view.AddItemActivity;
 
@@ -13,15 +16,16 @@ import org.joda.time.DateTime;
 
 import java.util.Date;
 
+import javax.inject.Inject;
+
 public class AddItemPresenter {
 
     private final AddItemActivity _addItemActivity;
-    private final EventService _eventService;
+    @Inject EventService _eventService;
 
-    public AddItemPresenter(AddItemActivity addItemActivity,
-                            EventService eventService) {
+    public AddItemPresenter(AddItemActivity addItemActivity) {
+        DaggerEventServiceComponent.builder().eventServiceModule(new EventServiceModule()).build().inject(this);
         _addItemActivity = addItemActivity;
-        _eventService = eventService;
     }
 
     public void clearTime() {

@@ -1,4 +1,4 @@
-package com.david.todo.view;
+package com.david.todo.view.activity;
 
 import android.app.Activity;
 import android.content.res.ColorStateList;
@@ -25,7 +25,10 @@ import com.david.todo.R;
 import com.david.todo.model.AnimateLocationCoordinatesModel;
 import com.david.todo.model.EventModel;
 import com.david.todo.presenter.AddItemPresenter;
-import com.david.todo.service.EventService;
+import com.david.todo.view.AddItemActionsView;
+import com.david.todo.view.BaseActivity;
+import com.david.todo.view.CollapsingToolbarViewStrategy;
+import com.david.todo.view.EventView;
 import com.david.todo.view.eventlisteners.EditTextChangeListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;

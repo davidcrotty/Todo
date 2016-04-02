@@ -4,8 +4,7 @@ import com.david.todo.presenter.TodoListPresenter;
 import com.david.todo.repository.DataRepository;
 import com.david.todo.service.TaskService;
 import com.david.todo.service.TextEntryService;
-import com.david.todo.view.AddItemShortView;
-import com.david.todo.view.TodoListActivity;
+import com.david.todo.view.activity.TodoListActivity;
 
 import dagger.Module;
 import dagger.Provides;

@@ -5,7 +5,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.david.todo.R;
-import com.david.todo.view.TodoListActivity;
+import com.david.todo.view.activity.TodoListActivity;
 
 import org.junit.Rule;
 import org.junit.Test;

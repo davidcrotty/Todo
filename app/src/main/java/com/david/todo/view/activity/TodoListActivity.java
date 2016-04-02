@@ -1,4 +1,4 @@
-package com.david.todo.view;
+package com.david.todo.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +27,10 @@ import com.david.todo.module.DataRepositoryComponent;
 import com.david.todo.module.DataRepositoryModule;
 import com.david.todo.module.TodoListPresenterModule;
 import com.david.todo.presenter.TodoListPresenter;
+import com.david.todo.view.AddItemShortView;
+import com.david.todo.view.BaseActivity;
+import com.david.todo.view.NoTodoItemsView;
+import com.david.todo.view.TodoView;
 
 import javax.inject.Inject;
 

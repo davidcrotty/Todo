@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.david.todo.R;
 import com.david.todo.adapter.TodoItemListAdapter;
@@ -14,9 +12,9 @@ import com.david.todo.model.AnimateLocationCoordinatesModel;
 import com.david.todo.model.TaskItemModel;
 import com.david.todo.service.TaskService;
 import com.david.todo.service.TextEntryService;
-import com.david.todo.view.AddItemActivity;
+import com.david.todo.view.activity.AddItemActivity;
 import com.david.todo.view.AddItemShortView;
-import com.david.todo.view.TodoListActivity;
+import com.david.todo.view.activity.TodoListActivity;
 import com.david.todo.view.TodoView;
 
 import java.util.ArrayList;

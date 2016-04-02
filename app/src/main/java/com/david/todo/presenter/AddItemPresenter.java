@@ -7,10 +7,9 @@ import com.david.todo.model.DateHolderModel;
 import com.david.todo.model.EventModel;
 import com.david.todo.model.TimeHolderModel;
 import com.david.todo.module.DaggerEventServiceComponent;
-import com.david.todo.module.EventServiceComponent;
 import com.david.todo.module.EventServiceModule;
 import com.david.todo.service.EventService;
-import com.david.todo.view.AddItemActivity;
+import com.david.todo.view.activity.AddItemActivity;
 
 import org.joda.time.DateTime;
 

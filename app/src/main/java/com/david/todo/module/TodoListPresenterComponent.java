@@ -1,6 +1,6 @@
 package com.david.todo.module;
 
-import com.david.todo.view.TodoListActivity;
+import com.david.todo.view.activity.TodoListActivity;
 import com.david.todo.presenter.TodoListPresenter;
 
 import dagger.Component;

@@ -20,6 +20,18 @@
         <item name="colorControlActivated">#fff</item>
     </style>
 
+    <style name="AppThemeNoActionBar.Transparent" parent="AppThemeNoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:statusBarColor">@color/add_activity_status_bar</item>
+        <item name="colorPrimaryDark">@android:color/white</item>
+        <item name="colorPrimary">@android:color/white</item>
+    </style>
+
+    <style name="AppThemeNoActionBar.Transparent.Green" parent="AppThemeNoActionBar">
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryDark">@color/green_ripple</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="Base.Theme.AppCompat.Light.DarkActionBar"/>
 
     <style name="TextLabel" parent="TextAppearance.AppCompat">

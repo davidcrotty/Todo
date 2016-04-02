@@ -29,7 +29,8 @@
 
         <activity
             android:name=".view.activity.TaskListActivity"
-            android:theme="@style/AppThemeNoActionBar.Transparent"
+            android:theme="@style/AppThemeNoActionBar.Transparent.Green"
+            android:label=""
             android:launchMode="singleTask"
             />
     </application>

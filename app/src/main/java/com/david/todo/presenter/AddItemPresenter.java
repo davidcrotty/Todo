@@ -27,6 +27,10 @@ public class AddItemPresenter {
         _addItemActivity = addItemActivity;
     }
 
+    public void delegateAddEventView() {
+        _addItemActivity.addEventView();
+    }
+
     public void delegateLaunchTaskListActivity() {
         _addItemActivity.launchTaskListActivity();
     }

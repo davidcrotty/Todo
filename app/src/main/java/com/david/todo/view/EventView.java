@@ -139,7 +139,7 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
             _presenter.removeEventView();
             return;
         }
-        
+
         animator.addListener(new SupportAnimator.SimpleAnimatorListener() {
             @Override
             public void onAnimationEnd() {

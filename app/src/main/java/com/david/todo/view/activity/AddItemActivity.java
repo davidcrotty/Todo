@@ -30,6 +30,8 @@ import com.david.todo.view.AddItemActionsView;
 import com.david.todo.view.BaseActivity;
 import com.david.todo.view.CollapsingToolbarViewStrategy;
 import com.david.todo.view.EventView;
+import com.david.todo.view.eventlisteners.AddEventViewClickListener;
+import com.david.todo.view.eventlisteners.AddTaskListClickListener;
 import com.david.todo.view.eventlisteners.EditTextChangeListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
@@ -171,9 +173,6 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
             case R.id.back_arrow_image:
                 finish();
                 break;
-            case R.id.focused_action_fab:
-                addEventView();
-                break;
             case R.id.time_select_container:
                 createTimePicker();
                 break;
@@ -207,14 +206,9 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
 
     private void delegateActionButtonEvent(int scrollY) {
         if(scrollY > _checkListScrollThreshold && scrollY < _commentsScrollThreshold) {
-            _actionFab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    launchTaskListActivity();
-                }
-            });
+            _actionFab.setOnClickListener(new AddTaskListClickListener(_addItemPresenter));
         } else {
-            _actionFab.setOnClickListener(this);
+            _actionFab.setOnClickListener(new AddEventViewClickListener(_addItemPresenter));
         }
     }
 
@@ -271,7 +265,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                                                                         finalRadius);
     }
 
-    private void addEventView() {
+    public void addEventView() {
         //on pause needs to store prior coords, but will be from prior rotation, so before going back needs to grab both land/port coords
         if(_eventView != null) {
             if(_eventView.getVisibility() == View.VISIBLE) return;

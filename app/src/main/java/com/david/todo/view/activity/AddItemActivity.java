@@ -100,6 +100,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     private AddItemPresenter _addItemPresenter;
     private AnimateLocationCoordinatesModel _coordinatesModel;
     private int _checkListScrollThreshold = 0;
+    private int _commentsScrollThreshold = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,25 +108,24 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.add_item_full_view);
         ButterKnife.bind(this);
         _addItemPresenter = new AddItemPresenter(this);
+        loadFabScrollThresholds();
+        addCollapsingToolbarBehaviour();
+        _addItemPresenter.updateTitleWithIntent();
+        addItemActions();
+        _scrollView.setOnScrollChangeListener(this);
+        _eventDetailShort.setOnClickListener(this);
+        showTimePickButton();
         _rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 circularRevealLayout();
-                _actionFab.setOnClickListener(AddItemActivity.this);
+                delegateActionButtonEvent(_scrollView.getScrollY());
                 calculateAnimationCoordinates();
-                if(getIntent().hasExtra(EventView.PRESERVE_VIEW)) {
+                if (getIntent().hasExtra(EventView.PRESERVE_VIEW)) {
                     addEventView();
                 }
             }
         });
-
-        addCollapsingToolbarBehaviour();
-        _addItemPresenter.updateTitleWithIntent();
-        addItemActions();
-        loadFabScrollThresholds();
-        _scrollView.setOnScrollChangeListener(this);
-        _eventDetailShort.setOnClickListener(this);
-        showTimePickButton();
     }
 
     @Override
@@ -185,20 +185,14 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-        int commentsScrollThreshold = _checkListScrollThreshold * 2;
         if(_checkListScrollThreshold == 0) return;
         Resources resources = getResources();
 
-        if(scrollY > _checkListScrollThreshold && scrollY < commentsScrollThreshold) {
+        if(scrollY > _checkListScrollThreshold && scrollY < _commentsScrollThreshold) {
             _actionFab.setImageDrawable(resources.getDrawable(R.drawable.check_box_white));
             _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.green)));
             _actionFab.setRippleColor(resources.getColor(R.color.green_ripple));
-            _actionFab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    launchTaskListActivity();
-                }
-            });
+            delegateActionButtonEvent(scrollY);
         } else if(scrollY > _checkListScrollThreshold) {
             _actionFab.setImageDrawable(resources.getDrawable(R.drawable.mode_comment));
             _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.light_blue)));
@@ -207,6 +201,20 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
             _actionFab.setImageDrawable(resources.getDrawable(R.drawable.event_white));
             _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.orange)));
             _actionFab.setRippleColor(resources.getColor(R.color.orange_ripple));
+            delegateActionButtonEvent(scrollY);
+        }
+    }
+
+    private void delegateActionButtonEvent(int scrollY) {
+        if(scrollY > _checkListScrollThreshold && scrollY < _commentsScrollThreshold) {
+            _actionFab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    launchTaskListActivity();
+                }
+            });
+        } else {
+            _actionFab.setOnClickListener(this);
         }
     }
 
@@ -283,6 +291,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         _checkListScrollThreshold = resources.getDimensionPixelSize(R.dimen.link_line)
                 + resources.getDimensionPixelSize(R.dimen.small_fab)
                 + (resources.getDimensionPixelOffset(R.dimen.link_margin) * 2);
+        _commentsScrollThreshold = _checkListScrollThreshold * 2;
     }
 
     private void addCollapsingToolbarBehaviour() {

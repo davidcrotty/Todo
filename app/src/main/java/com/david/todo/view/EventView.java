@@ -135,6 +135,11 @@ public class EventView extends RelativeLayout implements View.OnClickListener {
 
     public void reverseAnimation() {
         SupportAnimator animator = _circularReveal.reverse();
+        if(animator == null) {
+            _presenter.removeEventView();
+            return;
+        }
+        
         animator.addListener(new SupportAnimator.SimpleAnimatorListener() {
             @Override
             public void onAnimationEnd() {

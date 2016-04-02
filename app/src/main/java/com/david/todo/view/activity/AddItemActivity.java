@@ -1,6 +1,7 @@
 package com.david.todo.view.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -91,6 +92,8 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     TextView _timeText;
     @Bind(R.id.time_select_container)
     LinearLayout _timeSelectContainer;
+    @Bind(R.id.event_detail_short)
+    RelativeLayout _eventDetailShort;
 
     private EventView _eventView;
     private SupportAnimator _circularReveal;
@@ -121,6 +124,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         addItemActions();
         loadFabScrollThresholds();
         _scrollView.setOnScrollChangeListener(this);
+        _eventDetailShort.setOnClickListener(this);
         showTimePickButton();
     }
 
@@ -173,6 +177,9 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
             case R.id.time_select_container:
                 createTimePicker();
                 break;
+            case R.id.event_detail_short:
+                addEventView();
+                break;
         }
     }
 
@@ -186,6 +193,12 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
             _actionFab.setImageDrawable(resources.getDrawable(R.drawable.check_box_white));
             _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.green)));
             _actionFab.setRippleColor(resources.getColor(R.color.green_ripple));
+            _actionFab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    launchTaskListActivity();
+                }
+            });
         } else if(scrollY > _checkListScrollThreshold) {
             _actionFab.setImageDrawable(resources.getDrawable(R.drawable.mode_comment));
             _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.light_blue)));
@@ -195,6 +208,11 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
             _actionFab.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.orange)));
             _actionFab.setRippleColor(resources.getColor(R.color.orange_ripple));
         }
+    }
+
+    public void launchTaskListActivity() {
+        Intent intent = new Intent(this, TaskListActivity.class);
+        startActivity(intent);
     }
 
     public void updateTimeWith(String textToDisplay, int colour) {

@@ -27,6 +27,10 @@ public class AddItemPresenter {
         _addItemActivity = addItemActivity;
     }
 
+    public void delegateLaunchTaskListActivity() {
+        _addItemActivity.launchTaskListActivity();
+    }
+
     public void clearTime() {
         _addItemActivity.getIntent().removeExtra(AddItemActivity.DATE_KEY);
         _addItemActivity.clearTime();

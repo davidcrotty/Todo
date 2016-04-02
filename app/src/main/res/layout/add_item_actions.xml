@@ -25,11 +25,11 @@
         android:src="@drawable/check_box_white"
         app:elevation="4dp"
         app:rippleColor="@color/green_ripple"
-        android:id="@+id/checklist_fab"
+        android:id="@+id/task_list_fab"
         android:clickable="true"/>
 
     <View
-        android:layout_below="@+id/checklist_fab"
+        android:layout_below="@+id/task_list_fab"
         android:id="@+id/line2"
         android:layout_width="1dp"
         android:layout_height="@dimen/link_line"

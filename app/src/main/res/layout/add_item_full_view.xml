@@ -175,8 +175,10 @@
                     android:layout_marginLeft="20dp">
                     
                     <RelativeLayout
+                        android:id="@+id/event_detail_short"
                         android:layout_width="match_parent"
-                        android:layout_height="80dp">
+                        android:layout_height="80dp"
+                        android:clickable="true">
 
                         <LinearLayout
                             android:id="@+id/date_list_item"

@@ -26,6 +26,12 @@
             android:theme="@style/AppThemeNoActionBar.Transparent"
             android:launchMode="singleTask"
             />
+
+        <activity
+            android:name=".view.activity.TaskListActivity"
+            android:theme="@style/AppThemeNoActionBar.Transparent"
+            android:launchMode="singleTask"
+            />
     </application>
 
 </manifest>

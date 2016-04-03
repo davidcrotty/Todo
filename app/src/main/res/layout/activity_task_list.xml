@@ -21,10 +21,10 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-        android:layout_marginTop="?attr/actionBarSize"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/check_list"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></LinearLayout>
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

@@ -30,6 +30,5 @@ class TaskListActivity : BaseActivity() {
         _checkList.setHasFixedSize(true)
         _checkList.adapter = adapter
         _checkList.layoutManager = LinearLayoutManager(this)
-
     }
 }

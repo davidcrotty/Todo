@@ -15,7 +15,7 @@ class ChecklistAdapter(val itemList: ArrayList<String>) : RecyclerView.Adapter<C
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ItemViewHolder? {
         var layout = LayoutInflater.from(parent?.context).inflate(R.layout.check_list_item, parent, false)
-        val viewHolder = ItemViewHolder(layout); //frame layout is the parent view
+        val viewHolder = ItemViewHolder(layout);
         return viewHolder;
     }
 
@@ -32,7 +32,7 @@ class ChecklistAdapter(val itemList: ArrayList<String>) : RecyclerView.Adapter<C
         var textView: TextView
 
         init {
-            textView = view as TextView
+            textView = view.findViewById(R.id.text_item) as TextView
         }
     }
 }

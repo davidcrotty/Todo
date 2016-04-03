@@ -27,6 +27,32 @@ class ChecklistAdapter(val itemList: ArrayList<String>) : RecyclerView.Adapter<C
         return itemList.count();
     }
 
+    fun onItemDismiss(position: Int) {
+        itemList.removeAt(position);
+        notifyItemRemoved(position);
+    }
+
+    fun onItemMove(fromPosition: Int, toPosition: Int) : Boolean{
+        if (fromPosition < toPosition) {
+            for(i in fromPosition..toPosition - 1) {
+                Collections.swap(itemList, i, i + 1);
+            }
+//            for (int i = fromPosition; i < toPosition; i++) {
+//                Collections.swap(mItems, i, i + 1);
+//            }
+        } else {
+            for(i in fromPosition downTo toPosition) {
+                Collections.swap(itemList, i, i - 1);
+            }
+//            for (int i = fromPosition; i > toPosition; i--) {
+//                Collections.swap(mItems, i, i - 1);
+//            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
+
+
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         var textView: TextView

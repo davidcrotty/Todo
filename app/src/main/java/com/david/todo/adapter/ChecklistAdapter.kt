@@ -41,7 +41,7 @@ class ChecklistAdapter(val itemList: ArrayList<String>) : RecyclerView.Adapter<C
 //                Collections.swap(mItems, i, i + 1);
 //            }
         } else {
-            for(i in fromPosition downTo toPosition) {
+            for(i in fromPosition downTo toPosition + 1) {
                 Collections.swap(itemList, i, i - 1);
             }
 //            for (int i = fromPosition; i > toPosition; i--) {

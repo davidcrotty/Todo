@@ -10,6 +10,7 @@ import butterknife.ButterKnife
 import com.david.todo.R
 import com.david.todo.adapter.ChecklistAdapter
 import com.david.todo.view.BaseActivity
+import com.david.todo.view.decorators.DividerItemDecoration
 import com.david.todo.view.eventlisteners.TouchEventHelper
 
 /**
@@ -32,6 +33,7 @@ class TaskListActivity : BaseActivity() {
         _checkList.setHasFixedSize(true)
         _checkList.adapter = adapter
         _checkList.layoutManager = LinearLayoutManager(this)
+        _checkList.addItemDecoration(DividerItemDecoration(this, R.drawable.list_divider))
 
         val touchEventHelper = TouchEventHelper(adapter)
         val itemTouchHelper = ItemTouchHelper(touchEventHelper)

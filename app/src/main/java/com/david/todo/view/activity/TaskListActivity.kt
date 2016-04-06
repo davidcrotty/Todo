@@ -33,7 +33,7 @@ class TaskListActivity : BaseActivity() {
         _checkList.setHasFixedSize(true)
         _checkList.adapter = adapter
         _checkList.layoutManager = LinearLayoutManager(this)
-        _checkList.addItemDecoration(DividerItemDecoration(this, R.drawable.list_divider))
+//        _checkList.addItemDecoration(DividerItemDecoration(this, R.drawable.list_divider))
 
         val touchEventHelper = TouchEventHelper(adapter)
         val itemTouchHelper = ItemTouchHelper(touchEventHelper)

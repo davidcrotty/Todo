@@ -28,7 +28,11 @@ class TaskListActivity : BaseActivity() {
     }
 
     private fun init() {
-        val itemList = arrayListOf("one", "two", "three", "four", "five")
+        val itemList = arrayListOf("Prepare meeting room",
+                                   "Review project proposal",
+                                   "Contact catering team",
+                                   "Email team reminder",
+                                   "Test AV equipment")
         val adapter = ChecklistAdapter(itemList)
         _checkList.setHasFixedSize(true)
         _checkList.adapter = adapter

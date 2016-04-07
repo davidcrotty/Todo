@@ -14,13 +14,12 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
 
-    <View
-        android:layout_width="48dp"
-        android:layout_height="16dp"
+    <ImageView
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:id="@+id/drag_handle"
-        android:background="@android:color/holo_red_light"
+        android:src="@drawable/reorder_grey"
         android:layout_marginRight="16dp"
-        android:elevation="4dp"
         android:layout_gravity="right|center_vertical" />
 
 </FrameLayout>

@@ -24,7 +24,6 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>) : RecyclerView.A
 
     override fun onBindViewHolder(holder: ItemViewHolder?, position: Int) {
         holder?.textView?.text = itemList[position].text
-        holder?.handle?.setBackgroundColor(itemList[position].colour)
     }
 
     override fun getItemCount(): Int {
@@ -54,11 +53,9 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>) : RecyclerView.A
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         var textView: TextView
-        var handle: View
 
         init {
             textView = view.findViewById(R.id.text_item) as TextView
-            handle = view.findViewById(R.id.drag_handle) as View
         }
     }
 }

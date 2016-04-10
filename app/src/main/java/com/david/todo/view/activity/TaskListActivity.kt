@@ -36,7 +36,7 @@ class TaskListActivity : BaseActivity() {
                                    CheckItemModel("Contact catering team", resources.getColor(R.color.light_blue)),
                                    CheckItemModel("Email team reminder", resources.getColor(R.color.red)),
                                    CheckItemModel("Test AV equipment", resources.getColor(R.color.teal)));
-        val adapter = ChecklistAdapter(itemList)
+        val adapter = ChecklistAdapter(itemList, this)
         _checkList.setHasFixedSize(true)
         _checkList.adapter = adapter
         _checkList.layoutManager = LinearLayoutManager(this)

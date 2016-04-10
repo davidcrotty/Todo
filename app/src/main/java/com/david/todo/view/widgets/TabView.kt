@@ -19,6 +19,11 @@ class TabView(context: Context, attributes: AttributeSet) : View(context, attrib
         color = context.resources.getColor(R.color.red)
     }
 
+    fun setColour(colourHex: Int) {
+        color = colourHex
+        invalidate()
+    }
+
     override fun onDraw(canvas: Canvas?) {
         val canvas = canvas?.let { it } ?: return
         paint.color = color;

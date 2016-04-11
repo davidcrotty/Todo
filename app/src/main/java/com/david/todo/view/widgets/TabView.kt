@@ -28,14 +28,14 @@ class TabView(context: Context, attributes: AttributeSet) : View(context, attrib
         val canvas = canvas?.let { it } ?: return
         paint.color = color;
         paint.strokeWidth = 3F;
-        canvas.drawRect(40F,0F, 150F, 40F, paint)
+        canvas.drawRect(60F,0F, 250F, 60F, paint)
 
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setAntiAlias(true)
         val path = Path();
         path.setFillType(Path.FillType.EVEN_ODD);
-        path.lineTo(40F, 40F);
-        path.lineTo(40F, 0F);
+        path.lineTo(60F, 60F);
+        path.lineTo(60F, 6F);
         path.lineTo(0F, 0F);
         path.close();
 

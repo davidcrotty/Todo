@@ -30,22 +30,15 @@ class TabView(context: Context, attributes: AttributeSet) : View(context, attrib
         paint.strokeWidth = 3F;
         canvas.drawRect(60F,0F, 250F, 60F, paint)
 
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        paint.setAntiAlias(true)
-        val path = Path();
-        path.setFillType(Path.FillType.EVEN_ODD);
-        path.lineTo(60F, 60F);
-        path.lineTo(60F, 6F);
-        path.lineTo(0F, 0F);
-        path.close();
+        paint.style = Paint.Style.FILL_AND_STROKE
+        paint.isAntiAlias = true
+        val path = Path()
+        path.fillType = Path.FillType.EVEN_ODD
+        path.lineTo(60F, 60F)
+        path.lineTo(60F, 6F)
+        path.lineTo(0F, 0F)
+        path.close()
 
-        canvas.drawPath(path, paint);
-
-//        canvas?.drawRect(30F, 30F, 80F, 80F, paint);
-//        paint.setStrokeWidth(0F);
-//        paint.setColor(Color.CYAN);
-//        canvas?.drawRect(33F, 60F, 77F, 77F, paint );
-//        paint.setColor(Color.YELLOW);
-//        canvas?.drawRect(33F, 33F, 77F, 60F, paint );
+        canvas.drawPath(path, paint)
     }
 }

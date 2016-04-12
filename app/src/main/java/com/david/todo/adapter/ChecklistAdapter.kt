@@ -72,7 +72,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>, val context: Con
 
         init {
             textView = view.findViewById(R.id.text_item) as TextView
-            dragHandle = view.findViewById(R.id.drag_handle) as TabView
+            dragHandle = view.findViewById(R.id.peel_icon) as TabView
         }
     }
 }

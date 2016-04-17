@@ -18,6 +18,7 @@ class TabView(context: Context, attributes: AttributeSet) : View(context, attrib
     var viewWidth: Int = 0
     var color: Int
     var curvePaint: Paint
+    var shadowPaint: Paint
 
     init {
         paint = Paint()
@@ -30,6 +31,17 @@ class TabView(context: Context, attributes: AttributeSet) : View(context, attrib
         curvePaint.strokeWidth = 3F;
         curvePaint.style = Paint.Style.FILL_AND_STROKE
         curvePaint.isAntiAlias = true
+
+        shadowPaint = Paint()
+        shadowPaint.color = context.resources.getColor(android.R.color.black)
+        shadowPaint.strokeWidth = 0F;
+        shadowPaint.style = Paint.Style.STROKE
+        shadowPaint.isAntiAlias = true
+        // set shadow
+        shadowPaint.setShadowLayer(15F, -10F, -10F, Color.BLACK);
+        // Important for certain APIs
+        setLayerType(LAYER_TYPE_SOFTWARE, shadowPaint);
+
     }
 
     fun setColour(colourHex: Int) {
@@ -78,7 +90,16 @@ class TabView(context: Context, attributes: AttributeSet) : View(context, attrib
                         0F)
         curvePath.close()
 
+        //shadow
+        val shadowCurve = Path()
+        shadowCurve.moveTo(viewWidth.toFloat() / 1.5F, viewHeight.toFloat())
+        shadowCurve.quadTo(15F,
+                viewHeight.toFloat() / 2F,
+                0F,
+                0F)
+
         canvas.drawPath(path, paint)
         canvas.drawPath(curvePath, curvePaint)
+        canvas.drawPath(shadowCurve, shadowPaint)
     }
 }

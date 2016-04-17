@@ -22,9 +22,9 @@ class TabView(context: Context, attributes: AttributeSet) : View(context, attrib
     init {
         paint = Paint()
         shade = Path()
-        color = context.resources.getColor(R.color.red)
+        color = context.resources.getColor(R.color.green)
 
-        val curveColour = context.resources.getColor(R.color.green)
+        val curveColour = context.resources.getColor(R.color.green_peel) // needs to be a tone or 2 lighter
         curvePaint = Paint()
         curvePaint.color = curveColour
         curvePaint.strokeWidth = 3F;
@@ -33,7 +33,7 @@ class TabView(context: Context, attributes: AttributeSet) : View(context, attrib
     }
 
     fun setColour(colourHex: Int) {
-        color = colourHex
+//        color = colourHex
         invalidate()
     }
 
@@ -60,10 +60,25 @@ class TabView(context: Context, attributes: AttributeSet) : View(context, attrib
         path.lineTo(viewWidth.toFloat() / 1.5F, viewHeight.toFloat())
         path.close()
 
-//        path = Path()
-//        path.moveTo(viewWidth.toFloat() / 2F, viewHeight.toFloat())
-//        val oval = RectF()
+        var curvePath = Path()
+        curvePath.moveTo(0F, 0F)
+        curvePath.quadTo(viewWidth.toFloat() / 2, //high point of curve
+                         40F, //depth of curve
+                         viewWidth.toFloat() - (viewWidth.toFloat() / 4), //width
+                         20F) //height, 0 is top
+
+        curvePath.quadTo(40F,
+                        50F,
+                        viewWidth.toFloat() / 1.5F,
+                        viewHeight.toFloat())
+
+        curvePath.quadTo(15F,
+                        viewHeight.toFloat() / 2F,
+                        0F,
+                        0F)
+        curvePath.close()
 
         canvas.drawPath(path, paint)
+        canvas.drawPath(curvePath, curvePaint)
     }
 }

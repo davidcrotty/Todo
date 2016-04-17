@@ -12,22 +12,46 @@ import timber.log.Timber
  */
 class TabView(context: Context, attributes: AttributeSet) : View(context, attributes) {
 
-    lateinit var paint: Paint
-    lateinit var shade: Path
+    lateinit var peelUnderShape: Path
+    lateinit var peelOverShape: Path
+    lateinit var shadowCurve: Path
+
+    lateinit var peelUnderPaint: Paint
+    lateinit var curvePaint: Paint
+    lateinit var shadowPaint: Paint
+
     var viewHeight: Int = 0
     var viewWidth: Int = 0
-    var color: Int
-    var curvePaint: Paint
-    var shadowPaint: Paint
 
     init {
-        paint = Paint()
-        shade = Path()
-        color = context.resources.getColor(R.color.green)
+        createPaintEffects()
+    }
 
-        val curveColour = context.resources.getColor(R.color.green_peel) // needs to be a tone or 2 lighter
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        viewWidth = MeasureSpec.getSize(widthMeasureSpec);
+        viewHeight = MeasureSpec.getSize(heightMeasureSpec);
+        this.setMeasuredDimension(viewWidth, viewHeight);
+        createDrawCoordinates()
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        Timber.d("Height: $viewHeight Width: $viewWidth")
+
+        canvas?.drawPath(peelUnderShape, peelUnderPaint)
+        canvas?.drawPath(peelOverShape, curvePaint)
+        canvas?.drawPath(shadowCurve, shadowPaint)
+    }
+
+    fun createPaintEffects() {
+        peelUnderPaint = Paint()
+        peelUnderPaint.color = context.resources.getColor(R.color.green);
+        peelUnderPaint.strokeWidth = 3F;
+        peelUnderPaint.style = Paint.Style.FILL_AND_STROKE
+        peelUnderPaint.isAntiAlias = true
+
         curvePaint = Paint()
-        curvePaint.color = curveColour
+        curvePaint.color = context.resources.getColor(R.color.green_peel)
         curvePaint.strokeWidth = 3F;
         curvePaint.style = Paint.Style.FILL_AND_STROKE
         curvePaint.isAntiAlias = true
@@ -41,65 +65,39 @@ class TabView(context: Context, attributes: AttributeSet) : View(context, attrib
         shadowPaint.setShadowLayer(15F, -10F, -10F, Color.BLACK);
         // Important for certain APIs
         setLayerType(LAYER_TYPE_SOFTWARE, shadowPaint);
-
     }
 
-    fun setColour(colourHex: Int) {
-//        color = colourHex
-        invalidate()
-    }
+    fun createDrawCoordinates() {
+        peelUnderShape = Path()
+        peelUnderShape.fillType = Path.FillType.EVEN_ODD
+        //Paths start at 0,0 by default
+        peelUnderShape.lineTo(0F, viewHeight.toFloat())
+        peelUnderShape.lineTo(viewWidth.toFloat() / 1.5F, viewHeight.toFloat())
+        peelUnderShape.close()
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        viewWidth = MeasureSpec.getSize(widthMeasureSpec);
-        viewHeight = MeasureSpec.getSize(heightMeasureSpec);
-        this.setMeasuredDimension(viewWidth, viewHeight);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
+        peelOverShape = Path()
+        peelOverShape.moveTo(0F, 0F)
+        peelOverShape.quadTo(viewWidth.toFloat() / 2, //high point of curve
+                40F, //depth of curve
+                viewWidth.toFloat() - (viewWidth.toFloat() / 4), //width
+                20F) //height, 0 is top
 
-    override fun onDraw(canvas: Canvas?) {
-        Timber.d("Height: $viewHeight Width: $viewWidth")
+        peelOverShape.quadTo(40F,
+                50F,
+                viewWidth.toFloat() / 1.5F,
+                viewHeight.toFloat())
 
-        val canvas = canvas?.let { it } ?: return
-        paint.color = color;
-        paint.strokeWidth = 3F;
-        paint.style = Paint.Style.FILL_AND_STROKE
-        paint.isAntiAlias = true
+        peelOverShape.quadTo(15F,
+                viewHeight.toFloat() / 2F,
+                0F,
+                0F)
+        peelOverShape.close()
 
-        var path = Path()
-        path.fillType = Path.FillType.EVEN_ODD
-        //Should start at 0,0 anyway
-        path.lineTo(0F, viewHeight.toFloat())
-        path.lineTo(viewWidth.toFloat() / 1.5F, viewHeight.toFloat())
-        path.close()
-
-        var curvePath = Path()
-        curvePath.moveTo(0F, 0F)
-        curvePath.quadTo(viewWidth.toFloat() / 2, //high point of curve
-                         40F, //depth of curve
-                         viewWidth.toFloat() - (viewWidth.toFloat() / 4), //width
-                         20F) //height, 0 is top
-
-        curvePath.quadTo(40F,
-                        50F,
-                        viewWidth.toFloat() / 1.5F,
-                        viewHeight.toFloat())
-
-        curvePath.quadTo(15F,
-                        viewHeight.toFloat() / 2F,
-                        0F,
-                        0F)
-        curvePath.close()
-
-        //shadow
-        val shadowCurve = Path()
+        shadowCurve = Path()
         shadowCurve.moveTo(viewWidth.toFloat() / 1.5F, viewHeight.toFloat())
         shadowCurve.quadTo(15F,
                 viewHeight.toFloat() / 2F,
                 0F,
                 0F)
-
-        canvas.drawPath(path, paint)
-        canvas.drawPath(curvePath, curvePaint)
-        canvas.drawPath(shadowCurve, shadowPaint)
     }
 }

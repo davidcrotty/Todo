@@ -26,17 +26,6 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>, val context: Con
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder?, position: Int) {
-        if(position == 0) {
-            holder?.dragHandle?.setColour(context.resources.getColor(R.color.teal))
-        } else if(position == 1) {
-            holder?.dragHandle?.setColour(context.resources.getColor(R.color.light_blue))
-        } else if(position == 2) {
-            holder?.dragHandle?.setColour(context.resources.getColor(R.color.purple))
-        } else if(position == 3) {
-            holder?.dragHandle?.setColour(context.resources.getColor(R.color.orange))
-        } else {
-
-        }
         holder?.textView?.text = itemList[position].text
 
     }

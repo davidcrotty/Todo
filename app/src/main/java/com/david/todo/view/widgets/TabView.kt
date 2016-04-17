@@ -19,6 +19,8 @@ class TabView(context: Context, attributes: AttributeSet) : View(context, attrib
     lateinit var peelUnderPaint: Paint
     lateinit var curvePaint: Paint
     lateinit var shadowPaint: Paint
+    val strokeWidth: Float = 0F
+    val baseCanvasCoordinate: Float = 0F //canvas drawing always begins at 0
 
     var viewHeight: Int = 0
     var viewWidth: Int = 0
@@ -46,19 +48,19 @@ class TabView(context: Context, attributes: AttributeSet) : View(context, attrib
     fun createPaintEffects() {
         peelUnderPaint = Paint()
         peelUnderPaint.color = context.resources.getColor(R.color.green);
-        peelUnderPaint.strokeWidth = 3F;
+        peelUnderPaint.strokeWidth = strokeWidth;
         peelUnderPaint.style = Paint.Style.FILL_AND_STROKE
         peelUnderPaint.isAntiAlias = true
 
         curvePaint = Paint()
         curvePaint.color = context.resources.getColor(R.color.green_peel)
-        curvePaint.strokeWidth = 3F;
+        curvePaint.strokeWidth = strokeWidth;
         curvePaint.style = Paint.Style.FILL_AND_STROKE
         curvePaint.isAntiAlias = true
 
         shadowPaint = Paint()
         shadowPaint.color = context.resources.getColor(android.R.color.black)
-        shadowPaint.strokeWidth = 0F;
+        shadowPaint.strokeWidth = strokeWidth;
         shadowPaint.style = Paint.Style.STROKE
         shadowPaint.isAntiAlias = true
         // set shadow
@@ -70,13 +72,13 @@ class TabView(context: Context, attributes: AttributeSet) : View(context, attrib
     fun createDrawCoordinates() {
         peelUnderShape = Path()
         peelUnderShape.fillType = Path.FillType.EVEN_ODD
-        //Paths start at 0,0 by default
-        peelUnderShape.lineTo(0F, viewHeight.toFloat())
+
+        peelUnderShape.lineTo(baseCanvasCoordinate, viewHeight.toFloat())
         peelUnderShape.lineTo(viewWidth.toFloat() / 1.5F, viewHeight.toFloat())
         peelUnderShape.close()
 
         peelOverShape = Path()
-        peelOverShape.moveTo(0F, 0F)
+        peelOverShape.moveTo(baseCanvasCoordinate, baseCanvasCoordinate)
         peelOverShape.quadTo(viewWidth.toFloat() / 2, //high point of curve
                 40F, //depth of curve
                 viewWidth.toFloat() - (viewWidth.toFloat() / 4), //width
@@ -89,15 +91,15 @@ class TabView(context: Context, attributes: AttributeSet) : View(context, attrib
 
         peelOverShape.quadTo(15F,
                 viewHeight.toFloat() / 2F,
-                0F,
-                0F)
+                baseCanvasCoordinate,
+                baseCanvasCoordinate)
         peelOverShape.close()
 
         shadowCurve = Path()
         shadowCurve.moveTo(viewWidth.toFloat() / 1.5F, viewHeight.toFloat())
         shadowCurve.quadTo(15F,
                 viewHeight.toFloat() / 2F,
-                0F,
-                0F)
+                baseCanvasCoordinate,
+                baseCanvasCoordinate)
     }
 }

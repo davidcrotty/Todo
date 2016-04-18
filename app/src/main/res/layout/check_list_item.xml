@@ -6,36 +6,51 @@
     android:focusable="true"
     android:background="@drawable/ripple_background">
 
-    <com.david.todo.view.widgets.TabView
-    android:layout_width="38dp"
-    android:layout_height="match_parent"
-    android:id="@+id/peel_icon"
-    android:layout_marginRight="16dp"
-    android:layout_gravity="start" />
-
-    <!-- add margin from tabview, refactor once done-->
-    <TextView
-        android:layout_marginLeft="58dp"
-        android:id="@+id/text_item"
-        android:text="foo"
-        android:gravity="center"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_gravity="start|center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
-
-    <ImageView
-        android:id="@+id/drag_handle"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
-        android:src="@drawable/reorder_grey"
-        android:layout_marginRight="16dp"
-        android:layout_gravity="right|center_vertical" />
-
-    <View
+    <FrameLayout
+        android:id="@+id/task_background"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="#E0E0E0" />
+        android:layout_height="?listPreferredItemHeight"
+        android:background="@color/green">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/task_foreground"
+        android:layout_width="match_parent"
+        android:layout_height="?listPreferredItemHeight"
+        android:background="@android:color/white">
+
+            <com.david.todo.view.widgets.TabView
+            android:layout_width="38dp"
+            android:layout_height="match_parent"
+            android:id="@+id/peel_icon"
+            android:layout_marginRight="16dp"
+            android:layout_gravity="start" />
+
+            <!-- add margin from tabview, refactor once done-->
+            <TextView
+                android:layout_marginLeft="58dp"
+                android:id="@+id/text_item"
+                android:text="foo"
+                android:gravity="center"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_gravity="start|center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/drag_handle"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/reorder_grey"
+                android:layout_marginRight="16dp"
+                android:layout_gravity="right|center_vertical" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="#E0E0E0" />
+    </FrameLayout>
 
 </FrameLayout>

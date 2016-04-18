@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.david.todo.R
@@ -71,10 +72,14 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var textView: TextView
         var dragHandle: ImageView
+        var taskForeground: FrameLayout
+        var taskBackground: FrameLayout
 
         init {
             textView = view.findViewById(R.id.text_item) as TextView
             dragHandle = view.findViewById(R.id.drag_handle) as ImageView
+            taskForeground = view.findViewById(R.id.task_foreground) as FrameLayout
+            taskBackground = view.findViewById(R.id.task_background) as FrameLayout
         }
     }
 }

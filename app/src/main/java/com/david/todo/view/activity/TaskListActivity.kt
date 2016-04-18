@@ -1,26 +1,22 @@
 package com.david.todo.view.activity
 
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.widget.ListView
-import butterknife.Bind
-import butterknife.ButterKnife
 import com.david.todo.R
 import com.david.todo.adapter.ChecklistAdapter
 import com.david.todo.model.CheckItemModel
 import com.david.todo.view.BaseActivity
-import com.david.todo.view.decorators.DividerItemDecoration
+import com.david.todo.view.eventlisteners.IHandleListener
 import com.david.todo.view.eventlisteners.TouchEventHelper
 
 /**
  * Created by DavidHome on 02/04/2016.
  */
-class TaskListActivity : BaseActivity() {
-
+class TaskListActivity : BaseActivity(), IHandleListener {
     lateinit var _checkList: RecyclerView
+    lateinit var _itemTouchHelper: ItemTouchHelper
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,14 +32,17 @@ class TaskListActivity : BaseActivity() {
                                    CheckItemModel("Contact catering team", resources.getColor(R.color.light_blue)),
                                    CheckItemModel("Email team reminder", resources.getColor(R.color.red)),
                                    CheckItemModel("Test AV equipment", resources.getColor(R.color.teal)));
-        val adapter = ChecklistAdapter(itemList, this)
+        val adapter = ChecklistAdapter(itemList, this, this)
         _checkList.setHasFixedSize(true)
         _checkList.adapter = adapter
         _checkList.layoutManager = LinearLayoutManager(this)
-//        _checkList.addItemDecoration(DividerItemDecoration(this, R.drawable.list_divider))
+        var touchEventHelper = TouchEventHelper(adapter)
 
-        val touchEventHelper = TouchEventHelper(adapter)
-        val itemTouchHelper = ItemTouchHelper(touchEventHelper)
-        itemTouchHelper.attachToRecyclerView(_checkList)
+        _itemTouchHelper = ItemTouchHelper(touchEventHelper)
+        _itemTouchHelper.attachToRecyclerView(_checkList)
+    }
+
+    override fun onHandleDown(viewHolder: RecyclerView.ViewHolder) {
+        _itemTouchHelper.startDrag(viewHolder)
     }
 }

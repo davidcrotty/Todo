@@ -5,19 +5,25 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import com.david.todo.R
 import com.david.todo.model.CheckItemModel
+import com.david.todo.view.eventlisteners.IHandleListener
 import com.david.todo.view.widgets.TabView
+import timber.log.Timber
 import java.util.*
 
 /**
  * Created by DavidHome on 03/04/2016.
  */
-class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>, val context: Context) : RecyclerView.Adapter<ChecklistAdapter.ItemViewHolder>() {
+class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
+                       val context: Context,
+                       val dragListener: IHandleListener) : RecyclerView.Adapter<ChecklistAdapter.ItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ItemViewHolder? {
         var layout = LayoutInflater.from(parent?.context).inflate(R.layout.check_list_item, parent, false)
@@ -27,7 +33,15 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>, val context: Con
 
     override fun onBindViewHolder(holder: ItemViewHolder?, position: Int) {
         holder?.textView?.text = itemList[position].text
-
+        holder?.dragHandle?.setOnTouchListener({ view, motionEvent ->
+            when(motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    dragListener.onHandleDown(holder)
+                    true
+                }
+                else -> false
+            }
+        });
     }
 
     override fun getItemCount(): Int {
@@ -55,13 +69,12 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>, val context: Con
 
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         var textView: TextView
-        var dragHandle: TabView
+        var dragHandle: ImageView
 
         init {
             textView = view.findViewById(R.id.text_item) as TextView
-            dragHandle = view.findViewById(R.id.peel_icon) as TabView
+            dragHandle = view.findViewById(R.id.drag_handle) as ImageView
         }
     }
 }

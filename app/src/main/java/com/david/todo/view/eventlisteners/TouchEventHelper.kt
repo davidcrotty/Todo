@@ -8,7 +8,6 @@ import com.david.todo.adapter.ChecklistAdapter
  * Created by DavidHome on 03/04/2016.
  */
 class TouchEventHelper(val checkListAdapter: ChecklistAdapter) : ItemTouchHelper.Callback() {
-
     override fun isLongPressDragEnabled() : Boolean {
         return true;
     }

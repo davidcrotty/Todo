@@ -50,6 +50,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
     }
 
     fun onItemDismiss(position: Int) {
+        Timber.d("Removing $position")
         itemList.removeAt(position);
         notifyItemRemoved(position);
     }

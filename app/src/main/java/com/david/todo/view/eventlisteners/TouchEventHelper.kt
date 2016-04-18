@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.widget.FrameLayout
 import com.david.todo.adapter.ChecklistAdapter
 import timber.log.Timber
@@ -29,7 +31,11 @@ class TouchEventHelper(val checkListAdapter: ChecklistAdapter) : ItemTouchHelper
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-        checkListAdapter.onItemDismiss(viewHolder!!.adapterPosition);
+        //play animation on view then dismiss it
+        var parentContainer = viewHolder as ChecklistAdapter.ItemViewHolder;
+        val fadeAnimation = FadeAnimation(1F, 0F, viewHolder, checkListAdapter)
+        fadeAnimation.duration = 700
+        parentContainer.itemView.animation = fadeAnimation
     }
 
     override fun onChildDraw(c: Canvas?, recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
@@ -47,5 +53,4 @@ class TouchEventHelper(val checkListAdapter: ChecklistAdapter) : ItemTouchHelper
 
         super.onChildDraw(c, recyclerView, viewHolder, drawX, dY, actionState, isCurrentlyActive)
     }
-
 }

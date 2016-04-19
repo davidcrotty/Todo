@@ -59,12 +59,13 @@ class TaskListActivity : BaseActivity(), IHandleListener {
 
     fun showSnackbar() {
         Snackbar.make(rootView,
-                      "Item completed",
+                      resources.getString(R.string.checklist_text),
                       Snackbar.LENGTH_LONG)
-                          .setAction("UNDO", {
+                          .setAction(resources.getString(R.string.checklist_action), {
                               val checkItemHolder = intent.getSerializableExtra(MOST_RECENTLY_REMOVED_MODEL) as CheckItemHolder
                               _checkListAdapter.restoreItemWith(checkItemHolder?.position, checkItemHolder?.checkItemModel)
                           })
+                      .setActionTextColor(resources.getColor(R.color.green))
                       .show()
     }
 

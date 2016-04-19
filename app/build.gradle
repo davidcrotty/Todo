@@ -51,6 +51,7 @@ dependencies {
     compile 'com.jakewharton.timber:timber:4.1.0'
     compile 'joda-time:joda-time:2.9.2'
     compile 'com.wdullaer:materialdatetimepicker:2.2.0'
+    compile 'com.github.JakeWharton:kotterknife:b379946d60'
 
     //JVM Unit tests has to be named 'test' else gradle is unable to resolve name
     testCompile 'junit:junit:4.12'

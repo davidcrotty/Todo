@@ -14,6 +14,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.david.todo.R
 import com.david.todo.model.CheckItemModel
+import com.david.todo.model.TaskItemModel
+import com.david.todo.presenter.TaskListPresenter
 import com.david.todo.view.eventlisteners.IHandleListener
 import com.david.todo.view.widgets.TabView
 import timber.log.Timber
@@ -23,6 +25,7 @@ import java.util.*
  * Created by DavidHome on 03/04/2016.
  */
 class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
+                       val listPresenter: TaskListPresenter,
                        val context: Context,
                        val dragListener: IHandleListener) : RecyclerView.Adapter<ChecklistAdapter.ItemViewHolder>() {
 
@@ -51,8 +54,11 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
 
     fun onItemDismiss(position: Int) {
         Timber.d("Removing $position")
+        val taskItem = itemList[position]
         itemList.removeAt(position);
         notifyItemRemoved(position);
+        notifyItemRangeChanged(position, itemList.size)
+        listPresenter.storeAndDisplaySnackBarFor(taskItem, position)
     }
 
     fun onItemMove(fromPosition: Int, toPosition: Int) : Boolean{
@@ -67,6 +73,11 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
         }
         notifyItemMoved(fromPosition, toPosition);
         return true;
+    }
+
+    fun restoreItemWith(savedPosition: Int, itemToAdd: CheckItemModel) {
+        itemList.add(savedPosition, itemToAdd)
+        notifyItemInserted(savedPosition)
     }
 
 

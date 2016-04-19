@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.FrameLayout
 import com.david.todo.adapter.ChecklistAdapter
 
 /**

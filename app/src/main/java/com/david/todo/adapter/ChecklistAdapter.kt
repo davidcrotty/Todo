@@ -46,6 +46,10 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
                 else -> false
             }
         });
+
+        val layoutParams = holder?.taskForeground?.layoutParams as FrameLayout.LayoutParams
+        layoutParams.leftMargin = 0
+        holder?.taskForeground?.layoutParams = layoutParams
     }
 
     override fun getItemCount(): Int {
@@ -55,9 +59,9 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
     fun onItemDismiss(position: Int) {
         Timber.d("Removing $position")
         val taskItem = itemList[position]
-        itemList.removeAt(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, itemList.size)
+        itemList.removeAt(position)
+        notifyItemRemoved(position)
+        notifyDataSetChanged()
         listPresenter.storeAndDisplaySnackBarFor(taskItem, position)
     }
 

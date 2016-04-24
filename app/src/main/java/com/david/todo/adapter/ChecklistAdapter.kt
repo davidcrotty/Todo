@@ -82,6 +82,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
     fun restoreItemWith(savedPosition: Int, itemToAdd: CheckItemModel) {
         itemList.add(savedPosition, itemToAdd)
         notifyItemInserted(savedPosition)
+        notifyDataSetChanged()
     }
 
 

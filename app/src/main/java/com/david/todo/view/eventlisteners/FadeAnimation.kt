@@ -22,7 +22,6 @@ class FadeAnimation(val fromAlpha: Float, val toAlpha: Float, val viewHolder: Re
     }
 
     override fun onAnimationEnd(animation: Animation?) {
-        parentView.visibility = View.INVISIBLE
         checkListAdapter.onItemDismiss(viewHolder!!.adapterPosition);
     }
 

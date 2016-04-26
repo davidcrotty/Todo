@@ -24,7 +24,7 @@ class TaskListActivity : BaseActivity(), IHandleListener {
     val MOST_RECENTLY_REMOVED_MODEL: String = "MOST_RECENTLY_REMOVED_MODEL"
 
     lateinit var _List_presenter: TaskListPresenter
-    lateinit var _checkList: RecyclerView
+    lateinit var _checkListView: RecyclerView
     lateinit var _itemTouchHelper: ItemTouchHelper
     lateinit var _checkListAdapter: ChecklistAdapter
 
@@ -32,7 +32,7 @@ class TaskListActivity : BaseActivity(), IHandleListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_list)
         _List_presenter = TaskListPresenter(this)
-        _checkList = findViewById(R.id.check_list) as RecyclerView
+        _checkListView = findViewById(R.id.check_list) as RecyclerView
         init()
     }
 
@@ -44,13 +44,17 @@ class TaskListActivity : BaseActivity(), IHandleListener {
                                    CheckItemModel("Email team reminder", resources.getColor(R.color.red)),
                                    CheckItemModel("Test AV equipment", resources.getColor(R.color.teal)));
         _checkListAdapter = ChecklistAdapter(itemList, _List_presenter, this, this)
-        _checkList.setHasFixedSize(true)
-        _checkList.adapter = _checkListAdapter
-        _checkList.layoutManager = LinearLayoutManager(this)
+        _checkListView.setHasFixedSize(true)
+        _checkListView.adapter = _checkListAdapter
+        _checkListView.layoutManager = LinearLayoutManager(this)
+//        _checkListView.itemAnimator = foo: RecyclerView.ItemAnimator(){
+//
+//        }
+
         var touchEventHelper = TouchEventHelper(_checkListAdapter)
 
         _itemTouchHelper = ItemTouchHelper(touchEventHelper)
-        _itemTouchHelper.attachToRecyclerView(_checkList)
+        _itemTouchHelper.attachToRecyclerView(_checkListView)
     }
 
     override fun onHandleDown(viewHolder: RecyclerView.ViewHolder) {

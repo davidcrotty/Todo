@@ -50,6 +50,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
         val layoutParams = holder?.taskForeground?.layoutParams as FrameLayout.LayoutParams
         layoutParams.leftMargin = 0
         holder?.taskForeground?.layoutParams = layoutParams
+        holder?.itemView?.visibility = View.VISIBLE
     }
 
     override fun getItemCount(): Int {
@@ -61,7 +62,6 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
         val taskItem = itemList[position]
         itemList.removeAt(position)
         notifyItemRemoved(position)
-        notifyDataSetChanged()
         listPresenter.storeAndDisplaySnackBarFor(taskItem, position)
     }
 

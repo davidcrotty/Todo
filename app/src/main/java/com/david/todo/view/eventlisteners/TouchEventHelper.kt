@@ -15,6 +15,9 @@ import timber.log.Timber
  * Created by DavidHome on 03/04/2016.
  */
 class TouchEventHelper(val checkListAdapter: ChecklistAdapter) : ItemTouchHelper.Callback() {
+
+    val animationDuration: Long = 700
+
     override fun isLongPressDragEnabled() : Boolean {
         return true;
     }
@@ -32,9 +35,9 @@ class TouchEventHelper(val checkListAdapter: ChecklistAdapter) : ItemTouchHelper
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
         var parentContainer = viewHolder as ChecklistAdapter.ItemViewHolder;
-        val fadeAnimation = FadeAnimation(1F, 0F, viewHolder, checkListAdapter)
-        fadeAnimation.duration = 700
-        parentContainer.itemView.animation = fadeAnimation
+        val scaleAnimation = FadeAnimation(1F, 0F, viewHolder, checkListAdapter)
+        scaleAnimation.duration = animationDuration
+        parentContainer.itemView.animation = scaleAnimation
     }
 
     override fun onChildDraw(c: Canvas?, recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {

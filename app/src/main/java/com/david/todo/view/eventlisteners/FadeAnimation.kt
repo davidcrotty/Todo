@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import com.david.todo.adapter.ChecklistAdapter
 
 /**
@@ -22,6 +23,7 @@ class FadeAnimation(val fromAlpha: Float, val toAlpha: Float, val viewHolder: Re
     }
 
     override fun onAnimationEnd(animation: Animation?) {
+        parentView.visibility = View.INVISIBLE
         checkListAdapter.onItemDismiss(viewHolder!!.adapterPosition);
     }
 

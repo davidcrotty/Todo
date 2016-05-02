@@ -13,6 +13,7 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
+
             <ImageView
                 android:id="@+id/done_image"
                 android:layout_width="38dp"
@@ -30,6 +31,18 @@
                 android:textColor="@color/green_ripple"
                 android:text="DONE"/>
         </LinearLayout>
+
+        <View
+            android:layout_gravity="top"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/drop_shadow_green"></View>
+
+        <View
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/drop_shadow_reverse_green"></View>
 
     </FrameLayout>
 

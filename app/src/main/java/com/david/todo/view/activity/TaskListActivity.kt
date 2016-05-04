@@ -47,9 +47,6 @@ class TaskListActivity : BaseActivity(), IHandleListener {
         _checkListView.setHasFixedSize(true)
         _checkListView.adapter = _checkListAdapter
         _checkListView.layoutManager = LinearLayoutManager(this)
-//        _checkListView.itemAnimator = foo: RecyclerView.ItemAnimator(){
-//
-//        }
 
         var touchEventHelper = TouchEventHelper(_checkListAdapter)
 

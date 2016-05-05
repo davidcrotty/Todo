@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:background="@color/green"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:elevation="4dp">
 
         </android.support.v7.widget.Toolbar>

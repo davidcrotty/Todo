@@ -19,4 +19,7 @@
     <!-- Checklist snackbar-->
     <string name="checklist_text">Item completed</string>
     <string name="checklist_action">UNDO</string>
+
+    <!-- Checklist options -->
+    <string name="toggle_completed_items">Show completed items</string>
 </resources>

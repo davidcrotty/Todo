@@ -5,7 +5,9 @@ import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.Menu
 import butterknife.bindView
 import com.david.todo.R
 import com.david.todo.adapter.ChecklistAdapter
@@ -21,6 +23,7 @@ import com.david.todo.view.eventlisteners.TouchEventHelper
  */
 class TaskListActivity : BaseActivity(), IHandleListener {
     val rootView: CoordinatorLayout by bindView(R.id.root_view)
+    val toolbar: Toolbar by bindView(R.id.toolbar)
     val MOST_RECENTLY_REMOVED_MODEL: String = "MOST_RECENTLY_REMOVED_MODEL"
 
     lateinit var _List_presenter: TaskListPresenter
@@ -31,6 +34,7 @@ class TaskListActivity : BaseActivity(), IHandleListener {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_list)
+        setSupportActionBar(toolbar)
         _List_presenter = TaskListPresenter(this)
         _checkListView = findViewById(R.id.check_list) as RecyclerView
         init()
@@ -56,6 +60,20 @@ class TaskListActivity : BaseActivity(), IHandleListener {
 
     override fun onHandleDown(viewHolder: RecyclerView.ViewHolder) {
         _itemTouchHelper.startDrag(viewHolder)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu) : Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu);
+        val toggleCurrentItems = menu.findItem(R.id.toggle_completed_items);
+        toggleCurrentItems.setOnMenuItemClickListener {
+            item -> if(item.isChecked) {
+                item.isChecked = false
+            } else {
+                item.isChecked = true
+            }
+            true
+        }
+        return true
     }
 
     fun showSnackbar() {

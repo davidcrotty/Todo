@@ -29,6 +29,8 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
                        val context: Context,
                        val dragListener: IHandleListener) : RecyclerView.Adapter<ChecklistAdapter.ItemViewHolder>() {
 
+    val defaultPositionX: Float = 0F
+
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ItemViewHolder? {
         var layout = LayoutInflater.from(parent?.context).inflate(R.layout.check_list_item, parent, false)
         val viewHolder = ItemViewHolder(layout);
@@ -47,7 +49,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
             }
         });
 
-        holder?.taskForeground?.translationX = 0F
+        holder?.taskForeground?.translationX = defaultPositionX
         holder?.itemView?.visibility = View.VISIBLE
     }
 

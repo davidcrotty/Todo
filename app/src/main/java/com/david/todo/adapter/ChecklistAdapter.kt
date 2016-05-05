@@ -47,9 +47,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
             }
         });
 
-        val layoutParams = holder?.taskForeground?.layoutParams as FrameLayout.LayoutParams
-        layoutParams.leftMargin = 0
-        holder?.taskForeground?.layoutParams = layoutParams
+        holder?.taskForeground?.translationX = 0F
         holder?.itemView?.visibility = View.VISIBLE
     }
 

@@ -33,7 +33,7 @@ class TaskListActivity : BaseActivity(), IHandleListener {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.pending_activity_task_list)
+        setContentView(R.layout.activity_task_list)
         setSupportActionBar(toolbar)
         _List_presenter = TaskListPresenter(this)
         _checkListView = findViewById(R.id.check_list) as RecyclerView

@@ -32,7 +32,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
     val defaultPositionX: Float = 0F
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ItemViewHolder? {
-        var layout = LayoutInflater.from(parent?.context).inflate(R.layout.check_list_item, parent, false)
+        var layout = LayoutInflater.from(parent?.context).inflate(R.layout.pending_check_list_item, parent, false)
         val viewHolder = ItemViewHolder(layout);
         return viewHolder;
     }

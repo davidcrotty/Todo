@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?listPreferredItemHeight">
+    <FrameLayout
+        android:id="@+id/task_background"
+        android:layout_width="match_parent"
+        android:layout_height="?listPreferredItemHeight"
+        android:background="@color/green">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:id="@+id/undo_button"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="16sp"
+                android:textColor="@android:color/white"
+                android:text="UNDO"
+                android:gravity="center"
+                android:layout_gravity="left|center_vertical" />
+            <TextView
+                android:id="@+id/completed_item_text"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="16sp"
+                android:textColor="@color/green_ripple"
+                android:text="Prepare meeting room"/>
+        </LinearLayout>
+
+        <View
+            android:layout_gravity="top"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/drop_shadow_green"></View>
+
+        <View
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/drop_shadow_reverse_green"></View>
+
+    </FrameLayout>
+
+
+</FrameLayout>

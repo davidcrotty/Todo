@@ -13,6 +13,8 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.david.todo.R
+import com.david.todo.adapter.viewholder.HolderType
+import com.david.todo.adapter.viewholder.ItemViewHolder
 import com.david.todo.model.CheckItemModel
 import com.david.todo.model.TaskItemModel
 import com.david.todo.presenter.TaskListPresenter
@@ -27,30 +29,35 @@ import java.util.*
 class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
                        val listPresenter: TaskListPresenter,
                        val context: Context,
-                       val dragListener: IHandleListener) : RecyclerView.Adapter<ChecklistAdapter.ItemViewHolder>() {
+                       val dragListener: IHandleListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val defaultPositionX: Float = 0F
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ItemViewHolder? {
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
         var layout = LayoutInflater.from(parent?.context).inflate(R.layout.pending_check_list_item, parent, false)
         val viewHolder = ItemViewHolder(layout);
         return viewHolder;
     }
 
-    override fun onBindViewHolder(holder: ItemViewHolder?, position: Int) {
-        holder?.textView?.text = itemList[position].text
-        holder?.dragHandle?.setOnTouchListener({ view, motionEvent ->
-            when(motionEvent.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    dragListener.onHandleDown(holder)
-                    true
-                }
-                else -> false
-            }
-        });
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+        when(holder?.itemViewType) {
+            HolderType.PENDING.ordinal -> {
+                holder as ItemViewHolder
+                holder?.textView?.text = itemList[position].text
+                holder?.dragHandle?.setOnTouchListener({ view, motionEvent ->
+                    when(motionEvent.action) {
+                        MotionEvent.ACTION_DOWN -> {
+                            dragListener.onHandleDown(holder)
+                            true
+                        }
+                        else -> false
+                    }
+                });
 
-        holder?.taskForeground?.translationX = defaultPositionX
-        holder?.itemView?.visibility = View.VISIBLE
+                holder?.taskForeground?.translationX = defaultPositionX
+                holder?.itemView?.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -82,24 +89,5 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
     fun restoreItemWith(savedPosition: Int, itemToAdd: CheckItemModel) {
         itemList.add(savedPosition, itemToAdd)
         notifyItemInserted(savedPosition)
-//        notifyDataSetChanged()
-    }
-
-
-    class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var textView: TextView
-        var dragHandle: ImageView
-        var doneImage: ImageView
-        var taskForeground: FrameLayout
-        var taskBackground: FrameLayout
-
-        init {
-            textView = view.findViewById(R.id.text_item) as TextView
-            dragHandle = view.findViewById(R.id.drag_handle) as ImageView
-            doneImage = view.findViewById(R.id.done_image) as ImageView
-            doneImage.setColorFilter(view.context.getColor(R.color.green_ripple))
-            taskForeground = view.findViewById(R.id.task_foreground) as FrameLayout
-            taskBackground = view.findViewById(R.id.task_background) as FrameLayout
-        }
     }
 }

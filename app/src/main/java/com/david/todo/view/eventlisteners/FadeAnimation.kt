@@ -6,6 +6,7 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import com.david.todo.adapter.ChecklistAdapter
+import com.david.todo.adapter.viewholder.ItemViewHolder
 
 /**
  * Created by DavidHome on 18/04/2016.
@@ -14,7 +15,7 @@ class FadeAnimation(val fromAlpha: Float, val toAlpha: Float, val viewHolder: Re
     lateinit var parentView: View
 
     init {
-        val holder = viewHolder as ChecklistAdapter.ItemViewHolder
+        val holder = viewHolder as ItemViewHolder
         parentView = holder.itemView
         setAnimationListener(this)
     }

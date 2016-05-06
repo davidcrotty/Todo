@@ -14,7 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.david.todo.R
 import com.david.todo.adapter.viewholder.HolderType
-import com.david.todo.adapter.viewholder.ItemViewHolder
+import com.david.todo.adapter.viewholder.PendingItemViewHolder
 import com.david.todo.model.CheckItemModel
 import com.david.todo.model.TaskItemModel
 import com.david.todo.presenter.TaskListPresenter
@@ -35,14 +35,14 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
         var layout = LayoutInflater.from(parent?.context).inflate(R.layout.pending_check_list_item, parent, false)
-        val viewHolder = ItemViewHolder(layout);
+        val viewHolder = PendingItemViewHolder(layout);
         return viewHolder;
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         when(holder?.itemViewType) {
             HolderType.PENDING.ordinal -> {
-                holder as ItemViewHolder
+                holder as PendingItemViewHolder
                 holder?.textView?.text = itemList[position].text
                 holder?.dragHandle?.setOnTouchListener({ view, motionEvent ->
                     when(motionEvent.action) {

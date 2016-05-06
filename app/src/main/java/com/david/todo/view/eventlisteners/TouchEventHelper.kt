@@ -13,7 +13,7 @@ import android.widget.AbsListView
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import com.david.todo.adapter.ChecklistAdapter
-import com.david.todo.adapter.viewholder.ItemViewHolder
+import com.david.todo.adapter.viewholder.PendingItemViewHolder
 import timber.log.Timber
 
 /**
@@ -39,7 +39,7 @@ class TouchEventHelper(val checkListAdapter: ChecklistAdapter) : ItemTouchHelper
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-        var parentContainer = viewHolder as ItemViewHolder;
+        var parentContainer = viewHolder as PendingItemViewHolder;
         val scaleAnimation = FadeAnimation(1F, 0F, viewHolder, checkListAdapter)
         scaleAnimation.duration = animationDuration
         parentContainer.itemView.startAnimation(scaleAnimation);
@@ -53,7 +53,7 @@ class TouchEventHelper(val checkListAdapter: ChecklistAdapter) : ItemTouchHelper
         var drawX = dX
         if(actionState.equals(ItemTouchHelper.ACTION_STATE_SWIPE)) {
             //TODO make this call composed so is non specific to a concrete viewholder
-            val holder = viewHolder as ItemViewHolder
+            val holder = viewHolder as PendingItemViewHolder
             holder.taskForeground.translationX = dX
 
             drawX = 0F //Keeps background view still

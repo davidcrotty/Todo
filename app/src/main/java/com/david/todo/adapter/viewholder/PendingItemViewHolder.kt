@@ -10,7 +10,7 @@ import com.david.todo.R
 /**
  * Created by DavidHome on 06/05/2016.
  */
-class ItemViewHolder(view: View)  : RecyclerView.ViewHolder(view) {
+class PendingItemViewHolder(view: View)  : RecyclerView.ViewHolder(view) {
     var textView: TextView
     var dragHandle: ImageView
     var doneImage: ImageView

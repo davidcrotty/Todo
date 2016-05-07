@@ -28,6 +28,7 @@ class TaskListActivity : BaseActivity(), IHandleListener {
     val rootView: CoordinatorLayout by bindView(R.id.root_view)
     val toolbar: Toolbar by bindView(R.id.toolbar)
     val MOST_RECENTLY_REMOVED_MODEL: String = "MOST_RECENTLY_REMOVED_MODEL"
+    val CHECK_ITEM_LIST: String = "CHECK_ITEM_LIST"
 
     lateinit var _List_presenter: TaskListPresenter
     lateinit var _checkListView: RecyclerView
@@ -40,25 +41,34 @@ class TaskListActivity : BaseActivity(), IHandleListener {
         setSupportActionBar(toolbar)
         _List_presenter = TaskListPresenter(this)
         _checkListView = findViewById(R.id.check_list) as RecyclerView
-        init()
+        initAdapter()
     }
 
-    private fun init() {
-        val resources = resources
-        val itemList = arrayListOf(PendingCheckItemModel("Prepare meeting room"),
-                                   PendingCheckItemModel("Meet cat smugglers"),
-                                   PendingCheckItemModel("Test AV equipment"),
-                                   PendingCheckItemModel("Review project proposal"),
-                                   CompletedCheckItemModel("Update statement of work"));
+    private fun initAdapter() {
+        var itemList =
+        if(intent.hasExtra(CHECK_ITEM_LIST)) {
+           intent.getSerializableExtra(CHECK_ITEM_LIST)
+        } else {
+            arrayListOf(PendingCheckItemModel("Prepare meeting room"),
+                    PendingCheckItemModel("Meet cat smugglers"),
+                    PendingCheckItemModel("Test AV equipment"),
+                    PendingCheckItemModel("Review project proposal"),
+                    CompletedCheckItemModel("Update statement of work"));
+        }
+
         _checkListAdapter = ChecklistAdapter(itemList as ArrayList<CheckItem>, _List_presenter, this, this)
         _checkListView.setHasFixedSize(true)
         _checkListView.adapter = _checkListAdapter
         _checkListView.layoutManager = LinearLayoutManager(this)
 
         var touchEventHelper = TouchEventHelper(_checkListAdapter)
-
         _itemTouchHelper = ItemTouchHelper(touchEventHelper)
         _itemTouchHelper.attachToRecyclerView(_checkListView)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        intent.putExtra(CHECK_ITEM_LIST, _checkListAdapter.itemList)
     }
 
     override fun onHandleDown(viewHolder: RecyclerView.ViewHolder) {

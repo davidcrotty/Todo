@@ -95,7 +95,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
 
     fun replaceCompletedWithPendingItem(completedCheckItemModel: CompletedCheckItemModel) {
         for(i in itemList.indices) {
-            if(itemList[i] is CompletedCheckItemModel && i != 0) {
+            if(itemList[i] is CompletedCheckItemModel) {
                 itemList.remove(completedCheckItemModel)
                 itemList.add(i, PendingCheckItemModel(completedCheckItemModel.text))
                 notifyDataSetChanged()

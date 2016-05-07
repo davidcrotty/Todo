@@ -11,7 +11,7 @@ import com.david.todo.R
  * Created by DavidHome on 06/05/2016.
  */
 class PendingItemViewHolder(view: View)  : RecyclerView.ViewHolder(view) {
-    var textView: TextView
+    var taskText: TextView
     var dragHandle: ImageView
     var doneImage: ImageView
     var taskForeground: FrameLayout
@@ -19,7 +19,7 @@ class PendingItemViewHolder(view: View)  : RecyclerView.ViewHolder(view) {
     val viewType: HolderType = HolderType.PENDING
 
     init {
-        textView = view.findViewById(R.id.text_item) as TextView
+        taskText = view.findViewById(R.id.text_item) as TextView
         dragHandle = view.findViewById(R.id.drag_handle) as ImageView
         doneImage = view.findViewById(R.id.done_image) as ImageView
         doneImage.setColorFilter(view.context.getColor(R.color.green_ripple))

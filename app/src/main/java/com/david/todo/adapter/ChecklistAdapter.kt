@@ -46,7 +46,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
         val inflater = LayoutInflater.from(parent?.context)
-        var viewHolder = when(viewType) {
+        return when(viewType) {
             HolderType.PENDING.ordinal -> {
                 val parentLayout = inflater.inflate(R.layout.pending_check_list_item, parent, false)
                 return PendingItemViewHolder(parentLayout)
@@ -66,7 +66,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
             HolderType.PENDING.ordinal -> {
                 holder as PendingItemViewHolder
                 val pendingItemModel = itemList[position] as PendingCheckItemModel
-                holder?.textView?.text = pendingItemModel.text
+                holder?.taskText?.text = pendingItemModel.text
                 holder?.dragHandle?.setOnTouchListener({ view, motionEvent ->
                     when(motionEvent.action) {
                         MotionEvent.ACTION_DOWN -> {
@@ -83,6 +83,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
             HolderType.COMPLETED.ordinal -> {
                 holder as CompletedItemViewHolder
                 val completedItemModel = itemList[position] as CompletedCheckItemModel
+                holder?.taskText?.text = completedItemModel.text
             }
         }
     }
@@ -93,10 +94,12 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
 
     fun onItemDismiss(position: Int) {
         Timber.d("Removing $position")
-        val taskItem = itemList[position]
+        val taskItem = itemList[position] as PendingCheckItemModel
         itemList.removeAt(position)
         notifyItemRemoved(position)
-        listPresenter.storeAndDisplaySnackBarFor(taskItem as PendingCheckItemModel, position)
+        itemList.add(CompletedCheckItemModel(taskItem.text))
+        notifyItemInserted(itemList.size - 1)
+        listPresenter.storeAndDisplaySnackBarFor(taskItem, position)
     }
 
     fun onItemMove(fromPosition: Int, toPosition: Int) : Boolean{

@@ -96,13 +96,11 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
 
     fun replaceCompletedWithPendingItem(completedCheckItemModel: CompletedCheckItemModel,
                                         position: Int) {
-        //when toast is displating disable all undo buttons
         for(i in itemList.indices) {
             if(itemList[i] is CompletedCheckItemModel && i != 0) {
                 itemList.remove(completedCheckItemModel)
-                notifyItemRemoved(position)
                 itemList.add(i, PendingCheckItemModel(completedCheckItemModel.text))
-                notifyItemInserted(i)
+                notifyDataSetChanged()
                 return
             }
         }

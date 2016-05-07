@@ -14,12 +14,12 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/undo_button_text"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="8dp"
                 android:fontFamily="sans-serif-medium"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="@android:color/white"
                 android:text="UNDO"
                 android:gravity="center"
@@ -28,7 +28,7 @@
                 android:id="@+id/completed_item_text"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="8dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:textSize="16sp"

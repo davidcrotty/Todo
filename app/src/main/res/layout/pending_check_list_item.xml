@@ -64,9 +64,8 @@
 
             <!-- add margin from tabview, refactor once done-->
             <TextView
-                android:layout_marginLeft="58dp"
+                android:layout_marginLeft="61dp"
                 android:id="@+id/text_item"
-                android:text="foo"
                 android:gravity="center"
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_gravity="start|center_vertical"

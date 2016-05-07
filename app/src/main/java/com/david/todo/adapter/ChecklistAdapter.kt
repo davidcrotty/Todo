@@ -87,15 +87,13 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                 holder?.taskText?.text = completedItemModel.text
                 holder?.undoButtonText?.setOnClickListener({
                     if(_allowTransform == false) return@setOnClickListener
-                    replaceCompletedWithPendingItem(completedItemModel,
-                                                    position)
+                    replaceCompletedWithPendingItem(completedItemModel)
                 })
             }
         }
     }
 
-    fun replaceCompletedWithPendingItem(completedCheckItemModel: CompletedCheckItemModel,
-                                        position: Int) {
+    fun replaceCompletedWithPendingItem(completedCheckItemModel: CompletedCheckItemModel) {
         for(i in itemList.indices) {
             if(itemList[i] is CompletedCheckItemModel && i != 0) {
                 itemList.remove(completedCheckItemModel)

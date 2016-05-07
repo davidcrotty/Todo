@@ -11,12 +11,14 @@ import android.view.Menu
 import butterknife.bindView
 import com.david.todo.R
 import com.david.todo.adapter.ChecklistAdapter
+import com.david.todo.model.CheckItem
 import com.david.todo.model.CheckItemHolder
-import com.david.todo.model.CheckItemModel
+import com.david.todo.model.PendingItemModel
 import com.david.todo.presenter.TaskListPresenter
 import com.david.todo.view.BaseActivity
 import com.david.todo.view.eventlisteners.IHandleListener
 import com.david.todo.view.eventlisteners.TouchEventHelper
+import java.util.*
 
 /**
  * Created by DavidHome on 02/04/2016.
@@ -42,12 +44,12 @@ class TaskListActivity : BaseActivity(), IHandleListener {
 
     private fun init() {
         val resources = resources
-        val itemList = arrayListOf(CheckItemModel("Prepare meeting room", resources.getColor(R.color.purple)),
-                                   CheckItemModel("Review project proposal", resources.getColor(R.color.orange)),
-                                   CheckItemModel("Contact catering team", resources.getColor(R.color.light_blue)),
-                                   CheckItemModel("Email team reminder", resources.getColor(R.color.red)),
-                                   CheckItemModel("Test AV equipment", resources.getColor(R.color.teal)));
-        _checkListAdapter = ChecklistAdapter(itemList, _List_presenter, this, this)
+        val itemList = arrayListOf(PendingItemModel("Prepare meeting room"),
+                                   PendingItemModel("Meet cat smugglers"),
+                                   PendingItemModel("Test AV equipment"),
+                                   PendingItemModel("Review project proposal"),
+                                   PendingItemModel("Update statement of work"));
+        _checkListAdapter = ChecklistAdapter(itemList as ArrayList<CheckItem>, _List_presenter, this, this)
         _checkListView.setHasFixedSize(true)
         _checkListView.adapter = _checkListAdapter
         _checkListView.layoutManager = LinearLayoutManager(this)
@@ -82,7 +84,7 @@ class TaskListActivity : BaseActivity(), IHandleListener {
                       Snackbar.LENGTH_LONG)
                           .setAction(resources.getString(R.string.checklist_action), {
                               val checkItemHolder = intent.getSerializableExtra(MOST_RECENTLY_REMOVED_MODEL) as CheckItemHolder
-                              _checkListAdapter.restoreItemWith(checkItemHolder?.position, checkItemHolder?.checkItemModel)
+                              _checkListAdapter.restoreItemWith(checkItemHolder?.position, checkItemHolder?.pendingItemModel)
                           })
                       .setActionTextColor(resources.getColor(R.color.green))
                       .show()

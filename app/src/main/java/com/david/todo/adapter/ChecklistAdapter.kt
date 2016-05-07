@@ -15,7 +15,8 @@ import android.widget.TextView
 import com.david.todo.R
 import com.david.todo.adapter.viewholder.HolderType
 import com.david.todo.adapter.viewholder.PendingItemViewHolder
-import com.david.todo.model.CheckItemModel
+import com.david.todo.model.CheckItem
+import com.david.todo.model.PendingItemModel
 import com.david.todo.model.TaskItemModel
 import com.david.todo.presenter.TaskListPresenter
 import com.david.todo.view.eventlisteners.IHandleListener
@@ -26,12 +27,20 @@ import java.util.*
 /**
  * Created by DavidHome on 03/04/2016.
  */
-class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
+class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                        val listPresenter: TaskListPresenter,
                        val context: Context,
                        val dragListener: IHandleListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val defaultPositionX: Float = 0F
+
+    override fun getItemViewType(position: Int): Int {
+        if(itemList[position] is PendingItemModel) {
+            return HolderType.PENDING.ordinal
+        } else {
+            return HolderType.COMPLETED.ordinal
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
         var layout = LayoutInflater.from(parent?.context).inflate(R.layout.pending_check_list_item, parent, false)
@@ -43,7 +52,8 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
         when(holder?.itemViewType) {
             HolderType.PENDING.ordinal -> {
                 holder as PendingItemViewHolder
-                holder?.textView?.text = itemList[position].text
+                val pendingItemModel = itemList[position] as PendingItemModel
+                holder?.textView?.text = pendingItemModel.text
                 holder?.dragHandle?.setOnTouchListener({ view, motionEvent ->
                     when(motionEvent.action) {
                         MotionEvent.ACTION_DOWN -> {
@@ -69,7 +79,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
         val taskItem = itemList[position]
         itemList.removeAt(position)
         notifyItemRemoved(position)
-        listPresenter.storeAndDisplaySnackBarFor(taskItem, position)
+        listPresenter.storeAndDisplaySnackBarFor(taskItem as PendingItemModel, position)
     }
 
     fun onItemMove(fromPosition: Int, toPosition: Int) : Boolean{
@@ -86,7 +96,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItemModel>,
         return true;
     }
 
-    fun restoreItemWith(savedPosition: Int, itemToAdd: CheckItemModel) {
+    fun restoreItemWith(savedPosition: Int, itemToAdd: PendingItemModel) {
         itemList.add(savedPosition, itemToAdd)
         notifyItemInserted(savedPosition)
     }

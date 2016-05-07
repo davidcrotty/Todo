@@ -94,12 +94,13 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
 
     fun onItemDismiss(position: Int) {
         Timber.d("Removing $position")
-        val taskItem = itemList[position] as PendingCheckItemModel
+        val pendingTaskItem = itemList[position] as PendingCheckItemModel
+        val completedItem = CompletedCheckItemModel(pendingTaskItem.text)
         itemList.removeAt(position)
         notifyItemRemoved(position)
-        itemList.add(CompletedCheckItemModel(taskItem.text))
+        itemList.add(completedItem)
         notifyItemInserted(itemList.size - 1)
-        listPresenter.storeAndDisplaySnackBarFor(taskItem, position)
+        listPresenter.storeAndDisplaySnackBarFor(pendingTaskItem, completedItem, position)
     }
 
     fun onItemMove(fromPosition: Int, toPosition: Int) : Boolean{
@@ -116,8 +117,12 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
         return true;
     }
 
-    fun restoreItemWith(savedPosition: Int, checkItemToAdd: PendingCheckItemModel) {
+    fun restoreItemWith(savedPosition: Int, checkItemToAdd: PendingCheckItemModel, completedItemToRemove: CompletedCheckItemModel?) {
         itemList.add(savedPosition, checkItemToAdd)
         notifyItemInserted(savedPosition)
+        completedItemToRemove?.let {
+            itemList.remove(completedItemToRemove as CheckItem)
+            notifyItemRemoved(itemList.size)
+        }
     }
 }

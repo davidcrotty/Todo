@@ -85,7 +85,9 @@ class TaskListActivity : BaseActivity(), IHandleListener {
                       Snackbar.LENGTH_LONG)
                           .setAction(resources.getString(R.string.checklist_action), {
                               val checkItemHolder = intent.getSerializableExtra(MOST_RECENTLY_REMOVED_MODEL) as CheckItemHolder
-                              _checkListAdapter.restoreItemWith(checkItemHolder?.position, checkItemHolder?.pendingCheckItemModel)
+                              _checkListAdapter.restoreItemWith(checkItemHolder?.position,
+                                                                checkItemHolder?.pendingCheckItemModel,
+                                                                checkItemHolder.completedCheckItemModel)
                           })
                       .setActionTextColor(resources.getColor(R.color.green))
                       .show()

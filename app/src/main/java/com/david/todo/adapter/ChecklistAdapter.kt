@@ -84,6 +84,23 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                 holder as CompletedItemViewHolder
                 val completedItemModel = itemList[position] as CompletedCheckItemModel
                 holder?.taskText?.text = completedItemModel.text
+                holder?.undoButtonText?.setOnClickListener({
+                    replaceCompletedWithPendingItem(completedItemModel,
+                                                    position)
+                })
+            }
+        }
+    }
+
+    fun replaceCompletedWithPendingItem(completedCheckItemModel: CompletedCheckItemModel,
+                                        position: Int) {
+        for(i in itemList.indices) {
+            if(itemList[i] is CompletedCheckItemModel && i != 0) {
+                itemList.remove(completedCheckItemModel)
+                notifyItemRemoved(position)
+                itemList.add(i, PendingCheckItemModel(completedCheckItemModel.text))
+                notifyItemInserted(i)
+                return
             }
         }
     }

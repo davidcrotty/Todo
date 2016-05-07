@@ -1,5 +1,6 @@
 package com.david.todo.view.activity
 
+import android.content.BroadcastReceiver
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
@@ -19,6 +20,7 @@ import com.david.todo.presenter.TaskListPresenter
 import com.david.todo.view.BaseActivity
 import com.david.todo.view.eventlisteners.IHandleListener
 import com.david.todo.view.eventlisteners.TouchEventHelper
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -29,6 +31,7 @@ class TaskListActivity : BaseActivity(), IHandleListener {
     val toolbar: Toolbar by bindView(R.id.toolbar)
     val MOST_RECENTLY_REMOVED_MODEL: String = "MOST_RECENTLY_REMOVED_MODEL"
     val CHECK_ITEM_LIST: String = "CHECK_ITEM_LIST"
+
 
     lateinit var _List_presenter: TaskListPresenter
     lateinit var _checkListView: RecyclerView
@@ -100,6 +103,17 @@ class TaskListActivity : BaseActivity(), IHandleListener {
                                                                 checkItemHolder.completedCheckItemModel)
                           })
                       .setActionTextColor(resources.getColor(R.color.green))
+                      .setCallback(object: Snackbar.Callback() {
+                            override fun onDismissed(snackbar: Snackbar, event: Int) {
+                                Timber.d("DISMISSED")
+                                _checkListAdapter.allowViewholderTypeTransform(true)
+                            }
+
+                            override  fun onShown(snackbar: Snackbar) {
+                                Timber.d("SHOWN")
+                                _checkListAdapter.allowViewholderTypeTransform(false)
+                              }
+                      })
                       .show()
     }
 

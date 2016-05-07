@@ -35,6 +35,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                        val dragListener: IHandleListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val defaultPositionX: Float = 0F
+    var _allowTransform: Boolean = true
 
     override fun getItemViewType(position: Int): Int {
         if(itemList[position] is PendingCheckItemModel) {
@@ -85,6 +86,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                 val completedItemModel = itemList[position] as CompletedCheckItemModel
                 holder?.taskText?.text = completedItemModel.text
                 holder?.undoButtonText?.setOnClickListener({
+                    if(_allowTransform == false) return@setOnClickListener
                     replaceCompletedWithPendingItem(completedItemModel,
                                                     position)
                 })
@@ -94,6 +96,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
 
     fun replaceCompletedWithPendingItem(completedCheckItemModel: CompletedCheckItemModel,
                                         position: Int) {
+        //when toast is displating disable all undo buttons
         for(i in itemList.indices) {
             if(itemList[i] is CompletedCheckItemModel && i != 0) {
                 itemList.remove(completedCheckItemModel)
@@ -141,5 +144,9 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
             itemList.remove(completedItemToRemove as CheckItem)
             notifyItemRemoved(itemList.size)
         }
+    }
+
+    fun allowViewholderTypeTransform(allowTransform: Boolean) {
+        _allowTransform = allowTransform
     }
 }

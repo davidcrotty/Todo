@@ -13,10 +13,12 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.david.todo.R
+import com.david.todo.adapter.viewholder.CompletedItemViewHolder
 import com.david.todo.adapter.viewholder.HolderType
 import com.david.todo.adapter.viewholder.PendingItemViewHolder
 import com.david.todo.model.CheckItem
-import com.david.todo.model.PendingItemModel
+import com.david.todo.model.CompletedCheckItemModel
+import com.david.todo.model.PendingCheckItemModel
 import com.david.todo.model.TaskItemModel
 import com.david.todo.presenter.TaskListPresenter
 import com.david.todo.view.eventlisteners.IHandleListener
@@ -35,7 +37,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
     val defaultPositionX: Float = 0F
 
     override fun getItemViewType(position: Int): Int {
-        if(itemList[position] is PendingItemModel) {
+        if(itemList[position] is PendingCheckItemModel) {
             return HolderType.PENDING.ordinal
         } else {
             return HolderType.COMPLETED.ordinal
@@ -43,16 +45,27 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
-        var layout = LayoutInflater.from(parent?.context).inflate(R.layout.pending_check_list_item, parent, false)
-        val viewHolder = PendingItemViewHolder(layout);
-        return viewHolder;
+        val inflater = LayoutInflater.from(parent?.context)
+        var viewHolder = when(viewType) {
+            HolderType.PENDING.ordinal -> {
+                val parentLayout = inflater.inflate(R.layout.pending_check_list_item, parent, false)
+                return PendingItemViewHolder(parentLayout)
+            }
+            HolderType.COMPLETED.ordinal -> {
+                val parentLayout = inflater.inflate(R.layout.completed_check_list_item, parent, false)
+                return CompletedItemViewHolder(parentLayout)
+            }
+            else -> {
+                return null
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         when(holder?.itemViewType) {
             HolderType.PENDING.ordinal -> {
                 holder as PendingItemViewHolder
-                val pendingItemModel = itemList[position] as PendingItemModel
+                val pendingItemModel = itemList[position] as PendingCheckItemModel
                 holder?.textView?.text = pendingItemModel.text
                 holder?.dragHandle?.setOnTouchListener({ view, motionEvent ->
                     when(motionEvent.action) {
@@ -67,6 +80,10 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                 holder?.taskForeground?.translationX = defaultPositionX
                 holder?.itemView?.visibility = View.VISIBLE
             }
+            HolderType.COMPLETED.ordinal -> {
+                holder as CompletedItemViewHolder
+                val completedItemModel = itemList[position] as CompletedCheckItemModel
+            }
         }
     }
 
@@ -79,7 +96,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
         val taskItem = itemList[position]
         itemList.removeAt(position)
         notifyItemRemoved(position)
-        listPresenter.storeAndDisplaySnackBarFor(taskItem as PendingItemModel, position)
+        listPresenter.storeAndDisplaySnackBarFor(taskItem as PendingCheckItemModel, position)
     }
 
     fun onItemMove(fromPosition: Int, toPosition: Int) : Boolean{
@@ -96,8 +113,8 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
         return true;
     }
 
-    fun restoreItemWith(savedPosition: Int, itemToAdd: PendingItemModel) {
-        itemList.add(savedPosition, itemToAdd)
+    fun restoreItemWith(savedPosition: Int, checkItemToAdd: PendingCheckItemModel) {
+        itemList.add(savedPosition, checkItemToAdd)
         notifyItemInserted(savedPosition)
     }
 }

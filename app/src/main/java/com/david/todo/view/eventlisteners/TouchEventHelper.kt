@@ -13,6 +13,7 @@ import android.widget.AbsListView
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import com.david.todo.adapter.ChecklistAdapter
+import com.david.todo.adapter.viewholder.CompletedItemViewHolder
 import com.david.todo.adapter.viewholder.PendingItemViewHolder
 import timber.log.Timber
 
@@ -34,11 +35,13 @@ class TouchEventHelper(val checkListAdapter: ChecklistAdapter) : ItemTouchHelper
     }
 
     override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
+        if(viewHolder is CompletedItemViewHolder) return true
         checkListAdapter.onItemMove(viewHolder!!.adapterPosition, target!!.adapterPosition);
         return true;
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+        if(viewHolder is CompletedItemViewHolder) return
         var parentContainer = viewHolder as PendingItemViewHolder;
         val scaleAnimation = FadeAnimation(1F, 0F, viewHolder, checkListAdapter)
         scaleAnimation.duration = animationDuration
@@ -46,6 +49,7 @@ class TouchEventHelper(val checkListAdapter: ChecklistAdapter) : ItemTouchHelper
     }
 
     override fun onChildDraw(c: Canvas?, recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+        if(viewHolder is CompletedItemViewHolder) return
         if (viewHolder?.adapterPosition == -1) {
             return;
         }

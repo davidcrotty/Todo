@@ -13,7 +13,8 @@ import com.david.todo.R
 import com.david.todo.adapter.ChecklistAdapter
 import com.david.todo.model.CheckItem
 import com.david.todo.model.CheckItemHolder
-import com.david.todo.model.PendingItemModel
+import com.david.todo.model.CompletedCheckItemModel
+import com.david.todo.model.PendingCheckItemModel
 import com.david.todo.presenter.TaskListPresenter
 import com.david.todo.view.BaseActivity
 import com.david.todo.view.eventlisteners.IHandleListener
@@ -44,11 +45,11 @@ class TaskListActivity : BaseActivity(), IHandleListener {
 
     private fun init() {
         val resources = resources
-        val itemList = arrayListOf(PendingItemModel("Prepare meeting room"),
-                                   PendingItemModel("Meet cat smugglers"),
-                                   PendingItemModel("Test AV equipment"),
-                                   PendingItemModel("Review project proposal"),
-                                   PendingItemModel("Update statement of work"));
+        val itemList = arrayListOf(PendingCheckItemModel("Prepare meeting room"),
+                                   PendingCheckItemModel("Meet cat smugglers"),
+                                   PendingCheckItemModel("Test AV equipment"),
+                                   PendingCheckItemModel("Review project proposal"),
+                                   CompletedCheckItemModel("Update statement of work"));
         _checkListAdapter = ChecklistAdapter(itemList as ArrayList<CheckItem>, _List_presenter, this, this)
         _checkListView.setHasFixedSize(true)
         _checkListView.adapter = _checkListAdapter
@@ -84,7 +85,7 @@ class TaskListActivity : BaseActivity(), IHandleListener {
                       Snackbar.LENGTH_LONG)
                           .setAction(resources.getString(R.string.checklist_action), {
                               val checkItemHolder = intent.getSerializableExtra(MOST_RECENTLY_REMOVED_MODEL) as CheckItemHolder
-                              _checkListAdapter.restoreItemWith(checkItemHolder?.position, checkItemHolder?.pendingItemModel)
+                              _checkListAdapter.restoreItemWith(checkItemHolder?.position, checkItemHolder?.pendingCheckItemModel)
                           })
                       .setActionTextColor(resources.getColor(R.color.green))
                       .show()

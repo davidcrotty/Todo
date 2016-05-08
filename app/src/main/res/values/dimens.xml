@@ -26,4 +26,7 @@
     <dimen name="link_line">40dp</dimen>
     <dimen name="link_margin">10dp</dimen>
     <dimen name="small_fab">50dp</dimen>
+
+    <!-- Check list activity -->
+    <dimen name="list_margin">8dp</dimen>
 </resources>

@@ -4,7 +4,7 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@color/list_background">
 
     <android.support.design.widget.AppBarLayout
         android:layout_height="wrap_content"
@@ -24,19 +24,20 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="8dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/list_margin"
+        android:background="@android:color/white">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/check_list"
             android:layout_marginTop="?android:attr/actionBarSize"
+            android:id="@+id/check_list"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="1dp"
-            android:background="@android:color/white"></android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 

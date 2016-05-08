@@ -1,6 +1,7 @@
 package com.david.todo.view.activity
 
 import android.content.BroadcastReceiver
+import android.content.res.TypedArray
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
@@ -8,7 +9,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.TypedValue
 import android.view.Menu
+import android.widget.LinearLayout
 import butterknife.bindView
 import com.david.todo.R
 import com.david.todo.adapter.ChecklistAdapter

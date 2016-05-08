@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/list_background"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/icon_container"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:gravity="top">
+        <ImageView
+            android:src="@drawable/send_white"
+            android:layout_width="38dp"
+            android:layout_height="38dp" />
+    </LinearLayout>
+
+    <com.david.todo.view.widgets.SpeechView
+        android:layout_toLeftOf="@id/icon_container"
+        android:id="@+id/speech_view"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>

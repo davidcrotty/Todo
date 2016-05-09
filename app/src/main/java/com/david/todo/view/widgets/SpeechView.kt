@@ -13,6 +13,8 @@ import com.david.todo.R
  */
 class SpeechView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
+    val triangleArea: Int = 48
+    val triangleBase: Float = 0F
     lateinit var triangle: Path
     lateinit var fill: Paint
 
@@ -28,14 +30,14 @@ class SpeechView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        val speechBubble = resources.getDrawable(R.drawable.speech_container);
-        speechBubble.setBounds(0, 0, canvas!!.width - 48, canvas!!.height);
+        val speechBubble = resources.getDrawable(R.drawable.speech_container)
+        speechBubble.setBounds(0, 0, canvas!!.width - triangleArea, canvas!!.height)
         speechBubble.draw(canvas);
 
-        triangle.moveTo(canvas!!.width.toFloat(), 0F)
-        triangle.lineTo(canvas!!.width.toFloat(), 0F)
-        triangle.lineTo(canvas!!.width.toFloat() - 48F, 0F)
-        triangle.lineTo(canvas!!.width.toFloat() - 48F, 50F)
+        triangle.moveTo(canvas!!.width.toFloat(), triangleBase)
+        triangle.lineTo(canvas!!.width.toFloat(), triangleBase)
+        triangle.lineTo(canvas!!.width.toFloat() - triangleArea, triangleBase)
+        triangle.lineTo(canvas!!.width.toFloat() - triangleArea, triangleArea.toFloat())
         triangle.close()
 
         canvas.drawPath(triangle, fill)

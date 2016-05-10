@@ -81,6 +81,14 @@
                 android:layout_gravity="right|center_vertical" />
 
         <View
+            android:id="@+id/top_border"
+            android:visibility="invisible"
+            android:layout_gravity="top"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/drop_shadow"></View>
+
+        <View
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="2dp"

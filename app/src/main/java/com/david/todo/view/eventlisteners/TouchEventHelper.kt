@@ -54,10 +54,23 @@ class TouchEventHelper(val checkListAdapter: ChecklistAdapter) : ItemTouchHelper
             return;
         }
 
+        val holder = viewHolder as PendingItemViewHolder
+
+        if(actionState.equals(ItemTouchHelper.ACTION_STATE_DRAG)) {
+            if(holder.topBorder.visibility == View.INVISIBLE) {
+                holder.topBorder.visibility = View.VISIBLE
+            }
+        }
+
+        if(isCurrentlyActive == false) {
+            if(holder.topBorder.visibility == View.VISIBLE) {
+                holder.topBorder.visibility = View.INVISIBLE
+            }
+        }
+
         var drawX = dX
         if(actionState.equals(ItemTouchHelper.ACTION_STATE_SWIPE)) {
             //TODO make this call composed so is non specific to a concrete viewholder
-            val holder = viewHolder as PendingItemViewHolder
             holder.taskForeground.translationX = dX
 
             drawX = 0F //Keeps background view still

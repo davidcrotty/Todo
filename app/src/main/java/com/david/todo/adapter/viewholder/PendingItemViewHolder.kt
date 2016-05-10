@@ -14,6 +14,7 @@ class PendingItemViewHolder(view: View)  : RecyclerView.ViewHolder(view) {
     var taskText: TextView
     var dragHandle: ImageView
     var doneImage: ImageView
+    var topBorder: View
     var taskForeground: FrameLayout
     var taskBackground: FrameLayout
     val viewType: HolderType = HolderType.PENDING
@@ -22,6 +23,7 @@ class PendingItemViewHolder(view: View)  : RecyclerView.ViewHolder(view) {
         taskText = view.findViewById(R.id.text_item) as TextView
         dragHandle = view.findViewById(R.id.drag_handle) as ImageView
         doneImage = view.findViewById(R.id.done_image) as ImageView
+        topBorder = view.findViewById(R.id.top_border) as View
         taskForeground = view.findViewById(R.id.task_foreground) as FrameLayout
         taskBackground = view.findViewById(R.id.task_background) as FrameLayout
     }

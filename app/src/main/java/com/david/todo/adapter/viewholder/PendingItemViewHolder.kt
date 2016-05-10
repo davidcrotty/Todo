@@ -22,7 +22,6 @@ class PendingItemViewHolder(view: View)  : RecyclerView.ViewHolder(view) {
         taskText = view.findViewById(R.id.text_item) as TextView
         dragHandle = view.findViewById(R.id.drag_handle) as ImageView
         doneImage = view.findViewById(R.id.done_image) as ImageView
-        doneImage.setColorFilter(view.context.getColor(R.color.green_ripple))
         taskForeground = view.findViewById(R.id.task_foreground) as FrameLayout
         taskBackground = view.findViewById(R.id.task_background) as FrameLayout
     }

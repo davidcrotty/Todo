@@ -79,6 +79,12 @@
                 android:src="@drawable/reorder_grey"
                 android:layout_marginRight="16dp"
                 android:layout_gravity="right|center_vertical" />
+
+        <View
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/drop_shadow"></View>
     </FrameLayout>
 
 </FrameLayout>

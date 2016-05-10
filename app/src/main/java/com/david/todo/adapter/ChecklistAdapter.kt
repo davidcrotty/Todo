@@ -3,6 +3,8 @@ package com.david.todo.adapter
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.MotionEvent

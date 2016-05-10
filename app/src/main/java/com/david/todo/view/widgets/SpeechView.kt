@@ -18,7 +18,6 @@ class SpeechView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     val triangleArea: Int = 48
     val triangleBase: Float = 0F
 
-    lateinit var iconColour: ColorStateList
     lateinit var triangle: Path
     lateinit var fill: Paint
 

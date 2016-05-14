@@ -18,4 +18,10 @@ class TaskListPresenter(val taskListActivity: TaskListActivity) {
         taskListActivity.storeIntentFor(CheckItemHolder(pendingCheckItemModel, completedCheckItemModel, position))
         taskListActivity.showSnackbar()
     }
+
+    fun delegateAddItemToAdapterWith(task: String) {
+        val lastPosition = taskListActivity.getLastCompletedItemPosition()
+        val pendingItem = PendingCheckItemModel(task)
+        taskListActivity.addItemToAdapterWith(pendingItem, lastPosition)
+    }
 }

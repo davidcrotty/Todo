@@ -25,7 +25,9 @@ import com.david.todo.presenter.TaskListPresenter
 import com.david.todo.view.BaseActivity
 import com.david.todo.view.eventlisteners.IHandleListener
 import com.david.todo.view.eventlisteners.TouchEventHelper
+import com.david.todo.view.widgets.EnterItemView
 import timber.log.Timber
+import java.text.FieldPosition
 import java.util.*
 
 /**
@@ -34,21 +36,22 @@ import java.util.*
 class TaskListActivity : BaseActivity(), IHandleListener {
     val rootView: CoordinatorLayout by bindView(R.id.root_view)
     val toolbar: Toolbar by bindView(R.id.toolbar)
+    val enterItemWidget: EnterItemView by bindView(R.id.enter_item_view)
+    val checkListView: RecyclerView by bindView(R.id.check_list)
     val MOST_RECENTLY_REMOVED_MODEL: String = "MOST_RECENTLY_REMOVED_MODEL"
     val CHECK_ITEM_LIST: String = "CHECK_ITEM_LIST"
 
 
-    lateinit var _List_presenter: TaskListPresenter
-    lateinit var _checkListView: RecyclerView
-    lateinit var _itemTouchHelper: ItemTouchHelper
-    lateinit var _checkListAdapter: ChecklistAdapter
+    lateinit var listPresenter: TaskListPresenter
+    lateinit var itemTouchHelper: ItemTouchHelper
+    lateinit var checkListAdapter: ChecklistAdapter
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_list)
         setSupportActionBar(toolbar)
-        _List_presenter = TaskListPresenter(this)
-        _checkListView = findViewById(R.id.check_list) as RecyclerView
+        listPresenter = TaskListPresenter(this)
+        enterItemWidget.attachPresenter(listPresenter)
         initAdapter()
     }
 
@@ -64,23 +67,23 @@ class TaskListActivity : BaseActivity(), IHandleListener {
                     CompletedCheckItemModel("Update statement of work"));
         }
 
-        _checkListAdapter = ChecklistAdapter(itemList as ArrayList<CheckItem>, _List_presenter, this, this)
-        _checkListView.setHasFixedSize(true)
-        _checkListView.adapter = _checkListAdapter
-        _checkListView.layoutManager = LinearLayoutManager(this)
+        checkListAdapter = ChecklistAdapter(itemList as ArrayList<CheckItem>, listPresenter, this, this)
+        checkListView.setHasFixedSize(true)
+        checkListView.adapter = checkListAdapter
+        checkListView.layoutManager = LinearLayoutManager(this)
 
-        var touchEventHelper = TouchEventHelper(_checkListAdapter)
-        _itemTouchHelper = ItemTouchHelper(touchEventHelper)
-        _itemTouchHelper.attachToRecyclerView(_checkListView)
+        var touchEventHelper = TouchEventHelper(checkListAdapter)
+        itemTouchHelper = ItemTouchHelper(touchEventHelper)
+        itemTouchHelper.attachToRecyclerView(checkListView)
     }
 
     override fun onPause() {
         super.onPause()
-        intent.putExtra(CHECK_ITEM_LIST, _checkListAdapter.itemList)
+        intent.putExtra(CHECK_ITEM_LIST, checkListAdapter.itemList)
     }
 
     override fun onHandleDown(viewHolder: RecyclerView.ViewHolder) {
-        _itemTouchHelper.startDrag(viewHolder)
+        itemTouchHelper.startDrag(viewHolder)
     }
 
     override fun onCreateOptionsMenu(menu: Menu) : Boolean {
@@ -97,13 +100,21 @@ class TaskListActivity : BaseActivity(), IHandleListener {
         return true
     }
 
+    fun getLastCompletedItemPosition() : Int {
+        return checkListAdapter.getLastCompletedItemPosition()
+    }
+
+    fun addItemToAdapterWith(task: PendingCheckItemModel, position: Int) {
+        checkListAdapter?.addItem(task, position)
+    }
+
     fun showSnackbar() {
         Snackbar.make(rootView,
                       resources.getString(R.string.checklist_text),
                       Snackbar.LENGTH_LONG)
                           .setAction(resources.getString(R.string.checklist_action), {
                               val checkItemHolder = intent.getSerializableExtra(MOST_RECENTLY_REMOVED_MODEL) as CheckItemHolder
-                              _checkListAdapter.restoreItemWith(checkItemHolder?.position,
+                              checkListAdapter.restoreItemWith(checkItemHolder?.position,
                                                                 checkItemHolder?.pendingCheckItemModel,
                                                                 checkItemHolder.completedCheckItemModel)
                           })
@@ -111,12 +122,12 @@ class TaskListActivity : BaseActivity(), IHandleListener {
                       .setCallback(object: Snackbar.Callback() {
                             override fun onDismissed(snackbar: Snackbar, event: Int) {
                                 Timber.d("DISMISSED")
-                                _checkListAdapter.allowViewholderTypeTransform(true)
+                                checkListAdapter.allowViewholderTypeTransform(true)
                             }
 
                             override  fun onShown(snackbar: Snackbar) {
                                 Timber.d("SHOWN")
-                                _checkListAdapter.allowViewholderTypeTransform(false)
+                                checkListAdapter.allowViewholderTypeTransform(false)
                               }
                       })
                       .show()

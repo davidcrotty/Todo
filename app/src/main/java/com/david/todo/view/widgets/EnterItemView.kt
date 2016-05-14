@@ -11,6 +11,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import butterknife.bindView
 import com.david.todo.R
+import com.david.todo.presenter.TaskListPresenter
 import timber.log.Timber
 
 /**
@@ -20,6 +21,7 @@ class EnterItemView(context: Context, attrs: AttributeSet) : FrameLayout(context
     val sendImage: ImageView by bindView(R.id.send_button)
     val editText: EditText by bindView(R.id.add_item_text_edit)
     val iconColour: ColorStateList
+    lateinit var _presenter: TaskListPresenter
 
     init {
         inflate(context, R.layout.enter_item_view, this);
@@ -29,8 +31,14 @@ class EnterItemView(context: Context, attrs: AttributeSet) : FrameLayout(context
         editText.addTextChangedListener(this)
     }
 
+    fun attachPresenter(presenter: TaskListPresenter) {
+        _presenter = presenter
+    }
+
     override fun onClick(v: View?) {
-        
+        _presenter?.delegateAddItemToAdapterWith(editText.text.toString())
+        sendImage.setOnClickListener(null)
+        editText.text.clear()
     }
 
     override fun afterTextChanged(editable: Editable?) {

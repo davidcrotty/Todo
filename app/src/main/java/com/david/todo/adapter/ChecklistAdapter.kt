@@ -110,6 +110,20 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
         return itemList.count();
     }
 
+    fun addItem(task: PendingCheckItemModel, position: Int) {
+        itemList.add(position, task)
+        notifyItemInserted(position)
+    }
+
+    fun getLastCompletedItemPosition() : Int {
+        for(i in itemList.indices) {
+            if(itemList[i] is CompletedCheckItemModel) {
+                return if(i == 0) 0 else i
+            }
+        }
+        return itemList.size - 1
+    }
+
     fun onItemDismiss(position: Int) {
         Timber.d("Removing $position")
         val pendingTaskItem = itemList[position] as PendingCheckItemModel

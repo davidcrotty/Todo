@@ -34,6 +34,7 @@
         android:layout_height="match_parent" />
 
     <EditText
+        android:id="@+id/add_item_text_edit"
         android:hint="Add Item Here"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"

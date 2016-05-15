@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
+import android.view.View
 import butterknife.bindView
 import com.david.todo.R
 import com.david.todo.adapter.ChecklistAdapter
@@ -38,6 +39,7 @@ class TaskListActivity : BaseActivity(), IHandleListener {
     lateinit var listPresenter: TaskListPresenter
     lateinit var itemTouchHelper: ItemTouchHelper
     lateinit var checkListAdapter: ChecklistAdapter
+    lateinit var linearLayoutManager: LinearLayoutManager
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,9 +54,9 @@ class TaskListActivity : BaseActivity(), IHandleListener {
         checkListAdapter = ChecklistAdapter(itemList, listPresenter, this, this)
         checkListView.setHasFixedSize(true)
         checkListView.adapter = checkListAdapter
-        val layoutManager = LinearLayoutManager(this)
-        layoutManager.stackFromEnd = true
-        checkListView.layoutManager = layoutManager
+        linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager.stackFromEnd = true
+        checkListView.layoutManager = linearLayoutManager
 
         var touchEventHelper = TouchEventHelper(checkListAdapter)
         itemTouchHelper = ItemTouchHelper(touchEventHelper)
@@ -82,6 +84,22 @@ class TaskListActivity : BaseActivity(), IHandleListener {
             true
         }
         return true
+    }
+
+    fun setScrollBehaviourWith() {
+        //set rather than add is safer as prevents adding un-needed listeners
+        checkListView.setOnScrollListener(object: RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val totalItemCount = linearLayoutManager.itemCount
+                val lastVisibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition()
+                if(lastVisibleItem == totalItemCount - 1) { //TODO Will need tweaking when show/hiding completed
+                    enterItemWidget?.hideDropShadow()
+                } else {
+                    enterItemWidget?.showDropShadow()
+                }
+            }
+        })
     }
 
     fun getLastCompletedItemPosition() : Int {

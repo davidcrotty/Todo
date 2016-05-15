@@ -39,5 +39,6 @@ class TaskListPresenter(val taskListActivity: TaskListActivity) {
                 CompletedCheckItemModel("Update statement of work"),
                 CompletedCheckItemModel("Update statement of work"))
         taskListActivity.initAdapterWith(itemList as ArrayList<CheckItem>)
+        taskListActivity.setScrollBehaviourWith()
     }
 }

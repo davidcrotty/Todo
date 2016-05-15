@@ -53,6 +53,7 @@
             android:id="@+id/enter_item_view"
             speech_view:icon_colour="@color/green"
             android:layout_alignParentBottom="true"
+            android:paddingBottom="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></com.david.todo.view.widgets.EnterItemView>
 

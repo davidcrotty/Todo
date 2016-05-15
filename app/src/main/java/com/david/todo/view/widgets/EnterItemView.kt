@@ -36,6 +36,14 @@ class EnterItemView(context: Context, attrs: AttributeSet) : FrameLayout(context
         _presenter = presenter
     }
 
+    fun hideDropShadow() {
+        dropShadow.visibility = View.INVISIBLE
+    }
+
+    fun showDropShadow() {
+        dropShadow.visibility = View.VISIBLE
+    }
+
     override fun onClick(v: View?) {
         _presenter?.delegateAddItemToAdapterWith(editText.text.toString())
         sendImage.setOnClickListener(null)

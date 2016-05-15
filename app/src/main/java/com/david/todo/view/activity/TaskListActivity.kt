@@ -1,9 +1,5 @@
 package com.david.todo.view.activity
 
-import android.content.BroadcastReceiver
-import android.content.res.TypedArray
-import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
@@ -11,9 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.util.TypedValue
 import android.view.Menu
-import android.widget.LinearLayout
 import butterknife.bindView
 import com.david.todo.R
 import com.david.todo.adapter.ChecklistAdapter
@@ -27,7 +21,6 @@ import com.david.todo.view.eventlisteners.IHandleListener
 import com.david.todo.view.eventlisteners.TouchEventHelper
 import com.david.todo.view.widgets.EnterItemView
 import timber.log.Timber
-import java.text.FieldPosition
 import java.util.*
 
 /**
@@ -52,22 +45,11 @@ class TaskListActivity : BaseActivity(), IHandleListener {
         setSupportActionBar(toolbar)
         listPresenter = TaskListPresenter(this)
         enterItemWidget.attachPresenter(listPresenter)
-        initAdapter()
+        listPresenter.loadTaskItems(if (intent.hasExtra(CHECK_ITEM_LIST)) intent.getSerializableExtra(CHECK_ITEM_LIST) as ArrayList<CheckItem> else null)
     }
 
-    private fun initAdapter() {
-        var itemList =
-        if(intent.hasExtra(CHECK_ITEM_LIST)) {
-           intent.getSerializableExtra(CHECK_ITEM_LIST)
-        } else {
-            arrayListOf(PendingCheckItemModel("Prepare meeting room"),
-                    PendingCheckItemModel("Meet cat smugglers"),
-                    PendingCheckItemModel("Test AV equipment"),
-                    PendingCheckItemModel("Review project proposal"),
-                    CompletedCheckItemModel("Update statement of work"));
-        }
-
-        checkListAdapter = ChecklistAdapter(itemList as ArrayList<CheckItem>, listPresenter, this, this)
+    fun initAdapterWith(itemList: ArrayList<CheckItem>) {
+        checkListAdapter = ChecklistAdapter(itemList, listPresenter, this, this)
         checkListView.setHasFixedSize(true)
         checkListView.adapter = checkListAdapter
         checkListView.layoutManager = LinearLayoutManager(this)

@@ -28,13 +28,15 @@ class TaskListPresenter(val taskListActivity: TaskListActivity) {
     }
 
     fun loadTaskItems(checkItems: ArrayList<CheckItem>?) {
-        var itemList = checkItems ?: arrayListOf(PendingCheckItemModel("Prepare meeting room"),
-                PendingCheckItemModel("Meet cat smugglers"),
-                PendingCheckItemModel("Test AV equipment"),
-                PendingCheckItemModel("Review project proposal"),
-                PendingCheckItemModel("Update statement of work"),
-                CompletedCheckItemModel("Update statement of work2"))
-        taskListActivity.initAdapterWith(itemList as ArrayList<CheckItem>)
+//        var itemList = checkItems ?: arrayListOf(PendingCheckItemModel("Prepare meeting room"),
+//                PendingCheckItemModel("Meet cat smugglers"),
+//                PendingCheckItemModel("Test AV equipment"),
+//                PendingCheckItemModel("Review project proposal"),
+//                PendingCheckItemModel("Update statement of work"),
+//                CompletedCheckItemModel("Update statement of work2"))
+        var checkItems = checkItems?: ArrayList<CheckItem>()
+        if(checkItems.isEmpty()) taskListActivity.delegateHideDropShadow()
+        taskListActivity.initAdapterWith(checkItems)
         taskListActivity.setScrollBehaviourWith()
     }
 }

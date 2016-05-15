@@ -88,6 +88,10 @@ class TaskListActivity : BaseActivity(), IHandleListener {
         itemTouchHelper.attachToRecyclerView(checkListView)
     }
 
+    fun delegateHideDropShadow() {
+        enterItemWidget?.hideDropShadow()
+    }
+
     fun setScrollBehaviourWith() {
         //set rather than add is safer as prevents adding un-needed listeners
         checkListView.setOnScrollListener(object: RecyclerView.OnScrollListener() {

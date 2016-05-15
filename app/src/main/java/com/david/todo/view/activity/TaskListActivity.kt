@@ -106,8 +106,9 @@ class TaskListActivity : BaseActivity(), IHandleListener {
         return checkListAdapter.getLastCompletedItemPosition()
     }
 
-    fun addItemToAdapterWith(task: PendingCheckItemModel, position: Int) {
+    fun addPendingItemToAdapterWith(task: PendingCheckItemModel, position: Int) {
         checkListAdapter?.addItem(task, position)
+        checkListView.scrollToPosition(getLastCompletedItemPosition() - 1)
     }
 
     fun showSnackbar() {

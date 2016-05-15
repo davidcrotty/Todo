@@ -21,10 +21,10 @@ class TaskListPresenter(val taskListActivity: TaskListActivity) {
         taskListActivity.showSnackbar()
     }
 
-    fun delegateAddItemToAdapterWith(task: String) {
+    fun addPendingItemToAdapterWith(task: String) {
         val lastPosition = taskListActivity.getLastCompletedItemPosition()
         val pendingItem = PendingCheckItemModel(task)
-        taskListActivity.addItemToAdapterWith(pendingItem, lastPosition)
+        taskListActivity.addPendingItemToAdapterWith(pendingItem, lastPosition)
     }
 
     fun loadTaskItems(checkItems: ArrayList<CheckItem>?) {

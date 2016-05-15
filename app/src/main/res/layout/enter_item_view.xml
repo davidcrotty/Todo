@@ -15,7 +15,7 @@
     <RelativeLayout
         android:paddingTop="8dp"
         android:layout_below="@id/drop_shadow"
-        android:background="@android:color/transparent"
+        android:background="@android:color/white"
         android:id="@+id/content_container"
         android:layout_height="?android:attr/listPreferredItemHeight"
         android:layout_width="match_parent">

@@ -30,4 +30,7 @@
     <!-- Peel item effect colour-->
     <color name="green_peel">#7CB342</color>
     <color name="list_background">#EEEEEE</color>
+
+    <!-- Check list colours -->
+    <color name="speech_bubble">#F7F7F7</color>
 </resources>

@@ -25,7 +25,7 @@ class SpeechView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         triangle = Path()
         triangle.fillType = Path.FillType.EVEN_ODD
         fill = Paint()
-        fill.color = context.resources.getColor(android.R.color.white);
+        fill.color = context.resources.getColor(R.color.speech_bubble);
         fill.strokeWidth = 1F;
         fill.style = Paint.Style.FILL_AND_STROKE
         fill.isAntiAlias = true

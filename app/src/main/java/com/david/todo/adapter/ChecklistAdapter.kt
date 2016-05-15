@@ -121,7 +121,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                 return if(i == 0) 0 else i
             }
         }
-        return itemList.size - 1
+        return itemList.size
     }
 
     fun onItemDismiss(position: Int) {

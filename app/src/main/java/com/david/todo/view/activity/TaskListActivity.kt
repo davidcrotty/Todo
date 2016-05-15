@@ -55,7 +55,7 @@ class TaskListActivity : BaseActivity(), IHandleListener {
         checkListView.setHasFixedSize(true)
         checkListView.adapter = checkListAdapter
         linearLayoutManager = LinearLayoutManager(this)
-        linearLayoutManager.stackFromEnd = true
+        linearLayoutManager.stackFromEnd = false
         checkListView.layoutManager = linearLayoutManager
 
         var touchEventHelper = TouchEventHelper(checkListAdapter)
@@ -88,7 +88,7 @@ class TaskListActivity : BaseActivity(), IHandleListener {
 
     fun setScrollBehaviourWith() {
         //set rather than add is safer as prevents adding un-needed listeners
-        checkListView.setOnScrollListener(object: RecyclerView.OnScrollListener(){
+        checkListView.setOnScrollListener(object: RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val totalItemCount = linearLayoutManager.itemCount

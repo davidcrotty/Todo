@@ -20,6 +20,7 @@ import timber.log.Timber
 class EnterItemView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs), View.OnClickListener, TextWatcher {
     val sendImage: ImageView by bindView(R.id.send_button)
     val editText: EditText by bindView(R.id.add_item_text_edit)
+    val dropShadow: View by bindView(R.id.drop_shadow)
     val iconColour: ColorStateList
     lateinit var _presenter: TaskListPresenter
 

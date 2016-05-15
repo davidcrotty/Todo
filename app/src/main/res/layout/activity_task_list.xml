@@ -38,22 +38,23 @@
             android:layout_marginTop="?android:attr/actionBarSize"
             android:layout_height="@dimen/list_margin"></View>
 
-        <com.david.todo.view.widgets.EnterItemView
-            android:id="@+id/enter_item_view"
-            speech_view:icon_colour="@color/green"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/listPreferredItemHeight"></com.david.todo.view.widgets.EnterItemView>
-
         <android.support.v7.widget.RecyclerView
             android:layout_below="@id/recycler_margin"
-            android:layout_above="@id/enter_item_view"
             android:id="@+id/check_list"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent">
+            android:background="@android:color/transparent"
+            android:layout_marginBottom="?android:attr/listPreferredItemHeight">
         </android.support.v7.widget.RecyclerView>
+
+        <com.david.todo.view.widgets.EnterItemView
+            android:background="@android:color/transparent"
+            android:id="@+id/enter_item_view"
+            speech_view:icon_colour="@color/green"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.david.todo.view.widgets.EnterItemView>
 
     </RelativeLayout>
 

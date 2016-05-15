@@ -31,6 +31,7 @@
             android:name=".view.activity.TaskListActivity"
             android:theme="@style/AppThemeNoActionBar.Transparent.Green"
             android:label=""
+            android:windowSoftInputMode="stateHidden"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -52,7 +52,9 @@ class TaskListActivity : BaseActivity(), IHandleListener {
         checkListAdapter = ChecklistAdapter(itemList, listPresenter, this, this)
         checkListView.setHasFixedSize(true)
         checkListView.adapter = checkListAdapter
-        checkListView.layoutManager = LinearLayoutManager(this)
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.stackFromEnd = true
+        checkListView.layoutManager = layoutManager
 
         var touchEventHelper = TouchEventHelper(checkListAdapter)
         itemTouchHelper = ItemTouchHelper(touchEventHelper)

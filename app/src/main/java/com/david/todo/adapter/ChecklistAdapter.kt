@@ -38,6 +38,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
 
     val defaultPositionX: Float = 0F
     var _allowTransform: Boolean = true
+    var drawCompletedItems: Boolean = false
 
     override fun getItemViewType(position: Int): Int {
         if(itemList[position] is PendingCheckItemModel) {
@@ -85,12 +86,17 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
             }
             HolderType.COMPLETED.ordinal -> {
                 holder as CompletedItemViewHolder
-                val completedItemModel = itemList[position] as CompletedCheckItemModel
-                holder?.taskText?.text = completedItemModel.text
-                holder?.undoButtonText?.setOnClickListener({
-                    if(_allowTransform == false) return@setOnClickListener
-                    replaceCompletedWithPendingItem(completedItemModel)
-                })
+                if(drawCompletedItems) {
+                    holder?.completedItemContainer?.visibility = View.VISIBLE
+                    val completedItemModel = itemList[position] as CompletedCheckItemModel
+                    holder?.taskText?.text = completedItemModel.text
+                    holder?.undoButtonText?.setOnClickListener({
+                        if (_allowTransform == false) return@setOnClickListener
+                        replaceCompletedWithPendingItem(completedItemModel)
+                    })
+                } else {
+                    holder?.completedItemContainer?.visibility = View.INVISIBLE
+                }
             }
         }
     }
@@ -108,6 +114,16 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
 
     override fun getItemCount(): Int {
         return itemList.count();
+    }
+
+    fun hideCompletedItems() {
+        drawCompletedItems = false
+        notifyDataSetChanged()
+    }
+
+    fun showCompletedItems() {
+        drawCompletedItems = true
+        notifyDataSetChanged()
     }
 
     fun addItem(task: PendingCheckItemModel, position: Int) {

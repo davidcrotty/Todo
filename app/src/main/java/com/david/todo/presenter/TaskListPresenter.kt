@@ -33,11 +33,7 @@ class TaskListPresenter(val taskListActivity: TaskListActivity) {
                 PendingCheckItemModel("Test AV equipment"),
                 PendingCheckItemModel("Review project proposal"),
                 PendingCheckItemModel("Update statement of work"),
-                PendingCheckItemModel("Update statement of work"),
-                PendingCheckItemModel("Update statement of work"),
-                PendingCheckItemModel("Update statement of work"),
-                PendingCheckItemModel("Update statement of work"),
-                PendingCheckItemModel("Update statement of work"))
+                CompletedCheckItemModel("Update statement of work2"))
         taskListActivity.initAdapterWith(itemList as ArrayList<CheckItem>)
         taskListActivity.setScrollBehaviourWith()
     }

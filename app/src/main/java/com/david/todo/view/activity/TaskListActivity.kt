@@ -50,19 +50,6 @@ class TaskListActivity : BaseActivity(), IHandleListener {
         listPresenter.loadTaskItems(if (intent.hasExtra(CHECK_ITEM_LIST)) intent.getSerializableExtra(CHECK_ITEM_LIST) as ArrayList<CheckItem> else null)
     }
 
-    fun initAdapterWith(itemList: ArrayList<CheckItem>) {
-        checkListAdapter = ChecklistAdapter(itemList, listPresenter, this, this)
-        checkListView.setHasFixedSize(true)
-        checkListView.adapter = checkListAdapter
-        linearLayoutManager = LinearLayoutManager(this)
-        linearLayoutManager.stackFromEnd = false
-        checkListView.layoutManager = linearLayoutManager
-
-        var touchEventHelper = TouchEventHelper(checkListAdapter)
-        itemTouchHelper = ItemTouchHelper(touchEventHelper)
-        itemTouchHelper.attachToRecyclerView(checkListView)
-    }
-
     override fun onPause() {
         super.onPause()
         intent.putExtra(CHECK_ITEM_LIST, checkListAdapter.itemList)
@@ -78,12 +65,27 @@ class TaskListActivity : BaseActivity(), IHandleListener {
         toggleCurrentItems.setOnMenuItemClickListener {
             item -> if(item.isChecked) {
                 item.isChecked = false
+                checkListAdapter.hideCompletedItems()
             } else {
                 item.isChecked = true
+                checkListAdapter.showCompletedItems()
             }
             true
         }
         return true
+    }
+
+    fun initAdapterWith(itemList: ArrayList<CheckItem>) {
+        checkListAdapter = ChecklistAdapter(itemList, listPresenter, this, this)
+        checkListView.setHasFixedSize(true)
+        checkListView.adapter = checkListAdapter
+        linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager.stackFromEnd = false
+        checkListView.layoutManager = linearLayoutManager
+
+        var touchEventHelper = TouchEventHelper(checkListAdapter)
+        itemTouchHelper = ItemTouchHelper(touchEventHelper)
+        itemTouchHelper.attachToRecyclerView(checkListView)
     }
 
     fun setScrollBehaviourWith() {
@@ -124,12 +126,10 @@ class TaskListActivity : BaseActivity(), IHandleListener {
                       .setActionTextColor(resources.getColor(R.color.green))
                       .setCallback(object: Snackbar.Callback() {
                             override fun onDismissed(snackbar: Snackbar, event: Int) {
-                                Timber.d("DISMISSED")
                                 checkListAdapter.allowViewholderTypeTransform(true)
                             }
 
                             override  fun onShown(snackbar: Snackbar) {
-                                Timber.d("SHOWN")
                                 checkListAdapter.allowViewholderTypeTransform(false)
                               }
                       })

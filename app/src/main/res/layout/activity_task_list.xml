@@ -48,7 +48,12 @@
             android:layout_marginBottom="?android:attr/listPreferredItemHeight">
         </android.support.v7.widget.RecyclerView>
 
-        <com.david.todo.view.widgets.EnterItemView
+    </RelativeLayout>
+
+
+    <com.david.todo.view.widgets.EnterItemView
+            app:layout_behavior="com.david.todo.view.eventlisteners.ExpandUpBehaviour"
+            android:layout_gravity="bottom"
             android:background="@android:color/transparent"
             android:id="@+id/enter_item_view"
             speech_view:icon_colour="@color/green"
@@ -56,7 +61,4 @@
             android:paddingBottom="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></com.david.todo.view.widgets.EnterItemView>
-
-    </RelativeLayout>
-
 </android.support.design.widget.CoordinatorLayout>

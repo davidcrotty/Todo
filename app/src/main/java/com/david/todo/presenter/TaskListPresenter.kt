@@ -31,13 +31,13 @@ class TaskListPresenter(val taskListActivity: TaskListActivity) {
         var itemList = checkItems ?: arrayListOf(PendingCheckItemModel("Prepare meeting room"),
                 PendingCheckItemModel("Meet cat smugglers"),
                 PendingCheckItemModel("Test AV equipment"),
-                PendingCheckItemModel("Review project proposal"))
-//                CompletedCheckItemModel("Update statement of work"),
-//                CompletedCheckItemModel("Update statement of work"),
-//                CompletedCheckItemModel("Update statement of work"),
-//                CompletedCheckItemModel("Update statement of work"),
-//                CompletedCheckItemModel("Update statement of work"),
-//                CompletedCheckItemModel("Update statement of work"))
+                PendingCheckItemModel("Review project proposal"),
+                PendingCheckItemModel("Update statement of work"),
+                PendingCheckItemModel("Update statement of work"),
+                PendingCheckItemModel("Update statement of work"),
+                PendingCheckItemModel("Update statement of work"),
+                PendingCheckItemModel("Update statement of work"),
+                PendingCheckItemModel("Update statement of work"))
         taskListActivity.initAdapterWith(itemList as ArrayList<CheckItem>)
         taskListActivity.setScrollBehaviourWith()
     }

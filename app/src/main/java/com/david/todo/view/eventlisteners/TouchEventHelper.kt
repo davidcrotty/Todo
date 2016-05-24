@@ -70,9 +70,14 @@ class TouchEventHelper(val checkListAdapter: ChecklistAdapter) : ItemTouchHelper
 
         var drawX = dX
         if(actionState.equals(ItemTouchHelper.ACTION_STATE_SWIPE)) {
+
+            //if minus, switch view, else normal view
+            //if switch view goes too far stop rendering
+
+            //if model state is toggled x is out
+
             //TODO make this call composed so is non specific to a concrete viewholder
             holder.taskForeground.translationX = dX
-
             drawX = 0F //Keeps background view still
 //            Timber.d("draw animate ${viewHolder?.adapterPosition}")
         }

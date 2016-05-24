@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.ViewSwitcher
 import com.david.todo.R
 
 /**
@@ -17,6 +18,7 @@ class PendingItemViewHolder(view: View)  : RecyclerView.ViewHolder(view) {
     var topBorder: View
     var taskForeground: FrameLayout
     var taskBackground: FrameLayout
+    var actionSwitch: ViewSwitcher
     val viewType: HolderType = HolderType.PENDING
 
     init {
@@ -25,6 +27,7 @@ class PendingItemViewHolder(view: View)  : RecyclerView.ViewHolder(view) {
         doneImage = view.findViewById(R.id.done_image) as ImageView
         topBorder = view.findViewById(R.id.top_border) as View
         taskForeground = view.findViewById(R.id.task_foreground) as FrameLayout
-        taskBackground = view.findViewById(R.id.task_background) as FrameLayout
+        taskBackground = view.findViewById(R.id.complete_task_background) as FrameLayout
+        actionSwitch = view.findViewById(R.id.view_action_switch) as ViewSwitcher
     }
 }

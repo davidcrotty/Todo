@@ -1,5 +1,6 @@
 package com.david.todo.view.activity
 
+import android.graphics.Point
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
@@ -8,20 +9,17 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
-import android.view.View
 import butterknife.bindView
 import com.david.todo.R
 import com.david.todo.adapter.ChecklistAdapter
 import com.david.todo.model.CheckItem
 import com.david.todo.model.CheckItemHolder
-import com.david.todo.model.CompletedCheckItemModel
 import com.david.todo.model.PendingCheckItemModel
 import com.david.todo.presenter.TaskListPresenter
 import com.david.todo.view.BaseActivity
 import com.david.todo.view.eventlisteners.IHandleListener
 import com.david.todo.view.eventlisteners.TouchEventHelper
 import com.david.todo.view.widgets.EnterItemView
-import timber.log.Timber
 import java.util.*
 
 /**
@@ -32,6 +30,8 @@ class TaskListActivity : BaseActivity(), IHandleListener {
     val toolbar: Toolbar by bindView(R.id.toolbar)
     val enterItemWidget: EnterItemView by bindView(R.id.enter_item_view)
     val checkListView: RecyclerView by bindView(R.id.check_list)
+
+    val SWIPE_LIMIT_SCALAR: Int = 6
     val MOST_RECENTLY_REMOVED_MODEL: String = "MOST_RECENTLY_REMOVED_MODEL"
     val CHECK_ITEM_LIST: String = "CHECK_ITEM_LIST"
 
@@ -75,6 +75,12 @@ class TaskListActivity : BaseActivity(), IHandleListener {
         return true
     }
 
+    fun getScreenWidth() : Int {
+        val displaySize = Point();
+        windowManager.defaultDisplay.getRealSize(displaySize);
+        return displaySize.x
+    }
+
     fun initAdapterWith(itemList: ArrayList<CheckItem>) {
         checkListAdapter = ChecklistAdapter(itemList, listPresenter, this, this)
         checkListView.setHasFixedSize(true)
@@ -83,7 +89,7 @@ class TaskListActivity : BaseActivity(), IHandleListener {
         linearLayoutManager.stackFromEnd = false
         checkListView.layoutManager = linearLayoutManager
 
-        var touchEventHelper = TouchEventHelper(checkListAdapter)
+        var touchEventHelper = TouchEventHelper(checkListAdapter, getScreenWidth() / SWIPE_LIMIT_SCALAR)
         itemTouchHelper = ItemTouchHelper(touchEventHelper)
         itemTouchHelper.attachToRecyclerView(checkListView)
     }

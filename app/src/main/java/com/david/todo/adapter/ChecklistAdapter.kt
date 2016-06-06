@@ -23,7 +23,6 @@ import com.david.todo.model.CompletedCheckItemModel
 import com.david.todo.model.PendingCheckItemModel
 import com.david.todo.model.TaskItemModel
 import com.david.todo.presenter.TaskListPresenter
-import com.david.todo.view.eventlisteners.IHandleListener
 import com.david.todo.view.widgets.TabView
 import timber.log.Timber
 import java.util.*
@@ -33,8 +32,7 @@ import java.util.*
  */
 class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                        val listPresenter: TaskListPresenter,
-                       val context: Context,
-                       val dragListener: IHandleListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                       val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val defaultPositionX: Float = 0F
     var _allowTransform: Boolean = true
@@ -72,18 +70,13 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                 val pendingItemModel = itemList[position] as PendingCheckItemModel
                 holder?.taskText?.text = pendingItemModel.text
                 holder?.dragHandle?.setOnTouchListener({ view, motionEvent ->
-                    when(motionEvent.action) {
-                        MotionEvent.ACTION_DOWN -> {
-                            dragListener.onHandleDown(holder)
-                            true
-                        }
-                        else -> false
-                    }
+                        false
                 });
 
                 holder?.taskForeground?.translationX = defaultPositionX
                 holder?.itemView?.visibility = View.VISIBLE
             }
+
             HolderType.COMPLETED.ordinal -> {
                 holder as CompletedItemViewHolder
                 if(drawCompletedItems) {

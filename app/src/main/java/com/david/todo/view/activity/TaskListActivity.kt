@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import butterknife.bindView
 import com.david.todo.R
@@ -17,15 +16,13 @@ import com.david.todo.model.CheckItemHolder
 import com.david.todo.model.PendingCheckItemModel
 import com.david.todo.presenter.TaskListPresenter
 import com.david.todo.view.BaseActivity
-import com.david.todo.view.eventlisteners.IHandleListener
-import com.david.todo.view.eventlisteners.TouchEventHelper
 import com.david.todo.view.widgets.EnterItemView
 import java.util.*
 
 /**
  * Created by DavidHome on 02/04/2016.
  */
-class TaskListActivity : BaseActivity(), IHandleListener {
+class TaskListActivity : BaseActivity() {
     val rootView: CoordinatorLayout by bindView(R.id.root_view)
     val toolbar: Toolbar by bindView(R.id.toolbar)
     val enterItemWidget: EnterItemView by bindView(R.id.enter_item_view)
@@ -37,7 +34,6 @@ class TaskListActivity : BaseActivity(), IHandleListener {
 
 
     lateinit var listPresenter: TaskListPresenter
-    lateinit var itemTouchHelper: ItemTouchHelper
     lateinit var checkListAdapter: ChecklistAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
 
@@ -53,10 +49,6 @@ class TaskListActivity : BaseActivity(), IHandleListener {
     override fun onPause() {
         super.onPause()
         intent.putExtra(CHECK_ITEM_LIST, checkListAdapter.itemList)
-    }
-
-    override fun onHandleDown(viewHolder: RecyclerView.ViewHolder) {
-        itemTouchHelper.startDrag(viewHolder)
     }
 
     override fun onCreateOptionsMenu(menu: Menu) : Boolean {
@@ -82,16 +74,12 @@ class TaskListActivity : BaseActivity(), IHandleListener {
     }
 
     fun initAdapterWith(itemList: ArrayList<CheckItem>) {
-        checkListAdapter = ChecklistAdapter(itemList, listPresenter, this, this)
+        checkListAdapter = ChecklistAdapter(itemList, listPresenter, this)
         checkListView.setHasFixedSize(true)
         checkListView.adapter = checkListAdapter
         linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.stackFromEnd = false
         checkListView.layoutManager = linearLayoutManager
-
-        var touchEventHelper = TouchEventHelper(checkListAdapter, getScreenWidth() / SWIPE_LIMIT_SCALAR)
-        itemTouchHelper = ItemTouchHelper(touchEventHelper)
-        itemTouchHelper.attachToRecyclerView(checkListView)
     }
 
     fun delegateHideDropShadow() {

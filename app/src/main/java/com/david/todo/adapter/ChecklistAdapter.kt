@@ -20,7 +20,6 @@ import com.david.todo.model.CompletedCheckItemModel
 import com.david.todo.model.PendingCheckItemModel
 import com.david.todo.model.TaskItemModel
 import com.david.todo.presenter.TaskListPresenter
-import com.david.todo.view.eventlisteners.SwipeActionListener
 import com.david.todo.view.widgets.TabView
 import timber.log.Timber
 import java.util.*
@@ -35,8 +34,6 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
     val defaultPositionX: Float = 0F
     var _allowTransform: Boolean = true
     var drawCompletedItems: Boolean = false
-
-    val gestureDetector: GestureDetector = GestureDetector(context, SwipeActionListener(null))
 
     override fun getItemViewType(position: Int): Int {
         if(itemList[position] is PendingCheckItemModel) {
@@ -79,8 +76,13 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                 holder?.taskForeground?.isLongClickable = true
 
                 holder?.taskForeground?.setOnTouchListener({ view, motionEvent ->
-                    gestureDetector.onTouchEvent(motionEvent)
-                    return@setOnTouchListener true
+                    if(motionEvent.action == MotionEvent.ACTION_MOVE) {
+                        view.translationX = motionEvent.rawX
+                        Timber.d("X: ${motionEvent.x}")
+                        return@setOnTouchListener true
+                    }
+
+                    return@setOnTouchListener false
                 })
             }
 

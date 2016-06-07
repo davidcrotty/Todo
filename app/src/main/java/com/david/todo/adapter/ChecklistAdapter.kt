@@ -6,10 +6,7 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -23,6 +20,7 @@ import com.david.todo.model.CompletedCheckItemModel
 import com.david.todo.model.PendingCheckItemModel
 import com.david.todo.model.TaskItemModel
 import com.david.todo.presenter.TaskListPresenter
+import com.david.todo.view.eventlisteners.SwipeActionListener
 import com.david.todo.view.widgets.TabView
 import timber.log.Timber
 import java.util.*
@@ -37,6 +35,8 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
     val defaultPositionX: Float = 0F
     var _allowTransform: Boolean = true
     var drawCompletedItems: Boolean = false
+
+    val gestureDetector: GestureDetector = GestureDetector(context, SwipeActionListener(null))
 
     override fun getItemViewType(position: Int): Int {
         if(itemList[position] is PendingCheckItemModel) {
@@ -69,12 +69,19 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                 holder as PendingItemViewHolder
                 val pendingItemModel = itemList[position] as PendingCheckItemModel
                 holder?.taskText?.text = pendingItemModel.text
-                holder?.dragHandle?.setOnTouchListener({ view, motionEvent ->
-                        false
-                });
+//                holder?.dragHandle?.setOnTouchListener({ view, motionEvent ->
+//                        false
+//                });
 
                 holder?.taskForeground?.translationX = defaultPositionX
                 holder?.itemView?.visibility = View.VISIBLE
+
+                holder?.taskForeground?.isLongClickable = true
+
+                holder?.taskForeground?.setOnTouchListener({ view, motionEvent ->
+                    gestureDetector.onTouchEvent(motionEvent)
+                    return@setOnTouchListener true
+                })
             }
 
             HolderType.COMPLETED.ordinal -> {

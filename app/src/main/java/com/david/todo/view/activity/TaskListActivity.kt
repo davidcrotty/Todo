@@ -16,6 +16,7 @@ import com.david.todo.model.CheckItemHolder
 import com.david.todo.model.PendingCheckItemModel
 import com.david.todo.presenter.TaskListPresenter
 import com.david.todo.view.BaseActivity
+import com.david.todo.view.eventlisteners.SwipeActionListener
 import com.david.todo.view.widgets.EnterItemView
 import java.util.*
 
@@ -31,6 +32,7 @@ class TaskListActivity : BaseActivity() {
     val SWIPE_LIMIT_SCALAR: Int = 6
     val MOST_RECENTLY_REMOVED_MODEL: String = "MOST_RECENTLY_REMOVED_MODEL"
     val CHECK_ITEM_LIST: String = "CHECK_ITEM_LIST"
+    val swipeActionListener: SwipeActionListener = SwipeActionListener()
 
 
     lateinit var listPresenter: TaskListPresenter
@@ -80,6 +82,9 @@ class TaskListActivity : BaseActivity() {
         linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.stackFromEnd = false
         checkListView.layoutManager = linearLayoutManager
+
+        //Touch listener
+        checkListView.addOnItemTouchListener(swipeActionListener)
     }
 
     fun delegateHideDropShadow() {
@@ -136,5 +141,10 @@ class TaskListActivity : BaseActivity() {
 
     fun storeIntentFor(taskItemHolder: CheckItemHolder) {
         intent.putExtra(MOST_RECENTLY_REMOVED_MODEL, taskItemHolder)
+    }
+
+    override fun finish() {
+        super.finish()
+        checkListView.removeOnItemTouchListener(swipeActionListener)
     }
 }

@@ -76,17 +76,17 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
 
                 holder?.taskForeground?.isLongClickable = true
 
-                holder?.taskForeground?.setOnTouchListener({ view, motionEvent ->
-                    Timber.d("Track: ${motionEvent.x}")
-
-                    if(motionEvent.action == MotionEvent.ACTION_MOVE) {
-                        view.translationX = motionEvent.rawX
-//                        Timber.d("X: ${motionEvent.x}")
-                        return@setOnTouchListener true
-                    }
-
-                    return@setOnTouchListener false
-                })
+//                holder?.taskForeground?.setOnTouchListener({ view, motionEvent ->
+//                    Timber.d("Track: ${motionEvent.x}")
+//
+//                    if(motionEvent.action == MotionEvent.ACTION_MOVE) {
+//                        view.translationX = motionEvent.rawX
+////                        Timber.d("X: ${motionEvent.x}")
+//                        return@setOnTouchListener true
+//                    }
+//
+//                    return@setOnTouchListener false
+//                })
             }
 
             HolderType.COMPLETED.ordinal -> {

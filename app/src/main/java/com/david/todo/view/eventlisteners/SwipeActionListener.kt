@@ -19,30 +19,19 @@ class SwipeActionListener : RecyclerView.OnItemTouchListener {
     }
 
     override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent?): Boolean {
-
         if(e?.action == MotionEvent.ACTION_MOVE) {
-            if(selectedViewForeground != null) { //Already selected view?, move it and return
-                Timber.d("Moving view")
+            if(selectedViewForeground != null) {
                 selectedViewForeground?.translationX = e?.rawX!!
                 return false
             }
 
-            var view = rv?.findChildViewUnder(e!!.x, e!!.y) //Find view holder
-            if(view != null) { //Do we have a valid view
-                if(selectedViewForeground == null) { //First time at selecting a view?
-                    var viewHolder = rv?.getChildViewHolder(view) //get rv's view holder
-                    if(viewHolder is PendingItemViewHolder) { //are we the right type of viewholder? TODO (As a lib parent view could be of certain type
-                        var pendingItemHolder = viewHolder
-                        selectedViewForeground = pendingItemHolder.taskForeground
-                        Timber.d("View selected, translation ${selectedViewForeground?.translationX}")
-                    } else {
-                        selectedViewForeground = null
-                    }
-                }
+            var view = rv?.findChildViewUnder(e!!.x, e.y)
+            if(view != null) {
+                findAndSelectViewIfValidViewHolderItem(view, rv)
             }
         }
 
-        if(e?.action == MotionEvent.ACTION_UP) { //Stopped interacting
+        if(e?.action == MotionEvent.ACTION_UP) {
             if(selectedViewForeground != null) { //ping view back to original position TODO check here no other animation was triggered
                 selectedViewForeground?.translationX = NO_TRANSLATION
                 Timber.d("Released view")
@@ -50,8 +39,20 @@ class SwipeActionListener : RecyclerView.OnItemTouchListener {
             selectedViewForeground = null
         }
 
-        //rv finds event, can translate
         return false
+    }
+
+    fun findAndSelectViewIfValidViewHolderItem(view: View, recyclerView: RecyclerView?) {
+        if(selectedViewForeground == null) { //First time at selecting a view?
+            var viewHolder = recyclerView?.getChildViewHolder(view) //get rv's view holder
+            if(viewHolder is PendingItemViewHolder) { //are we the right type of viewholder? TODO (As a lib parent view could be of certain type
+                var pendingItemHolder = viewHolder
+                selectedViewForeground = pendingItemHolder.taskForeground
+                Timber.d("View selected, translation ${selectedViewForeground?.translationX}")
+            } else {
+                selectedViewForeground = null
+            }
+        }
     }
 
 

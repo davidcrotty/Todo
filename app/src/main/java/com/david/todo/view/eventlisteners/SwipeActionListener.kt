@@ -19,24 +19,25 @@ class SwipeActionListener : RecyclerView.OnItemTouchListener {
     }
 
     override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent?): Boolean {
-        if(e?.action == MotionEvent.ACTION_MOVE) {
-            if(selectedViewForeground != null) {
-                selectedViewForeground?.translationX = e?.rawX!!
-                return false
-            }
+        when(e?.action) {
+            MotionEvent.ACTION_MOVE -> {
+                if(selectedViewForeground != null) {
+                    selectedViewForeground?.translationX = e?.rawX!!
+                    return false
+                }
 
-            var view = rv?.findChildViewUnder(e!!.x, e.y)
-            if(view != null) {
-                findAndSelectViewIfValidViewHolderItem(view, rv)
+                var view = rv?.findChildViewUnder(e!!.x, e.y)
+                if(view != null) {
+                    findAndSelectViewIfValidViewHolderItem(view, rv)
+                }
             }
-        }
-
-        if(e?.action == MotionEvent.ACTION_UP) {
-            if(selectedViewForeground != null) { //ping view back to original position TODO check here no other animation was triggered
-                selectedViewForeground?.translationX = NO_TRANSLATION
-                Timber.d("Released view")
+            MotionEvent.ACTION_UP -> {
+                if(selectedViewForeground != null) { //ping view back to original position TODO check here no other animation was triggered
+                    selectedViewForeground?.translationX = NO_TRANSLATION
+                    Timber.d("Released view")
+                }
+                selectedViewForeground = null
             }
-            selectedViewForeground = null
         }
 
         return false

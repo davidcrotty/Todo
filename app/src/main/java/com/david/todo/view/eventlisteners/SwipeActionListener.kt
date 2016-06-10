@@ -1,6 +1,8 @@
 package com.david.todo.view.eventlisteners
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +12,7 @@ import timber.log.Timber
 /**
  * Created by DavidHome on 07/06/2016.
  */
-class SwipeActionListener : RecyclerView.OnItemTouchListener {
+class SwipeActionListener() : RecyclerView.OnItemTouchListener {
 
     val NO_TRANSLATION: Float = 0F
     val SWIPE_OFF_SCALAR: Int = 2
@@ -18,7 +20,7 @@ class SwipeActionListener : RecyclerView.OnItemTouchListener {
     var selectedViewForeground: ViewGroup? = null
 
     //Translation item TODO could become a value object
-    var deltaMoveX:Float = 0F
+    var deltaMoveX: Float = 0F
     var shouldFlingRightOffScreen = false
 
     override fun onTouchEvent(rv: RecyclerView?, e: MotionEvent?) {
@@ -26,20 +28,31 @@ class SwipeActionListener : RecyclerView.OnItemTouchListener {
     }
 
     override fun onInterceptTouchEvent(rv: RecyclerView?, event: MotionEvent?): Boolean {
+        //check if fling on action down
+        //if was fling swipe view left or right based on direction, gesture detector can call this
+        //class back?
+
+        //if fling detected call back this class
+
         when(event?.action) {
             MotionEvent.ACTION_DOWN -> {
                 findAndSelectViewIfValidViewHolderItem(rv?.findChildViewUnder(event!!.x, event.y), rv, event!!)
             }
             MotionEvent.ACTION_MOVE -> {
-                if(selectedViewForeground != null) {
-                    val moveX = deltaMoveX + event?.rawX!!
-                    selectedViewForeground?.translationX = moveX
-                    if(moveX.toInt() > selectedViewForeground!!.width / SWIPE_OFF_SCALAR) {
-                        shouldFlingRightOffScreen = true
-                    } else {
-                        shouldFlingRightOffScreen = false
+                translateViewIfOneSelected(event)
+                Timber.d("Delta $deltaMoveX")
+                if(event!!.x > -350) { //right direction, better off a percentage /
+                    var move = event!!.eventTime - event.downTime
+                    Timber.d("Move $move")
+                    if(event!!.eventTime - event.downTime < 85) {
+                        findAndSelectViewIfValidViewHolderItem(rv?.findChildViewUnder(event!!.x, event.y), rv, event!!)
+                        if(selectedViewForeground == null) return false
+                        SliderAnimationWrapper(selectedViewForeground!!,
+                                selectedViewForeground?.translationX!!,
+                                selectedViewForeground?.width!!.toFloat())
+                                .start()
+                        selectedViewForeground = null
                     }
-                    return false
                 }
             }
             MotionEvent.ACTION_UP -> {
@@ -57,6 +70,14 @@ class SwipeActionListener : RecyclerView.OnItemTouchListener {
         }
 
         return false
+    }
+
+    fun swipeRight() {
+        Timber.d("RIGHT")
+//        SliderAnimationWrapper(selectedViewForeground!!,
+//                selectedViewForeground?.translationX!!,
+//                selectedViewForeground?.width!!.toFloat())
+//                .start()
     }
 
     /**
@@ -90,13 +111,24 @@ class SwipeActionListener : RecyclerView.OnItemTouchListener {
     }
 
     fun deSelectViewHolder() {
-        if(selectedViewForeground != null) { //ping view back to original position TODO check here no other animation was triggered
+        if(selectedViewForeground != null) {
             selectedViewForeground?.translationX = NO_TRANSLATION
             deltaMoveX = NO_TRANSLATION
         }
         selectedViewForeground = null
     }
 
+    fun translateViewIfOneSelected(event: MotionEvent?) {
+        if(selectedViewForeground != null) {
+            val moveX = deltaMoveX + event?.rawX!!
+            selectedViewForeground?.translationX = moveX
+            if(moveX.toInt() > selectedViewForeground!!.width / SWIPE_OFF_SCALAR) {
+                shouldFlingRightOffScreen = true
+            } else {
+                shouldFlingRightOffScreen = false
+            }
+        }
+    }
 
     override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
         Timber.d("onRequestDisallowInterceptTouchEvent")

@@ -32,9 +32,8 @@ class TaskListActivity : BaseActivity() {
     val SWIPE_LIMIT_SCALAR: Int = 6
     val MOST_RECENTLY_REMOVED_MODEL: String = "MOST_RECENTLY_REMOVED_MODEL"
     val CHECK_ITEM_LIST: String = "CHECK_ITEM_LIST"
-    val swipeActionListener: SwipeActionListener = SwipeActionListener()
 
-
+    lateinit var swipeActionListener: SwipeActionListener
     lateinit var listPresenter: TaskListPresenter
     lateinit var checkListAdapter: ChecklistAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
@@ -43,6 +42,8 @@ class TaskListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_list)
         setSupportActionBar(toolbar)
+        swipeActionListener = SwipeActionListener(this)
+
         listPresenter = TaskListPresenter(this)
         enterItemWidget.attachPresenter(listPresenter)
         listPresenter.loadTaskItems(if (intent.hasExtra(CHECK_ITEM_LIST)) intent.getSerializableExtra(CHECK_ITEM_LIST) as ArrayList<CheckItem> else null)

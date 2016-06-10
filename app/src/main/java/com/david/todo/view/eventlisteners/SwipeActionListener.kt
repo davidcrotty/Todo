@@ -13,10 +13,13 @@ import timber.log.Timber
 class SwipeActionListener : RecyclerView.OnItemTouchListener {
 
     val NO_TRANSLATION: Float = 0F
+    val SWIPE_OFF_SCALAR: Int = 2
+
     var selectedViewForeground: ViewGroup? = null
 
     //Translation item TODO could become a value object
     var deltaMoveX:Float = 0F
+    var shouldFlingRightOffScreen = false
 
     override fun onTouchEvent(rv: RecyclerView?, e: MotionEvent?) {
         Timber.d("onTouchEvent")
@@ -29,11 +32,26 @@ class SwipeActionListener : RecyclerView.OnItemTouchListener {
             }
             MotionEvent.ACTION_MOVE -> {
                 if(selectedViewForeground != null) {
-                    selectedViewForeground?.translationX = deltaMoveX + event?.rawX!!
+                    val moveX = deltaMoveX + event?.rawX!!
+                    selectedViewForeground?.translationX = moveX
+                    if(moveX.toInt() > selectedViewForeground!!.width / SWIPE_OFF_SCALAR) {
+                        shouldFlingRightOffScreen = true
+                    } else {
+                        shouldFlingRightOffScreen = false
+                    }
                     return false
                 }
             }
             MotionEvent.ACTION_UP -> {
+                if(shouldFlingRightOffScreen) {
+                    if(selectedViewForeground != null) {
+                        SliderAnimationWrapper(selectedViewForeground!!,
+                                               selectedViewForeground?.translationX!!,
+                                               selectedViewForeground?.width!!.toFloat())
+                                               .start()
+                    }
+                }
+
                 deSelectViewHolder()
             }
         }
@@ -53,7 +71,7 @@ class SwipeActionListener : RecyclerView.OnItemTouchListener {
             if(viewHolder is PendingItemViewHolder) { //are we the right type of viewholder? TODO (As a lib parent view could be of certain type
                 var pendingItemHolder = viewHolder
                 selectViewHolder(pendingItemHolder.taskForeground, motionEvent)
-                Timber.d("View selected, translation ${selectedViewForeground?.translationX}")
+//                Timber.d("View selected, translation ${selectedViewForeground?.translationX}")
             } else {
                 selectViewHolder(null, motionEvent)
             }

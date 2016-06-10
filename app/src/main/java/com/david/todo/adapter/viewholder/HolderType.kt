@@ -5,5 +5,6 @@ package com.david.todo.adapter.viewholder
  */
 enum class HolderType {
     PENDING,
+    DELETE_TOGGLE,
     COMPLETED
 }

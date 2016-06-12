@@ -20,11 +20,17 @@ class FadeAnimation(val fromAlpha: Float, val toAlpha: Float, val viewHolder: Re
         setAnimationListener(this)
     }
 
+    fun startAnimation() {
+//        parentView.animation = this
+        parentView.startAnimation(this)
+    }
+
     override fun onAnimationRepeat(animation: Animation?) {
     }
 
     override fun onAnimationEnd(animation: Animation?) {
         parentView.visibility = View.INVISIBLE
+        //TODO if becoming a library this will need a removal strategy to be used in recyclerViews
         checkListAdapter.onItemDismiss(viewHolder!!.adapterPosition);
     }
 

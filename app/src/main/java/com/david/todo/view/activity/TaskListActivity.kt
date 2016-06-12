@@ -42,7 +42,6 @@ class TaskListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_list)
         setSupportActionBar(toolbar)
-        swipeActionListener = SwipeActionListener(this)
 
         listPresenter = TaskListPresenter(this)
         enterItemWidget.attachPresenter(listPresenter)
@@ -78,6 +77,8 @@ class TaskListActivity : BaseActivity() {
 
     fun initAdapterWith(itemList: ArrayList<CheckItem>) {
         checkListAdapter = ChecklistAdapter(itemList, listPresenter, this)
+        swipeActionListener = SwipeActionListener(this,checkListAdapter)
+
         checkListView.setHasFixedSize(true)
         checkListView.adapter = checkListAdapter
         linearLayoutManager = LinearLayoutManager(this)

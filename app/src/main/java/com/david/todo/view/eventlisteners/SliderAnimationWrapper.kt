@@ -4,7 +4,6 @@ import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
-import timber.log.Timber
 
 /**
  * Created by DavidHome on 10/06/2016.
@@ -12,6 +11,11 @@ import timber.log.Timber
 class SliderAnimationWrapper(val viewToAnimate: View, val fromX: Float, val toX: Float) : Animation.AnimationListener {
     lateinit var slideOffAnimation: Animation
     val animationDuration: Long = 195
+    var afterExitAnimation: FadeAnimation? = null
+
+    constructor(viewToAnimate: View, fromX: Float, toX: Float, afterExitAnimation: FadeAnimation?) : this(viewToAnimate, fromX, toX) {
+        this.afterExitAnimation = afterExitAnimation
+    }
 
     init {
         slideOffAnimation = TranslateAnimation(fromX,
@@ -28,11 +32,13 @@ class SliderAnimationWrapper(val viewToAnimate: View, val fromX: Float, val toX:
     }
 
     override fun onAnimationRepeat(animation: Animation?) {
+
     }
 
     override fun onAnimationEnd(animation: Animation?) {
-        viewToAnimate.visibility = View.INVISIBLE
-        //Fires complete off and fade etc
+        viewToAnimate.visibility = View.GONE
+        afterExitAnimation?.duration = 195
+        afterExitAnimation?.startAnimation()
     }
 
     override fun onAnimationStart(animation: Animation?) {

@@ -3,6 +3,7 @@ package com.david.todo.view.eventlisteners
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.*
+import com.david.todo.adapter.ChecklistAdapter
 import com.david.todo.adapter.viewholder.PendingItemViewHolder
 import timber.log.Timber
 
@@ -12,13 +13,18 @@ import timber.log.Timber
 
 /**
  * @param context - Used for getting view configuration in determining fling distance per device
+ * @param checkListAdapter - Used for calling specific methods on the recycler adapter for handling removals
  */
-class SwipeActionListener(val context: Context) : RecyclerView.OnItemTouchListener {
+class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistAdapter) : RecyclerView.OnItemTouchListener {
 
     val NO_TRANSLATION: Float = 0F
     val SWIPE_OFF_SCALAR: Int = 2
+    val FLING_THRESHOLD: Float = 1200F //"dropping" back will result in a false fling
 
+    //TODO turn into value object
     var selectedViewForeground: ViewGroup? = null
+    var selectedViewHolder: PendingItemViewHolder? = null
+
     var shouldFlingRightOffScreen: Boolean = false
 
     //Translation item TODO could become a value object
@@ -46,25 +52,14 @@ class SwipeActionListener(val context: Context) : RecyclerView.OnItemTouchListen
                 }
             }
             MotionEvent.ACTION_UP -> {
-                if(selectedViewForeground != null) {
-                    var viewConfiguration = ViewConfiguration.get(context)
-                    velocityTracker?.addMovement(event)
-                    velocityTracker?.computeCurrentVelocity(1000, viewConfiguration.scaledMaximumFlingVelocity.toFloat())
-                    var velocity = velocityTracker?.getXVelocity(event!!.getPointerId(event!!.actionIndex))
-                    //TODO will need to determine direction also
-                    Timber.d("Velocity ${velocity!!.toInt()}")
-                    if(Math.abs(velocity!!.toInt()) > 1200) {
-                        Timber.d("FLING DETECTED")
-                    }
-
-                    velocityTracker?.recycle()
-                }
-
-                if(shouldFlingRightOffScreen) {
+                detectIfFlingOnValidItem(event)
+                if(shouldFlingRightOffScreen && selectedViewHolder != null) {
                     if(selectedViewForeground != null) {
+                        var fadeAnimation = FadeAnimation(1F, 0F, selectedViewHolder!!, checkListAdapter)
                         SliderAnimationWrapper(selectedViewForeground!!,
                                                selectedViewForeground?.translationX!!,
-                                               selectedViewForeground?.width!!.toFloat())
+                                               selectedViewForeground?.width!!.toFloat(),
+                                               fadeAnimation)
                                                .start()
                     }
                 }
@@ -76,12 +71,20 @@ class SwipeActionListener(val context: Context) : RecyclerView.OnItemTouchListen
         return false
     }
 
-    fun swipeRight() {
-        Timber.d("RIGHT")
-//        SliderAnimationWrapper(selectedViewForeground!!,
-//                selectedViewForeground?.translationX!!,
-//                selectedViewForeground?.width!!.toFloat())
-//                .start()
+    fun detectIfFlingOnValidItem(event: MotionEvent?) {
+        if(selectedViewForeground != null) {
+            var viewConfiguration = ViewConfiguration.get(context)
+            velocityTracker?.addMovement(event)
+            velocityTracker?.computeCurrentVelocity(1000, viewConfiguration.scaledMaximumFlingVelocity.toFloat())
+            var velocity = velocityTracker?.getXVelocity(event!!.getPointerId(event!!.actionIndex))
+
+            //TODO will need to determine direction also when looking for delete
+            if(Math.abs(velocity!!.toInt()) > FLING_THRESHOLD) {
+                shouldFlingRightOffScreen = true
+            }
+
+            velocityTracker?.recycle()
+        }
     }
 
     /**
@@ -91,14 +94,14 @@ class SwipeActionListener(val context: Context) : RecyclerView.OnItemTouchListen
     fun findAndSelectViewIfValidViewHolderItem(view: View?, recyclerView: RecyclerView?, motionEvent: MotionEvent) {
         val view = view?.let { it } ?: return
 
-        if(selectedViewForeground == null) { //First time at selecting a view?
+        if(selectedViewForeground == null) {
             var viewHolder = recyclerView?.getChildViewHolder(view) //get rv's view holder
             if(viewHolder is PendingItemViewHolder) { //are we the right type of viewholder? TODO (As a lib parent view could be of certain type
                 var pendingItemHolder = viewHolder
-                selectViewHolder(pendingItemHolder.taskForeground, motionEvent)
+                selectViewHolder(pendingItemHolder, pendingItemHolder.taskForeground, motionEvent)
 //                Timber.d("View selected, translation ${selectedViewForeground?.translationX}")
             } else {
-                selectViewHolder(null, motionEvent)
+                selectViewHolder(null, null, motionEvent)
             }
         }
     }
@@ -106,8 +109,9 @@ class SwipeActionListener(val context: Context) : RecyclerView.OnItemTouchListen
     /**
      * Selects viewholder, records it as a local variable as well as associates a delta value with it
      */
-    fun selectViewHolder(view: ViewGroup?, motionEvent: MotionEvent) {
+    fun selectViewHolder(pendingItemViewHolder: PendingItemViewHolder?, view: ViewGroup?, motionEvent: MotionEvent) {
         selectedViewForeground = view
+        selectedViewHolder = pendingItemViewHolder
         if(view != null) {
             deltaMoveX = selectedViewForeground!!.x - motionEvent.rawX
         }
@@ -120,6 +124,7 @@ class SwipeActionListener(val context: Context) : RecyclerView.OnItemTouchListen
             deltaMoveX = NO_TRANSLATION
         }
         selectedViewForeground = null
+        selectedViewHolder = null
     }
 
     fun translateViewIfOneSelected(event: MotionEvent?) {

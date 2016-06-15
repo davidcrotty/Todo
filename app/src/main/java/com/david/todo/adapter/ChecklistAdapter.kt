@@ -86,7 +86,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                         replaceCompletedWithPendingItem(completedItemModel)
                     })
                 } else {
-                    holder?.completedItemContainer?.visibility = View.INVISIBLE
+                    holder?.completedItemContainer?.visibility = View.GONE
                 }
             }
         }

@@ -10,7 +10,7 @@ import android.view.animation.TranslateAnimation
  */
 class SliderAnimationWrapper(val viewToAnimate: View, val fromX: Float, val toX: Float) : Animation.AnimationListener {
     lateinit var slideOffAnimation: Animation
-    val animationDuration: Long = 195
+    val ANIMATION_DURATION: Long = 195
     var afterExitAnimation: FadeAnimation? = null
 
     constructor(viewToAnimate: View, fromX: Float, toX: Float, afterExitAnimation: FadeAnimation?) : this(viewToAnimate, fromX, toX) {
@@ -23,7 +23,7 @@ class SliderAnimationWrapper(val viewToAnimate: View, val fromX: Float, val toX:
                                                viewToAnimate?.translationY!!,
                                                viewToAnimate?.translationY!!)
         slideOffAnimation.interpolator = AccelerateInterpolator()
-        slideOffAnimation.duration = animationDuration
+        slideOffAnimation.duration = ANIMATION_DURATION
         slideOffAnimation.setAnimationListener(this)
     }
 
@@ -37,7 +37,7 @@ class SliderAnimationWrapper(val viewToAnimate: View, val fromX: Float, val toX:
 
     override fun onAnimationEnd(animation: Animation?) {
         viewToAnimate.visibility = View.GONE
-        afterExitAnimation?.duration = 195
+        afterExitAnimation?.duration = ANIMATION_DURATION
         afterExitAnimation?.startAnimation()
     }
 

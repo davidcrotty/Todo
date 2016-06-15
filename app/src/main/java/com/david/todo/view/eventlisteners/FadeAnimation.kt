@@ -21,7 +21,6 @@ class FadeAnimation(val fromAlpha: Float, val toAlpha: Float, val viewHolder: Re
     }
 
     fun startAnimation() {
-//        parentView.animation = this
         parentView.startAnimation(this)
     }
 

@@ -69,12 +69,6 @@ class TaskListActivity : BaseActivity() {
         return true
     }
 
-    fun getScreenWidth() : Int {
-        val displaySize = Point();
-        windowManager.defaultDisplay.getRealSize(displaySize);
-        return displaySize.x
-    }
-
     fun initAdapterWith(itemList: ArrayList<CheckItem>) {
         checkListAdapter = ChecklistAdapter(itemList, listPresenter, this)
         swipeActionListener = SwipeActionListener(this,checkListAdapter)
@@ -85,7 +79,6 @@ class TaskListActivity : BaseActivity() {
         linearLayoutManager.stackFromEnd = false
         checkListView.layoutManager = linearLayoutManager
 
-        //Touch listener
         checkListView.addOnItemTouchListener(swipeActionListener)
     }
 

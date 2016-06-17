@@ -33,6 +33,9 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
     var deltaMoveX: Float = 0F
     var velocityTracker : VelocityTracker? = null
 
+    //Cache type for the duration of a gesture from down to up
+    var actionViewType: HolderType? = null
+
     override fun onTouchEvent(rv: RecyclerView?, e: MotionEvent?) {
         Timber.d("onTouchEvent")
     }
@@ -45,6 +48,8 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
                 if(selectedViewForeground != null) {
                     velocityTracker = VelocityTracker.obtain()
                     velocityTracker?.addMovement(event)
+
+                    actionViewType = selectedViewHolder!!.viewType
                 }
             }
             MotionEvent.ACTION_MOVE -> {
@@ -87,8 +92,17 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
             velocityTracker?.computeCurrentVelocity(1000, viewConfiguration.scaledMaximumFlingVelocity.toFloat())
             var velocity = velocityTracker?.getXVelocity(event!!.getPointerId(event!!.actionIndex))
 
-            //TODO will need to determine direction also when looking for delete
-            if(Math.abs(velocity!!.toInt()) > FLING_THRESHOLD) {
+            var gestureNotInDeleteToggle = if(actionViewType == null) {
+                                    true
+                               } else {
+                                   if(actionViewType == HolderType.DELETE_TOGGLE) {
+                                       false
+                                   } else {
+                                       true
+                                   }
+                               }
+
+            if(Math.abs(velocity!!.toInt()) > FLING_THRESHOLD && gestureNotInDeleteToggle) {
                 shouldFlingRightOffScreen = true
             }
 
@@ -134,6 +148,7 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
         }
         selectedViewForeground = null
         selectedViewHolder = null
+        actionViewType = null
     }
 
     fun translateViewIfOneSelected(event: MotionEvent?) {

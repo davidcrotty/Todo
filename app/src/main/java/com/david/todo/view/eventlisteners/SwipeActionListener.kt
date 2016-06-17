@@ -21,6 +21,7 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
     val NO_TRANSLATION: Float = 0F
     val SWIPE_OFF_SCALAR: Int = 2
     val FLING_THRESHOLD: Float = 1200F //"dropping" back will result in a false fling
+    val DELETE_TOGGLE_TRANSLATE_X = -200F
 
     //TODO turn into value object
     var selectedViewForeground: ViewGroup? = null
@@ -53,6 +54,13 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
                 }
             }
             MotionEvent.ACTION_UP -> {
+                if(selectedViewForeground != null) {
+                    if(selectedViewHolder?.viewType == HolderType.DELETE_TOGGLE) {
+                        deSelectViewHolderWith(DELETE_TOGGLE_TRANSLATE_X)
+                        return false
+                    }
+                }
+
                 detectIfFlingOnValidItem(event)
                 if(shouldFlingRightOffScreen && selectedViewHolder != null) {
                     if(selectedViewForeground != null) {
@@ -65,7 +73,7 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
                     }
                 }
 
-                deSelectViewHolder()
+                deSelectViewHolderWith()
             }
         }
 
@@ -119,10 +127,10 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
 
     }
 
-    fun deSelectViewHolder() {
+    fun deSelectViewHolderWith(translation: Float = NO_TRANSLATION) {
         if(selectedViewForeground != null) {
-            selectedViewForeground?.translationX = NO_TRANSLATION
-            deltaMoveX = NO_TRANSLATION
+            selectedViewForeground?.translationX = translation
+            deltaMoveX = translation
         }
         selectedViewForeground = null
         selectedViewHolder = null
@@ -139,10 +147,8 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
                 selectedViewHolder?.actionSwitch?.displayedChild = PendingItemViewHolder.DELETE_VIEW
             }
 
-            if(moveX < -200F) {
-                moveX = -200F
-                //change vh state to pending delete
-                //on render stays that way, (also checked on mouse up)
+            if(moveX < DELETE_TOGGLE_TRANSLATE_X) {
+                moveX = DELETE_TOGGLE_TRANSLATE_X
                 selectedViewHolder?.viewType = HolderType.DELETE_TOGGLE
             } else {
                 selectedViewHolder?.viewType = HolderType.PENDING

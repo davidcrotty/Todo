@@ -12,6 +12,12 @@ import com.david.todo.R
  * Created by DavidHome on 06/05/2016.
  */
 class PendingItemViewHolder(view: View)  : RecyclerView.ViewHolder(view) {
+
+    companion object {
+        val DELETE_VIEW: Int = 0
+        val COMPLETE_VIEW: Int = 1
+    }
+
     var taskText: TextView
     var dragHandle: ImageView
     var doneImage: ImageView
@@ -19,7 +25,7 @@ class PendingItemViewHolder(view: View)  : RecyclerView.ViewHolder(view) {
     var taskForeground: FrameLayout
     var taskBackground: FrameLayout
     var actionSwitch: ViewSwitcher
-    val viewType: HolderType = HolderType.PENDING
+    var viewType: HolderType = HolderType.PENDING
 
     init {
         taskText = view.findViewById(R.id.text_item) as TextView

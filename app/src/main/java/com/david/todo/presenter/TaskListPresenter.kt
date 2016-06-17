@@ -37,7 +37,6 @@ class TaskListPresenter(val taskListActivity: TaskListActivity) {
 
 
         var checkItems = checkItems?: ArrayList<CheckItem>()
-//        checkItems.add(PendingCheckItemModel("Meet cat smugglers"))
         if(checkItems.isEmpty()) taskListActivity.delegateHideDropShadow()
         taskListActivity.initAdapterWith(checkItems)
         taskListActivity.setScrollBehaviourWith()

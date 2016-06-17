@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import com.david.todo.adapter.ChecklistAdapter
+import com.david.todo.adapter.viewholder.HolderType
 import com.david.todo.adapter.viewholder.PendingItemViewHolder
 import timber.log.Timber
 
@@ -129,7 +130,24 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
 
     fun translateViewIfOneSelected(event: MotionEvent?) {
         if(selectedViewForeground != null) {
-            val moveX = deltaMoveX + event?.rawX!!
+            //how to tell if moving right
+            var moveX = deltaMoveX + event?.rawX!!
+
+            if(moveX < 0) {
+                selectedViewHolder?.actionSwitch?.displayedChild = PendingItemViewHolder.COMPLETE_VIEW
+            } else {
+                selectedViewHolder?.actionSwitch?.displayedChild = PendingItemViewHolder.DELETE_VIEW
+            }
+
+            if(moveX < -200F) {
+                moveX = -200F
+                //change vh state to pending delete
+                //on render stays that way, (also checked on mouse up)
+                selectedViewHolder?.viewType = HolderType.DELETE_TOGGLE
+            } else {
+                selectedViewHolder?.viewType = HolderType.PENDING
+            }
+
             selectedViewForeground?.translationX = moveX
             if(moveX.toInt() > selectedViewForeground!!.width / SWIPE_OFF_SCALAR) {
                 shouldFlingRightOffScreen = true

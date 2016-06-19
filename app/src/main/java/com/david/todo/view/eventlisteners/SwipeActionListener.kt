@@ -171,9 +171,9 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
             var moveX = deltaMoveX + event?.rawX!!
 
             if(moveX < 0) {
-                selectedViewHolder?.actionSwitch?.displayedChild = PendingItemViewHolder.COMPLETE_VIEW
-            } else {
                 selectedViewHolder?.actionSwitch?.displayedChild = PendingItemViewHolder.DELETE_VIEW
+            } else {
+                selectedViewHolder?.actionSwitch?.displayedChild = PendingItemViewHolder.COMPLETE_VIEW
             }
 
             if(moveX < DELETE_TOGGLE_TRANSLATE_X) {

@@ -53,11 +53,14 @@ class TaskListActivity : BaseActivity() {
             //set state on adapter so all futures render out
             //get all visible item vh and translate
             if(checkListAdapter.itemList?.size == 0) return@setOnClickListener
+
+            //state of switch can be derived from view switcher
+
             var firstVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition()
             var lastVisiblePosition = linearLayoutManager.findLastVisibleItemPosition()
             for(i in firstVisiblePosition .. lastVisiblePosition) {
                 Timber.d("Position $i")
-                
+
                 //i can be used as a scalar for posting the animation
                 var viewHolder = checkListView.findViewHolderForAdapterPosition(i)
                 if(viewHolder is PendingItemViewHolder) {

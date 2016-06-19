@@ -29,7 +29,6 @@ class TaskListActivity : BaseActivity() {
     val enterItemWidget: EnterItemView by bindView(R.id.enter_item_view)
     val checkListView: RecyclerView by bindView(R.id.check_list)
 
-    val SWIPE_LIMIT_SCALAR: Int = 6
     val MOST_RECENTLY_REMOVED_MODEL: String = "MOST_RECENTLY_REMOVED_MODEL"
     val CHECK_ITEM_LIST: String = "CHECK_ITEM_LIST"
 

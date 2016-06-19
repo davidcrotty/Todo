@@ -1,6 +1,5 @@
 package com.david.todo.view.activity
 
-import android.graphics.Point
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
@@ -8,9 +7,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
+import android.widget.RelativeLayout
 import butterknife.bindView
 import com.david.todo.R
 import com.david.todo.adapter.ChecklistAdapter
+import com.david.todo.adapter.viewholder.HolderType
+import com.david.todo.adapter.viewholder.PendingItemViewHolder
 import com.david.todo.model.CheckItem
 import com.david.todo.model.CheckItemHolder
 import com.david.todo.model.PendingCheckItemModel
@@ -18,6 +20,7 @@ import com.david.todo.presenter.TaskListPresenter
 import com.david.todo.view.BaseActivity
 import com.david.todo.view.eventlisteners.SwipeActionListener
 import com.david.todo.view.widgets.EnterItemView
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -28,6 +31,7 @@ class TaskListActivity : BaseActivity() {
     val toolbar: Toolbar by bindView(R.id.toolbar)
     val enterItemWidget: EnterItemView by bindView(R.id.enter_item_view)
     val checkListView: RecyclerView by bindView(R.id.check_list)
+    val deleteToggleIcon: RelativeLayout by bindView(R.id.delete_action_icon)
 
     val MOST_RECENTLY_REMOVED_MODEL: String = "MOST_RECENTLY_REMOVED_MODEL"
     val CHECK_ITEM_LIST: String = "CHECK_ITEM_LIST"
@@ -45,6 +49,29 @@ class TaskListActivity : BaseActivity() {
         listPresenter = TaskListPresenter(this)
         enterItemWidget.attachPresenter(listPresenter)
         listPresenter.loadTaskItems(if (intent.hasExtra(CHECK_ITEM_LIST)) intent.getSerializableExtra(CHECK_ITEM_LIST) as ArrayList<CheckItem> else null)
+        deleteToggleIcon.setOnClickListener({
+            //set state on adapter so all futures render out
+            //get all visible item vh and translate
+            if(checkListAdapter.itemList?.size == 0) return@setOnClickListener
+            var firstVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition()
+            var lastVisiblePosition = linearLayoutManager.findLastVisibleItemPosition()
+            for(i in firstVisiblePosition .. lastVisiblePosition) {
+                Timber.d("Position $i")
+                
+                //i can be used as a scalar for posting the animation
+                var viewHolder = checkListView.findViewHolderForAdapterPosition(i)
+                if(viewHolder is PendingItemViewHolder) {
+                    if(viewHolder.viewType == HolderType.PENDING) {
+                        viewHolder.taskForeground.translationX = SwipeActionListener.DELETE_TOGGLE_TRANSLATE_X
+                        viewHolder.actionSwitch.displayedChild = PendingItemViewHolder.DELETE_VIEW
+                        viewHolder.viewType = HolderType.DELETE_TOGGLE
+                        var pendingItem = checkListAdapter.itemList[i] as PendingCheckItemModel
+                        pendingItem.isDeleteToggled = true
+                    }
+                }
+            }
+//            checkListView.findViewHolderForAdapterPosition()
+        })
     }
 
     override fun onPause() {

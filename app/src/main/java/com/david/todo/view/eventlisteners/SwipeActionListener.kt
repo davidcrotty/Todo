@@ -6,6 +6,7 @@ import android.view.*
 import com.david.todo.adapter.ChecklistAdapter
 import com.david.todo.adapter.viewholder.HolderType
 import com.david.todo.adapter.viewholder.PendingItemViewHolder
+import com.david.todo.model.PendingCheckItemModel
 import timber.log.Timber
 
 /**
@@ -18,10 +19,13 @@ import timber.log.Timber
  */
 class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistAdapter) : RecyclerView.OnItemTouchListener {
 
+    companion object {
+        val DELETE_TOGGLE_TRANSLATE_X = -200F
+    }
+
     val NO_TRANSLATION: Float = 0F
     val SWIPE_OFF_SCALAR: Int = 2
     val FLING_THRESHOLD: Float = 1200F //"dropping" back will result in a false fling
-    val DELETE_TOGGLE_TRANSLATE_X = -200F
 
     //TODO turn into value object
     var selectedViewForeground: ViewGroup? = null
@@ -61,8 +65,18 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
             MotionEvent.ACTION_UP -> {
                 if(selectedViewForeground != null) {
                     if(selectedViewHolder?.viewType == HolderType.DELETE_TOGGLE) {
+                        //persist here
+                        var pendingItem = checkListAdapter.itemList[selectedViewHolder!!.adapterPosition] as PendingCheckItemModel
+                        pendingItem.isDeleteToggled = true
+
                         deSelectViewHolderWith(DELETE_TOGGLE_TRANSLATE_X)
                         return false
+                    } else {
+                        //TODO reconsider having the models having a view state enum as opposed to seperate
+                        var checkItem = checkListAdapter.itemList[selectedViewHolder!!.adapterPosition]
+                        if(checkItem is PendingCheckItemModel) {
+                            checkItem.isDeleteToggled = false
+                        }
                     }
                 }
 

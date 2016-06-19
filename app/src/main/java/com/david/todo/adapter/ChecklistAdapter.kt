@@ -21,6 +21,7 @@ import com.david.todo.model.CompletedCheckItemModel
 import com.david.todo.model.PendingCheckItemModel
 import com.david.todo.model.TaskItemModel
 import com.david.todo.presenter.TaskListPresenter
+import com.david.todo.view.eventlisteners.SwipeActionListener
 import com.david.todo.view.widgets.TabView
 import timber.log.Timber
 import java.util.*
@@ -37,8 +38,17 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
     var drawCompletedItems: Boolean = false
 
     override fun getItemViewType(position: Int): Int {
-        if(itemList[position] is PendingCheckItemModel) {
-            return HolderType.PENDING.ordinal
+        var checkItem = itemList[position]
+        Timber.d("getItemViewType")
+
+        if(checkItem is PendingCheckItemModel) {
+            if(checkItem.isDeleteToggled) {
+                Timber.d("isDeleteToggled $position")
+                return HolderType.DELETE_TOGGLE.ordinal
+            } else {
+                Timber.d("pending $position")
+                return HolderType.PENDING.ordinal
+            }
         } else {
             return HolderType.COMPLETED.ordinal
         }
@@ -55,6 +65,10 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                 val parentLayout = inflater.inflate(R.layout.completed_check_list_item, parent, false)
                 return CompletedItemViewHolder(parentLayout)
             }
+            HolderType.DELETE_TOGGLE.ordinal -> {
+                val parentLayout = inflater.inflate(R.layout.pending_check_list_item, parent, false)
+                return PendingItemViewHolder(parentLayout)
+            }
             else -> {
                 return null
             }
@@ -67,7 +81,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                 holder as PendingItemViewHolder
                 val pendingItemModel = itemList[position] as PendingCheckItemModel
                 holder?.taskText?.text = pendingItemModel.text
-
+                holder?.actionSwitch?.displayedChild = PendingItemViewHolder.COMPLETE_VIEW
                 holder?.taskForeground?.translationX = defaultPositionX
                 holder?.itemView?.visibility = View.VISIBLE
 
@@ -88,6 +102,18 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                 } else {
                     holder?.completedItemContainer?.visibility = View.GONE
                 }
+            }
+
+            HolderType.DELETE_TOGGLE.ordinal -> {
+                holder as PendingItemViewHolder
+                val pendingItemModel = itemList[position] as PendingCheckItemModel
+                holder?.taskText?.text = pendingItemModel.text
+                holder?.actionSwitch?.displayedChild = PendingItemViewHolder.DELETE_VIEW
+                holder?.taskForeground?.translationX = SwipeActionListener.DELETE_TOGGLE_TRANSLATE_X
+                holder?.itemView?.visibility = View.VISIBLE
+
+                holder?.taskForeground?.isLongClickable = true
+                holder?.taskForeground?.visibility = View.VISIBLE
             }
         }
     }

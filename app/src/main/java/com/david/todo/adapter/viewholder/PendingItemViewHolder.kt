@@ -14,8 +14,8 @@ import com.david.todo.R
 class PendingItemViewHolder(view: View)  : RecyclerView.ViewHolder(view) {
 
     companion object {
-        val DELETE_VIEW: Int = 0
-        val COMPLETE_VIEW: Int = 1
+        val COMPLETE_VIEW: Int = 0
+        val DELETE_VIEW: Int = 1
     }
 
     var taskText: TextView

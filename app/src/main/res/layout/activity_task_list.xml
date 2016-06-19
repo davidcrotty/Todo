@@ -2,7 +2,6 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:speech_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,12 +24,19 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <android.support.v7.widget.AppCompatImageView
-                    android:layout_marginEnd="16dp"
-                    app:srcCompat="@drawable/ic_delete_white"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_alignParentEnd="true"/>
+
+                <RelativeLayout
+                    android:id="@+id/delete_action_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentEnd="true">
+                    <android.support.v7.widget.AppCompatImageView
+                        app:srcCompat="@drawable/ic_delete_white"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp" />
+                </RelativeLayout>
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>

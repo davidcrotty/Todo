@@ -65,17 +65,21 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
             MotionEvent.ACTION_UP -> {
                 if(selectedViewForeground != null) {
                     if(selectedViewHolder?.viewType == HolderType.DELETE_TOGGLE) {
-                        //persist here
-                        var pendingItem = checkListAdapter.itemList[selectedViewHolder!!.adapterPosition] as PendingCheckItemModel
-                        pendingItem.isDeleteToggled = true
-
+                        var position = selectedViewHolder!!.adapterPosition
+                        if(position != -1) {
+                            var pendingItem = checkListAdapter.itemList[position] as PendingCheckItemModel
+                            pendingItem.isDeleteToggled = true
+                        }
                         deSelectViewHolderWith(DELETE_TOGGLE_TRANSLATE_X)
                         return false
                     } else {
                         //TODO reconsider having the models having a view state enum as opposed to seperate
-                        var checkItem = checkListAdapter.itemList[selectedViewHolder!!.adapterPosition]
-                        if(checkItem is PendingCheckItemModel) {
-                            checkItem.isDeleteToggled = false
+                        var position = selectedViewHolder!!.adapterPosition
+                        if(position != -1) { //adapter position may not come back valid
+                            var checkItem = checkListAdapter.itemList[position]
+                            if (checkItem is PendingCheckItemModel) {
+                                checkItem.isDeleteToggled = false
+                            }
                         }
                     }
                 }

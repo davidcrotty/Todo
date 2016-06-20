@@ -44,6 +44,8 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
         Timber.d("onTouchEvent")
     }
 
+    //TODO break event handling into a class called 'interaction' which can be quieried.
+    //TODO an interaction represents an event from down to lift
     override fun onInterceptTouchEvent(rv: RecyclerView?, event: MotionEvent?): Boolean {
 
         when(event?.action) {
@@ -66,6 +68,9 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
                 if(selectedViewForeground != null) {
                     var position = selectedViewHolder!!.adapterPosition
                     if(modelStateIsChangedWith(position)) {
+                        selectedViewForeground = null
+                        selectedViewHolder = null
+                        actionViewType = null
                         return false
                     }
                 }
@@ -164,6 +169,7 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
 
     }
 
+    //TODO break out deselect and translation
     fun deSelectViewHolderWith(translation: Float = NO_TRANSLATION) {
         if(selectedViewForeground != null) {
             selectedViewForeground?.translationX = translation

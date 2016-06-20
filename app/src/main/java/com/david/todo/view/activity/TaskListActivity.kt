@@ -55,22 +55,21 @@ class TaskListActivity : BaseActivity() {
             if(checkListAdapter.itemList?.size == 0) return@setOnClickListener
 
             //state of switch can be derived from view switcher
-
             var firstVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition()
             var lastVisiblePosition = linearLayoutManager.findLastVisibleItemPosition()
+            Timber.d("lastVisiblePosition $lastVisiblePosition")
+
             for(i in firstVisiblePosition .. lastVisiblePosition) {
                 Timber.d("Position $i")
 
                 //i can be used as a scalar for posting the animation
                 var viewHolder = checkListView.findViewHolderForAdapterPosition(i)
                 if(viewHolder is PendingItemViewHolder) {
-                    if(viewHolder.viewType == HolderType.PENDING) {
-                        viewHolder.taskForeground.translationX = SwipeActionListener.DELETE_TOGGLE_TRANSLATE_X
-                        viewHolder.actionSwitch.displayedChild = PendingItemViewHolder.DELETE_VIEW
-                        viewHolder.viewType = HolderType.DELETE_TOGGLE
-                        var pendingItem = checkListAdapter.itemList[i] as PendingCheckItemModel
-                        pendingItem.isDeleteToggled = true
-                    }
+                    viewHolder.taskForeground.translationX = SwipeActionListener.DELETE_TOGGLE_TRANSLATE_X
+                    viewHolder.actionSwitch.displayedChild = PendingItemViewHolder.DELETE_VIEW
+                    viewHolder.viewType = HolderType.DELETE_TOGGLE
+                    var pendingItem = checkListAdapter.itemList[i] as PendingCheckItemModel
+                    pendingItem.isDeleteToggled = true
                 }
             }
 //            checkListView.findViewHolderForAdapterPosition()

@@ -40,6 +40,8 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
     //Cache type for the duration of a gesture from down to up
     var actionViewType: HolderType? = null
 
+    var interactionXStart: Float = 0F //Track starting interaction to get the direction at end of an interaction
+
     override fun onTouchEvent(rv: RecyclerView?, e: MotionEvent?) {
         Timber.d("onTouchEvent")
     }
@@ -56,6 +58,8 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
                     velocityTracker?.addMovement(event)
 
                     actionViewType = selectedViewHolder!!.viewType
+                    Timber.d("ACTION_DOWN $actionViewType")
+                    interactionXStart = event.x
                 }
             }
             MotionEvent.ACTION_MOVE -> {
@@ -65,6 +69,7 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
                 }
             }
             MotionEvent.ACTION_UP -> {
+                Timber.d("ACTION_UP")
                 if(selectedViewForeground != null) {
                     var position = selectedViewHolder!!.adapterPosition
                     if(modelStateIsChangedWith(position)) {
@@ -131,7 +136,9 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
                                }
 
             if(Math.abs(velocity!!.toInt()) > FLING_THRESHOLD && gestureNotInDeleteToggle) {
-                shouldFlingRightOffScreen = true
+                if(interactionXStart < event!!.x) {
+                    shouldFlingRightOffScreen = true
+                }
             }
 
             velocityTracker?.recycle()

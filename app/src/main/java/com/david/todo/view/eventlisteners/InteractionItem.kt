@@ -1,6 +1,7 @@
 package com.david.todo.view.eventlisteners
 
 import android.view.ViewGroup
+import android.widget.ViewSwitcher
 import com.david.todo.adapter.viewholder.HolderType
 import com.david.todo.adapter.viewholder.PendingItemViewHolder
 
@@ -9,7 +10,8 @@ import com.david.todo.adapter.viewholder.PendingItemViewHolder
  *
  * All of these items can be taken from the viewholder?
  */
-data class InteractionItem(val viewGroup: ViewGroup,
+data class InteractionItem(val foreground: ViewGroup,
+                           val background: ViewSwitcher,
                            val pendingItemViewHolder: PendingItemViewHolder,
                            val foregroundViewPosition: Float,
                            var actionViewType: HolderType,

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.widget.RelativeLayout
+import android.widget.ViewSwitcher
 import butterknife.bindView
 import com.david.todo.R
 import com.david.todo.adapter.ChecklistAdapter
@@ -27,12 +28,16 @@ import java.util.*
  * Created by DavidHome on 02/04/2016.
  */
 class TaskListActivity : BaseActivity() {
+
     val rootView: CoordinatorLayout by bindView(R.id.root_view)
     val toolbar: Toolbar by bindView(R.id.toolbar)
     val enterItemWidget: EnterItemView by bindView(R.id.enter_item_view)
     val checkListView: RecyclerView by bindView(R.id.check_list)
-    val deleteToggleIcon: RelativeLayout by bindView(R.id.delete_action_icon)
+    val deleteToggleIconContainer: RelativeLayout by bindView(R.id.delete_action_icon_container)
+    val deleteToggleViewSwitch: ViewSwitcher by bindView(R.id.delete_action_icon_switch)
 
+    val DONE_DELETE_ICON_VIEW: Int = 1
+    val TRASH_ICON_VIEW: Int = 0
     val MOST_RECENTLY_REMOVED_MODEL: String = "MOST_RECENTLY_REMOVED_MODEL"
     val CHECK_ITEM_LIST: String = "CHECK_ITEM_LIST"
 
@@ -49,31 +54,52 @@ class TaskListActivity : BaseActivity() {
         listPresenter = TaskListPresenter(this)
         enterItemWidget.attachPresenter(listPresenter)
         listPresenter.loadTaskItems(if (intent.hasExtra(CHECK_ITEM_LIST)) intent.getSerializableExtra(CHECK_ITEM_LIST) as ArrayList<CheckItem> else null)
-        deleteToggleIcon.setOnClickListener({
-            //set state on adapter so all futures render out
-            //get all visible item vh and translate
-            if(checkListAdapter.itemList?.size == 0) return@setOnClickListener
+        deleteToggleIconContainer.setOnClickListener({
+            //TODO hide visibility when no items
 
-            //state of switch can be derived from view switcher
-            var firstVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition()
-            var lastVisiblePosition = linearLayoutManager.findLastVisibleItemPosition()
-            Timber.d("lastVisiblePosition $lastVisiblePosition")
+            if(deleteToggleViewSwitch.displayedChild == TRASH_ICON_VIEW) {
+                deleteToggleViewSwitch.displayedChild = DONE_DELETE_ICON_VIEW
+                toggleItemsToViewStateWith(HolderType.DELETE_TOGGLE)
+            } else {
+                deleteToggleViewSwitch.displayedChild = TRASH_ICON_VIEW
+                toggleItemsToViewStateWith(HolderType.PENDING)
+            }
 
-            for(i in firstVisiblePosition .. lastVisiblePosition) {
-                Timber.d("Position $i")
 
-                //i can be used as a scalar for posting the animation
-                var viewHolder = checkListView.findViewHolderForAdapterPosition(i)
-                if(viewHolder is PendingItemViewHolder) {
+        })
+    }
+
+    /**
+     * Changes state of view with either @HolderType.PENDING or @HolderType.DELETE_TOGGLE
+     */
+    fun toggleItemsToViewStateWith(viewType : HolderType) {
+        if(checkListAdapter.itemList?.size == 0) return
+
+        var firstVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition()
+        var lastVisiblePosition = linearLayoutManager.findLastVisibleItemPosition()
+        Timber.d("lastVisiblePosition $lastVisiblePosition")
+
+        for(i in firstVisiblePosition .. lastVisiblePosition) {
+            Timber.d("Position $i")
+
+            var viewHolder = checkListView.findViewHolderForAdapterPosition(i)
+            if(viewHolder is PendingItemViewHolder) {
+                if(viewType == HolderType.PENDING ) {
+                    viewHolder.taskForeground.translationX = SwipeActionListener.PENDING_TRANSLATE_X
+                    viewHolder.actionSwitch.displayedChild = PendingItemViewHolder.COMPLETE_VIEW
+                    viewHolder.viewType = HolderType.PENDING
+                    var pendingItem = checkListAdapter.itemList[i] as PendingCheckItemModel
+                    pendingItem.isDeleteToggled = false
+                } else if (viewType == HolderType.DELETE_TOGGLE) {
                     viewHolder.taskForeground.translationX = SwipeActionListener.DELETE_TOGGLE_TRANSLATE_X
                     viewHolder.actionSwitch.displayedChild = PendingItemViewHolder.DELETE_VIEW
                     viewHolder.viewType = HolderType.DELETE_TOGGLE
                     var pendingItem = checkListAdapter.itemList[i] as PendingCheckItemModel
                     pendingItem.isDeleteToggled = true
                 }
+
             }
-//            checkListView.findViewHolderForAdapterPosition()
-        })
+        }
     }
 
     override fun onPause() {

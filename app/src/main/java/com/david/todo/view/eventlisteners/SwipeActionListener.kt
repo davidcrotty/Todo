@@ -18,6 +18,7 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
 
     companion object {
         val DELETE_TOGGLE_TRANSLATE_X = -200F
+        val PENDING_TRANSLATE_X = 0F
     }
 
     lateinit var interactionHandler: InteractionHandler

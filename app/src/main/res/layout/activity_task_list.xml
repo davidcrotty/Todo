@@ -26,12 +26,13 @@
                 android:layout_height="match_parent">
 
                 <RelativeLayout
-                    android:id="@+id/delete_action_icon"
+                    android:id="@+id/delete_action_icon_container"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_alignParentEnd="true">
 
                     <ViewSwitcher
+                        android:id="@+id/delete_action_icon_switch"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_centerVertical="true"

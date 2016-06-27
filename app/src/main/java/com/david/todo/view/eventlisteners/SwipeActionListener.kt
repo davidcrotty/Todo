@@ -43,6 +43,9 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
             MotionEvent.ACTION_UP -> {
                 interactionHandler.finaliseInteractionWith(event)
             }
+            MotionEvent.ACTION_CANCEL -> {
+                Timber.d("ITEM - CANCEL")
+            }
         }
 
         return false

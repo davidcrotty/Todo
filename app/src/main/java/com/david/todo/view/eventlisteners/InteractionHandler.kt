@@ -9,6 +9,7 @@ import com.david.todo.adapter.ChecklistAdapter
 import com.david.todo.adapter.viewholder.HolderType
 import com.david.todo.adapter.viewholder.PendingItemViewHolder
 import com.david.todo.model.PendingCheckItemModel
+import timber.log.Timber
 
 /**
  * Created by DavidHome on 21/06/2016.
@@ -22,6 +23,8 @@ class InteractionHandler(val checkListAdapter: ChecklistAdapter,
 
     val FLING_THRESHOLD: Float = 1200F
     val SWIPE_OFF_SCALAR: Int = 2
+    val DELETE_BACKGROUND = 1
+    val PENDING_BACKGROUND = 0
 
     var selectedInteractionItem: InteractionItem? = null
     var velocityTracker: VelocityTracker? = null
@@ -29,22 +32,35 @@ class InteractionHandler(val checkListAdapter: ChecklistAdapter,
     fun beginInteractionWith(event: MotionEvent?, recyclerView: RecyclerView?) {
         val view = recyclerView?.findChildViewUnder(event!!.x, event.y) ?: return
 
+        //state must be ascertained from first touch as this gets lost
+
         if(selectedInteractionItem == null) {
             var viewHolder = recyclerView?.getChildViewHolder(view)
             if(viewHolder is PendingItemViewHolder) {
                 velocityTracker = VelocityTracker.obtain();
                 velocityTracker?.addMovement(event)
+                var viewType = getViewState(viewHolder)
 
                 selectedInteractionItem = InteractionItem(viewHolder.taskForeground,
                                                           viewHolder.actionSwitch,
                                                           viewHolder,
                                                           viewHolder.taskForeground.x - event!!.rawX,
-                                                          viewHolder.viewType,
+                                                          viewType,
                                                           event.x)
+
+//                Timber.d("ITEM - SELECTED $viewType")
             } else {
                 selectedInteractionItem = null
             }
         }
+    }
+
+    fun getViewState(pendingItemViewHolder: PendingItemViewHolder) : HolderType {
+        if(pendingItemViewHolder.taskForeground.translationX < 0) {
+            return HolderType.DELETE_TOGGLE
+        }
+
+        return HolderType.PENDING
     }
 
     fun translateSelectedViewWith(event: MotionEvent?) {
@@ -66,9 +82,9 @@ class InteractionHandler(val checkListAdapter: ChecklistAdapter,
         }
 
         if(moveX > 0) {
-            selectedInteractionItem!!.background.displayedChild = 0
+            selectedInteractionItem!!.background.displayedChild = PENDING_BACKGROUND
         } else {
-            selectedInteractionItem!!.background.displayedChild = 1
+            selectedInteractionItem!!.background.displayedChild = DELETE_BACKGROUND
         }
 
         selectedInteractionItem!!.foreground.translationX = moveX
@@ -79,6 +95,7 @@ class InteractionHandler(val checkListAdapter: ChecklistAdapter,
         if(selectedInteractionItem == null) return
         var finalPosition = selectedInteractionItem!!.foreground.translationX
 
+
         if(selectedInteractionItem?.actionViewType == HolderType.PENDING) {
             if(finalPosition < DELETE_TOGGLE_TRANSLATE_X / SWIPE_OFF_SCALAR) {
                 selectedInteractionItem!!.foreground.translationX = DELETE_TOGGLE_TRANSLATE_X
@@ -86,7 +103,6 @@ class InteractionHandler(val checkListAdapter: ChecklistAdapter,
                 updateRecyclerModelDeleteState(true) //to render it as deleted next pass
             } else if(finalPosition > selectedInteractionItem!!.foreground.width / 2 || flingedToRight(event)) {
                 slideOffScreenToCompleted() //slide away
-                selectedInteractionItem!!.actionViewType = HolderType.COMPLETED
                 updateRecyclerModelDeleteState(false)
             } else {
                 selectedInteractionItem!!.foreground.translationX = 0F
@@ -94,7 +110,7 @@ class InteractionHandler(val checkListAdapter: ChecklistAdapter,
             }
 
         } else if (selectedInteractionItem?.actionViewType == HolderType.DELETE_TOGGLE) {
-            if(finalPosition >= DELETE_TOGGLE_TRANSLATE_X / SWIPE_OFF_SCALAR) {
+            if(finalPosition >= DELETE_TOGGLE_TRANSLATE_X / SWIPE_OFF_SCALAR || flingedToRight(event)) {
                 selectedInteractionItem!!.foreground.translationX = 0F
                 selectedInteractionItem!!.actionViewType = HolderType.PENDING
                 updateRecyclerModelDeleteState(false)
@@ -104,6 +120,10 @@ class InteractionHandler(val checkListAdapter: ChecklistAdapter,
                 updateRecyclerModelDeleteState(true) //to render it as deleted next pass
             }
         }
+
+        //Update vh state in rv
+
+//        Timber.d("ITEM - FINALISED END state - ${selectedInteractionItem?.actionViewType}")
 
         velocityTracker?.recycle()
         selectedInteractionItem = null

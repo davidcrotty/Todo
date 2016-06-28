@@ -3,6 +3,7 @@ package com.david.todo.view.eventlisteners
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.MotionEvent
+import com.david.todo.R
 import com.david.todo.adapter.ChecklistAdapter
 import timber.log.Timber
 
@@ -17,14 +18,18 @@ import timber.log.Timber
 class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistAdapter) : RecyclerView.OnItemTouchListener {
 
     companion object {
-        val DELETE_TOGGLE_TRANSLATE_X = -200F
+        var DELETE_TOGGLE_TRANSLATE_X = -0F
         val PENDING_TRANSLATE_X = 0F
     }
 
     lateinit var interactionHandler: InteractionHandler
 
     init {
-        interactionHandler = InteractionHandler(checkListAdapter, context)
+        interactionHandler = InteractionHandler(checkListAdapter, context, DELETE_TOGGLE_TRANSLATE_X)
+        var deleteTextWidth = context.resources.getDimensionPixelSize(R.dimen.delete_text_width)
+        var deleteMargin = context.resources.getDimensionPixelOffset(R.dimen.delete_text_margin)
+        DELETE_TOGGLE_TRANSLATE_X  = -(deleteMargin.toFloat() * 2) - deleteTextWidth
+
     }
 
     override fun onTouchEvent(rv: RecyclerView?, e: MotionEvent?) {

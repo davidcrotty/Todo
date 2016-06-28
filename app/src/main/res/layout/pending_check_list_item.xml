@@ -58,11 +58,11 @@
             android:background="@color/red">
 
             <TextView
-                android:layout_width="50dp"
+                android:layout_marginStart="@dimen/delete_text_margin"
+                android:layout_marginEnd="@dimen/delete_text_margin"
+                android:layout_width="@dimen/delete_text_width"
                 android:layout_height="wrap_content"
                 android:id="@+id/undo_button_text"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
                 android:fontFamily="sans-serif-medium"
                 android:textSize="14sp"
                 android:textColor="@android:color/white"

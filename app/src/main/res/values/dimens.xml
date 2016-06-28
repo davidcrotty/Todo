@@ -29,4 +29,8 @@
 
     <!-- Check list activity -->
     <dimen name="list_margin">8dp</dimen>
+
+    <!-- Check list items -->
+    <dimen name="delete_text_width">50dp</dimen>
+    <dimen name="delete_text_margin">16dp</dimen>
 </resources>

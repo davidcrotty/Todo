@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.MotionEvent
 import android.view.VelocityTracker
 import android.view.ViewConfiguration
+import com.david.todo.R
 import com.david.todo.adapter.ChecklistAdapter
 import com.david.todo.adapter.viewholder.HolderType
 import com.david.todo.adapter.viewholder.PendingItemViewHolder
@@ -15,11 +16,9 @@ import timber.log.Timber
  * Created by DavidHome on 21/06/2016.
  */
 class InteractionHandler(val checkListAdapter: ChecklistAdapter,
-                         val context: Context) {
+                         val context: Context,
+                         val deleteToggleTranslate: Float) {
 
-    companion object {
-        val DELETE_TOGGLE_TRANSLATE_X = -200F
-    }
 
     val FLING_THRESHOLD: Float = 1200F
     val SWIPE_OFF_SCALAR: Int = 2
@@ -72,12 +71,12 @@ class InteractionHandler(val checkListAdapter: ChecklistAdapter,
         if(selectedInteractionItem!!.actionViewType == HolderType.DELETE_TOGGLE) {
             if(moveX >= 0) {
                 moveX = 0F
-            } else if (moveX <= DELETE_TOGGLE_TRANSLATE_X) {
-                moveX = DELETE_TOGGLE_TRANSLATE_X
+            } else if (moveX <= deleteToggleTranslate) {
+                moveX = deleteToggleTranslate
             }
         } else if(selectedInteractionItem!!.actionViewType == HolderType.PENDING) {
-            if(moveX < DELETE_TOGGLE_TRANSLATE_X) {
-                moveX = DELETE_TOGGLE_TRANSLATE_X
+            if(moveX < deleteToggleTranslate) {
+                moveX = deleteToggleTranslate
             }
         }
 
@@ -97,8 +96,8 @@ class InteractionHandler(val checkListAdapter: ChecklistAdapter,
 
 
         if(selectedInteractionItem?.actionViewType == HolderType.PENDING) {
-            if(finalPosition < DELETE_TOGGLE_TRANSLATE_X / SWIPE_OFF_SCALAR) {
-                selectedInteractionItem!!.foreground.translationX = DELETE_TOGGLE_TRANSLATE_X
+            if(finalPosition < deleteToggleTranslate / SWIPE_OFF_SCALAR) {
+                selectedInteractionItem!!.foreground.translationX = deleteToggleTranslate
                 selectedInteractionItem!!.actionViewType = HolderType.DELETE_TOGGLE
                 updateRecyclerModelDeleteState(true) //to render it as deleted next pass
             } else if(finalPosition > selectedInteractionItem!!.foreground.width / 2 || flingedToRight(event)) {
@@ -110,12 +109,12 @@ class InteractionHandler(val checkListAdapter: ChecklistAdapter,
             }
 
         } else if (selectedInteractionItem?.actionViewType == HolderType.DELETE_TOGGLE) {
-            if(finalPosition >= DELETE_TOGGLE_TRANSLATE_X / SWIPE_OFF_SCALAR || flingedToRight(event)) {
+            if(finalPosition >= deleteToggleTranslate / SWIPE_OFF_SCALAR || flingedToRight(event)) {
                 selectedInteractionItem!!.foreground.translationX = 0F
                 selectedInteractionItem!!.actionViewType = HolderType.PENDING
                 updateRecyclerModelDeleteState(false)
             } else {
-                selectedInteractionItem!!.foreground.translationX = DELETE_TOGGLE_TRANSLATE_X
+                selectedInteractionItem!!.foreground.translationX = deleteToggleTranslate
                 selectedInteractionItem!!.actionViewType = HolderType.DELETE_TOGGLE
                 updateRecyclerModelDeleteState(true) //to render it as deleted next pass
             }

@@ -18,7 +18,7 @@ import timber.log.Timber
 class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistAdapter) : RecyclerView.OnItemTouchListener {
 
     companion object {
-        var DELETE_TOGGLE_TRANSLATE_X = -0F
+        var DELETE_TOGGLE_TRANSLATE_X = -200F // how much view should be offset by
         val PENDING_TRANSLATE_X = 0F
     }
 

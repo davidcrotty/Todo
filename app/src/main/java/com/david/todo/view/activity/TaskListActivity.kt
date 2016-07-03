@@ -2,6 +2,7 @@ package com.david.todo.view.activity
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
@@ -195,13 +196,34 @@ class TaskListActivity : BaseActivity() {
 
     fun undoCompletedItem() {
         val checkItemHolder = intent.getSerializableExtra(MOST_RECENTLY_COMPLETED_MODEL) as PendingToCompleteItemHolder
-        checkListAdapter.restoreItemWith(checkItemHolder.position,
+        checkListAdapter.restoreCompletedItemWith(checkItemHolder.position,
                 checkItemHolder.pendingCheckItemModel,
                 checkItemHolder.completedCheckItemModel)
     }
 
     fun undoDeletedItem() {
+        var deletedItem: PendingToDeleteCheckItemModel = intent.getSerializableExtra(MOST_RECENTLY_DELETED_MODEL) as PendingToDeleteCheckItemModel ?: return
+        var childStateChangedListener = object : RecyclerView.OnChildAttachStateChangeListener{
+            override fun onChildViewDetachedFromWindow(view: View?) {
 
+            }
+
+            override fun onChildViewAttachedToWindow(view: View?) {
+                var pendingViewHolder = linearLayoutManager.findViewByPosition(deletedItem.position) ?: return
+                //go find it from a view
+                var viewHolder = checkListView.getChildViewHolder(pendingViewHolder)
+                if(viewHolder is PendingItemViewHolder) {
+                    viewHolder.taskForeground.translationX = 0F
+                    var model = checkListAdapter.getModelFor(deletedItem.position) as PendingCheckItemModel
+                    model?.isDeleteToggled = false
+                }
+                checkListView.removeOnChildAttachStateChangeListener(this)
+            }
+
+        }
+
+        checkListView.addOnChildAttachStateChangeListener(childStateChangedListener)
+        checkListAdapter.restorePendingCheckItemWith(deletedItem.position, deletedItem.pendingToDeleteCheckItemModel)
     }
 
     fun pendingItemDeleted(pendingItemViewHolder: PendingItemViewHolder) {

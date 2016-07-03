@@ -167,7 +167,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
     }
 
     fun dismissAndReplaceWithCompletedItem(position: Int) {
-        Timber.d("Removing $position")
+//        Timber.d("Removing $position")
         val pendingTaskItem = itemList[position] as PendingCheckItemModel
         val completedItem = CompletedCheckItemModel(pendingTaskItem.text)
         itemList.removeAt(position)
@@ -191,9 +191,8 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
         return true;
     }
 
-    fun restoreItemWith(savedPosition: Int, checkItemToAdd: PendingCheckItemModel, completedItemToRemove: CompletedCheckItemModel?) {
-        itemList.add(savedPosition, checkItemToAdd)
-        notifyItemInserted(savedPosition)
+    fun restoreCompletedItemWith(savedPosition: Int, checkItemToAdd: PendingCheckItemModel, completedItemToRemove: CompletedCheckItemModel?) {
+        restorePendingCheckItemWith(savedPosition, checkItemToAdd)
         completedItemToRemove?.let {
             itemList.remove(completedItemToRemove as CheckItem)
             notifyItemRemoved(itemList.size)
@@ -202,5 +201,10 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
 
     fun allowViewholderTypeTransform(allowTransform: Boolean) {
         _allowTransform = allowTransform
+    }
+
+    fun restorePendingCheckItemWith(savedPosition: Int, checkItemToAdd: PendingCheckItemModel) {
+        itemList.add(savedPosition, checkItemToAdd)
+        notifyItemInserted(savedPosition)
     }
 }

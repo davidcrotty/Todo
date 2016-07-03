@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="?listPreferredItemHeight">
+    android:layout_height="?listPreferredItemHeight"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ViewSwitcher
         android:id="@+id/view_action_switch"
@@ -107,12 +108,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
 
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/drag_handle"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:scaleType="center"
-                android:src="@drawable/ic_drag_handle_black_24dp"
+                app:srcCompat="@drawable/ic_drag_handle_black"
                 android:layout_marginRight="8dp"
                 android:layout_gravity="right|center_vertical" />
 

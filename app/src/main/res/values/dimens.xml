@@ -33,4 +33,5 @@
     <!-- Check list items -->
     <dimen name="delete_text_width">50dp</dimen>
     <dimen name="delete_text_margin">16dp</dimen>
+    <dimen name="delete_text_hit_area">80dp</dimen>
 </resources>

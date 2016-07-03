@@ -57,17 +57,26 @@
             android:layout_height="match_parent"
             android:background="@color/red">
 
-            <TextView
-                android:layout_marginStart="@dimen/delete_text_margin"
-                android:layout_marginEnd="@dimen/delete_text_margin"
-                android:layout_width="@dimen/delete_text_width"
-                android:layout_height="wrap_content"
-                android:id="@+id/undo_button_text"
-                android:fontFamily="sans-serif-medium"
-                android:textSize="14sp"
-                android:textColor="@android:color/white"
-                android:text="DELETE"
-                android:layout_gravity="right|center_vertical" />
+
+            <RelativeLayout
+                android:id="@+id/delete_button"
+                android:layout_width="@dimen/delete_text_hit_area"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/undo_button_text"
+                    android:fontFamily="sans-serif-medium"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"
+                    android:text="DELETE"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                     />
+
+            </RelativeLayout>
 
         </FrameLayout>
 

@@ -45,11 +45,13 @@ class TaskListActivity : BaseActivity() {
     lateinit var listPresenter: TaskListPresenter
     lateinit var checkListAdapter: ChecklistAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
+    var deleteToggleMargin: Float? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_list)
         setSupportActionBar(toolbar)
+        deleteToggleMargin = -resources.getDimension(R.dimen.delete_text_hit_area)
 
         listPresenter = TaskListPresenter(this)
         enterItemWidget.attachPresenter(listPresenter)
@@ -91,7 +93,7 @@ class TaskListActivity : BaseActivity() {
                     var pendingItem = checkListAdapter.itemList[i] as PendingCheckItemModel
                     pendingItem.isDeleteToggled = false
                 } else if (viewType == HolderType.DELETE_TOGGLE) {
-                    viewHolder.taskForeground.translationX = SwipeActionListener.DELETE_TOGGLE_TRANSLATE_X
+                    viewHolder.taskForeground.translationX = deleteToggleMargin!!
                     viewHolder.actionSwitch.displayedChild = PendingItemViewHolder.DELETE_VIEW
                     viewHolder.viewType = HolderType.DELETE_TOGGLE
                     var pendingItem = checkListAdapter.itemList[i] as PendingCheckItemModel
@@ -124,8 +126,8 @@ class TaskListActivity : BaseActivity() {
     }
 
     fun initAdapterWith(itemList: ArrayList<CheckItem>) {
-        checkListAdapter = ChecklistAdapter(itemList, listPresenter, this)
-        swipeActionListener = SwipeActionListener(this,checkListAdapter)
+        checkListAdapter = ChecklistAdapter(itemList, listPresenter, this, deleteToggleMargin!!)
+        swipeActionListener = SwipeActionListener(this,checkListAdapter, deleteToggleMargin!!)
 
         checkListView.setHasFixedSize(true)
         checkListView.adapter = checkListAdapter

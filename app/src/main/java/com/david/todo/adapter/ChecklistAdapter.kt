@@ -31,7 +31,8 @@ import java.util.*
  */
 class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                        val listPresenter: TaskListPresenter,
-                       val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                       val context: Context,
+                       val deleteToggleMargin: Float) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val defaultPositionX: Float = 0F
     var _allowTransform: Boolean = true
@@ -109,7 +110,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                 val pendingItemModel = itemList[position] as PendingCheckItemModel
                 holder?.taskText?.text = pendingItemModel.text
                 holder?.actionSwitch?.displayedChild = PendingItemViewHolder.DELETE_VIEW
-                holder?.taskForeground?.translationX = SwipeActionListener.DELETE_TOGGLE_TRANSLATE_X
+                holder?.taskForeground?.translationX = deleteToggleMargin
                 holder?.itemView?.visibility = View.VISIBLE
 
                 holder?.taskForeground?.isLongClickable = true

@@ -8,10 +8,7 @@ import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.*
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.david.todo.R
 import com.david.todo.adapter.viewholder.CompletedItemViewHolder
 import com.david.todo.adapter.viewholder.HolderType
@@ -21,6 +18,7 @@ import com.david.todo.model.CompletedCheckItemModel
 import com.david.todo.model.PendingCheckItemModel
 import com.david.todo.model.TaskItemModel
 import com.david.todo.presenter.TaskListPresenter
+import com.david.todo.view.activity.TaskListActivity
 import com.david.todo.view.eventlisteners.SwipeActionListener
 import com.david.todo.view.widgets.TabView
 import timber.log.Timber
@@ -31,7 +29,7 @@ import java.util.*
  */
 class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
                        val listPresenter: TaskListPresenter,
-                       val context: Context,
+                       val activity: TaskListActivity,
                        val deleteToggleMargin: Float) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val defaultPositionX: Float = 0F
@@ -60,7 +58,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
         return when(viewType) {
             HolderType.PENDING.ordinal -> {
                 val parentLayout = inflater.inflate(R.layout.pending_check_list_item, parent, false)
-                return PendingItemViewHolder(parentLayout)
+                return PendingItemViewHolder(parentLayout, activity)
             }
             HolderType.COMPLETED.ordinal -> {
                 val parentLayout = inflater.inflate(R.layout.completed_check_list_item, parent, false)
@@ -68,7 +66,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
             }
             HolderType.DELETE_TOGGLE.ordinal -> {
                 val parentLayout = inflater.inflate(R.layout.pending_check_list_item, parent, false)
-                return PendingItemViewHolder(parentLayout)
+                return PendingItemViewHolder(parentLayout, activity)
             }
             else -> {
                 return null
@@ -81,40 +79,39 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
             HolderType.PENDING.ordinal -> {
                 holder as PendingItemViewHolder
                 val pendingItemModel = itemList[position] as PendingCheckItemModel
-                holder?.taskText?.text = pendingItemModel.text
-                holder?.actionSwitch?.displayedChild = PendingItemViewHolder.COMPLETE_VIEW
-                holder?.taskForeground?.translationX = defaultPositionX
-                holder?.itemView?.visibility = View.VISIBLE
+                holder.taskText.text = pendingItemModel.text
+                holder.actionSwitch.displayedChild = PendingItemViewHolder.COMPLETE_VIEW
+                holder.taskForeground.translationX = defaultPositionX
+                holder.itemView?.visibility = View.VISIBLE
 
-                holder?.taskForeground?.isLongClickable = true
-                holder?.taskForeground?.visibility = View.VISIBLE
+                holder.taskForeground.isLongClickable = true
+                holder.taskForeground.visibility = View.VISIBLE
             }
 
             HolderType.COMPLETED.ordinal -> {
                 holder as CompletedItemViewHolder
                 if(drawCompletedItems) {
-                    holder?.completedItemContainer?.visibility = View.VISIBLE
+                    holder.completedItemContainer.visibility = View.VISIBLE
                     val completedItemModel = itemList[position] as CompletedCheckItemModel
-                    holder?.taskText?.text = completedItemModel.text
-                    holder?.undoButtonText?.setOnClickListener({
+                    holder.taskText.text = completedItemModel.text
+                    holder.undoButtonText.setOnClickListener({
                         if (_allowTransform == false) return@setOnClickListener
                         replaceCompletedWithPendingItem(completedItemModel)
                     })
                 } else {
-                    holder?.completedItemContainer?.visibility = View.GONE
+                    holder.completedItemContainer.visibility = View.GONE
                 }
             }
 
             HolderType.DELETE_TOGGLE.ordinal -> {
                 holder as PendingItemViewHolder
                 val pendingItemModel = itemList[position] as PendingCheckItemModel
-                holder?.taskText?.text = pendingItemModel.text
-                holder?.actionSwitch?.displayedChild = PendingItemViewHolder.DELETE_VIEW
-                holder?.taskForeground?.translationX = deleteToggleMargin
-                holder?.itemView?.visibility = View.VISIBLE
-
-                holder?.taskForeground?.isLongClickable = true
-                holder?.taskForeground?.visibility = View.VISIBLE
+                holder.taskText.text = pendingItemModel.text
+                holder.actionSwitch.displayedChild = PendingItemViewHolder.DELETE_VIEW
+                holder.taskForeground.translationX = deleteToggleMargin
+                holder.itemView?.visibility = View.VISIBLE
+                holder.taskForeground.isLongClickable = true
+                holder.taskForeground.visibility = View.VISIBLE
             }
         }
     }
@@ -132,6 +129,11 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
 
     override fun getItemCount(): Int {
         return itemList.count();
+    }
+
+    fun getModelFor(position: Int) : CheckItem? {
+        if(position + 1 > itemList.size) return null
+        return itemList[position]
     }
 
     fun hideCompletedItems() {
@@ -158,7 +160,13 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
         return itemList.size
     }
 
-    fun onItemDismiss(position: Int) {
+    fun deleteItem(position: Int) {
+        if(position == RecyclerView.NO_POSITION) return
+        itemList.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun dismissAndReplaceWithCompletedItem(position: Int) {
         Timber.d("Removing $position")
         val pendingTaskItem = itemList[position] as PendingCheckItemModel
         val completedItem = CompletedCheckItemModel(pendingTaskItem.text)

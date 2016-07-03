@@ -66,6 +66,7 @@ class InteractionHandler(val checkListAdapter: ChecklistAdapter,
         if(selectedInteractionItem == null) return
         //calculate move
         var moveX = selectedInteractionItem!!.foregroundViewPosition + event?.rawX!!
+//        Timber.d("moveX $moveX movestate ${selectedInteractionItem!!.actionViewType}")
 
         //if currently in delete state, can only go to 0, cannot go more than Configured position (on mouse up)
         if(selectedInteractionItem!!.actionViewType == HolderType.DELETE_TOGGLE) {
@@ -86,6 +87,7 @@ class InteractionHandler(val checkListAdapter: ChecklistAdapter,
             selectedInteractionItem!!.background.displayedChild = DELETE_BACKGROUND
         }
 
+        Timber.d("FInal move command $moveX deleteToggleTranslate $deleteToggleTranslate")
         selectedInteractionItem!!.foreground.translationX = moveX
         velocityTracker?.addMovement(event)
     }

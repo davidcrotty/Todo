@@ -25,10 +25,6 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
 
     init {
         interactionHandler = InteractionHandler(checkListAdapter, context, deleteToggleMargin)
-        var deleteTextWidth = context.resources.getDimensionPixelSize(R.dimen.delete_text_width)
-        var deleteMargin = context.resources.getDimensionPixelOffset(R.dimen.delete_text_margin)
-//        DELETE_TOGGLE_TRANSLATE_X  = -(deleteMargin.toFloat() * 2) - deleteTextWidth
-
     }
 
     override fun onTouchEvent(rv: RecyclerView?, e: MotionEvent?) {

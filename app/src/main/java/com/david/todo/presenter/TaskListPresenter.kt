@@ -1,7 +1,9 @@
 package com.david.todo.presenter
 
+import android.view.View
+import com.david.todo.R
 import com.david.todo.model.CheckItem
-import com.david.todo.model.CheckItemHolder
+import com.david.todo.model.PendingToCompleteItemHolder
 import com.david.todo.model.CompletedCheckItemModel
 import com.david.todo.model.PendingCheckItemModel
 import com.david.todo.view.activity.TaskListActivity
@@ -17,8 +19,12 @@ class TaskListPresenter(val taskListActivity: TaskListActivity) {
     fun storeAndDisplaySnackBarFor(pendingCheckItemModel: PendingCheckItemModel,
                                    completedCheckItemModel: CompletedCheckItemModel,
                                    position: Int) {
-        taskListActivity.storeIntentFor(CheckItemHolder(pendingCheckItemModel, completedCheckItemModel, position))
-        taskListActivity.showSnackbar()
+        taskListActivity.storeIntentFor(PendingToCompleteItemHolder(pendingCheckItemModel, completedCheckItemModel, position))
+        taskListActivity.showSnackbarWith(taskListActivity.resources.getString(R.string.checklist_completed_text),
+                                         taskListActivity.resources.getColor(R.color.green),
+                                         View.OnClickListener {
+                                             taskListActivity.undoCompletedItem()
+                                         })
     }
 
     fun addPendingItemToAdapterWith(task: String) {

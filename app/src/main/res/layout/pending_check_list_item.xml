@@ -57,7 +57,6 @@
             android:layout_height="match_parent"
             android:background="@color/red">
 
-
             <RelativeLayout
                 android:id="@+id/delete_button"
                 android:layout_width="@dimen/delete_text_hit_area"

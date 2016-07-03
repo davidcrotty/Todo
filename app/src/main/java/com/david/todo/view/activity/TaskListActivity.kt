@@ -1,5 +1,6 @@
 package com.david.todo.view.activity
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
@@ -7,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
+import android.view.View
 import android.widget.RelativeLayout
 import android.widget.ViewSwitcher
 import butterknife.bindView
@@ -15,8 +17,9 @@ import com.david.todo.adapter.ChecklistAdapter
 import com.david.todo.adapter.viewholder.HolderType
 import com.david.todo.adapter.viewholder.PendingItemViewHolder
 import com.david.todo.model.CheckItem
-import com.david.todo.model.CheckItemHolder
+import com.david.todo.model.PendingToCompleteItemHolder
 import com.david.todo.model.PendingCheckItemModel
+import com.david.todo.model.PendingToDeleteCheckItemModel
 import com.david.todo.presenter.TaskListPresenter
 import com.david.todo.view.BaseActivity
 import com.david.todo.view.eventlisteners.SwipeActionListener
@@ -38,7 +41,8 @@ class TaskListActivity : BaseActivity() {
 
     val DONE_DELETE_ICON_VIEW: Int = 1
     val TRASH_ICON_VIEW: Int = 0
-    val MOST_RECENTLY_REMOVED_MODEL: String = "MOST_RECENTLY_REMOVED_MODEL"
+    val MOST_RECENTLY_COMPLETED_MODEL: String = "MOST_RECENTLY_COMPLETED_MODEL"
+    val MOST_RECENTLY_DELETED_MODEL: String = "MOST_RECENTLY_DELETED_MODEL"
     val CHECK_ITEM_LIST: String = "CHECK_ITEM_LIST"
 
     lateinit var swipeActionListener: SwipeActionListener
@@ -139,7 +143,7 @@ class TaskListActivity : BaseActivity() {
     }
 
     fun delegateHideDropShadow() {
-        enterItemWidget?.hideDropShadow()
+        enterItemWidget.hideDropShadow()
     }
 
     fun setScrollBehaviourWith() {
@@ -150,9 +154,9 @@ class TaskListActivity : BaseActivity() {
                 val totalItemCount = linearLayoutManager.itemCount
                 val lastVisibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition()
                 if(lastVisibleItem == totalItemCount - 1) { //TODO Will need tweaking when show/hiding completed
-                    enterItemWidget?.hideDropShadow()
+                    enterItemWidget.hideDropShadow()
                 } else {
-                    enterItemWidget?.showDropShadow()
+                    enterItemWidget.showDropShadow()
                 }
             }
         })
@@ -163,21 +167,16 @@ class TaskListActivity : BaseActivity() {
     }
 
     fun addPendingItemToAdapterWith(task: PendingCheckItemModel, position: Int) {
-        checkListAdapter?.addItem(task, position)
+        checkListAdapter.addItem(task, position)
         checkListView.scrollToPosition(getLastCompletedItemPosition() - 1)
     }
 
-    fun showSnackbar() {
+    fun showSnackbarWith(text: String, undoColourId: Int, action: View.OnClickListener) {
         Snackbar.make(rootView,
-                      resources.getString(R.string.checklist_text),
+                      text,
                       Snackbar.LENGTH_LONG)
-                          .setAction(resources.getString(R.string.checklist_action), {
-                              val checkItemHolder = intent.getSerializableExtra(MOST_RECENTLY_REMOVED_MODEL) as CheckItemHolder
-                              checkListAdapter.restoreItemWith(checkItemHolder?.position,
-                                                                checkItemHolder?.pendingCheckItemModel,
-                                                                checkItemHolder.completedCheckItemModel)
-                          })
-                      .setActionTextColor(resources.getColor(R.color.green))
+                          .setAction(resources.getString(R.string.checklist_action), action)
+                      .setActionTextColor(undoColourId)
                       .setCallback(object: Snackbar.Callback() {
                             override fun onDismissed(snackbar: Snackbar, event: Int) {
                                 checkListAdapter.allowViewholderTypeTransform(true)
@@ -190,8 +189,34 @@ class TaskListActivity : BaseActivity() {
                       .show()
     }
 
-    fun storeIntentFor(taskItemHolder: CheckItemHolder) {
-        intent.putExtra(MOST_RECENTLY_REMOVED_MODEL, taskItemHolder)
+    fun storeIntentFor(taskItemHolder: PendingToCompleteItemHolder) {
+        intent.putExtra(MOST_RECENTLY_COMPLETED_MODEL, taskItemHolder)
+    }
+
+    fun undoCompletedItem() {
+        val checkItemHolder = intent.getSerializableExtra(MOST_RECENTLY_COMPLETED_MODEL) as PendingToCompleteItemHolder
+        checkListAdapter.restoreItemWith(checkItemHolder.position,
+                checkItemHolder.pendingCheckItemModel,
+                checkItemHolder.completedCheckItemModel)
+    }
+
+    fun undoDeletedItem() {
+
+    }
+
+    fun pendingItemDeleted(pendingItemViewHolder: PendingItemViewHolder) {
+        val position = pendingItemViewHolder.adapterPosition;
+        if(position == RecyclerView.NO_POSITION) return
+        var item = checkListAdapter.getModelFor(position)
+        if(item is PendingCheckItemModel) {
+            intent.putExtra(MOST_RECENTLY_DELETED_MODEL, PendingToDeleteCheckItemModel(item, position))
+            checkListAdapter.deleteItem(position)
+            showSnackbarWith(resources.getString(R.string.checklist_delete_text),
+                             resources.getColor(R.color.red),
+                             View.OnClickListener {
+                                 undoDeletedItem()
+                             })
+        }
     }
 
     override fun finish() {

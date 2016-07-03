@@ -45,6 +45,7 @@ class TaskListActivity : BaseActivity() {
     val MOST_RECENTLY_COMPLETED_MODEL: String = "MOST_RECENTLY_COMPLETED_MODEL"
     val MOST_RECENTLY_DELETED_MODEL: String = "MOST_RECENTLY_DELETED_MODEL"
     val CHECK_ITEM_LIST: String = "CHECK_ITEM_LIST"
+    val COMPLETED_ITEMS_SHOULD_BE_SHOWN: String = "COMPLETED_ITEMS_SHOULD_BE_SHOWN"
 
     lateinit var swipeActionListener: SwipeActionListener
     lateinit var listPresenter: TaskListPresenter
@@ -84,10 +85,10 @@ class TaskListActivity : BaseActivity() {
 
         var firstVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition()
         var lastVisiblePosition = linearLayoutManager.findLastVisibleItemPosition()
-        Timber.d("lastVisiblePosition $lastVisiblePosition")
+//        Timber.d("lastVisiblePosition $lastVisiblePosition")
 
         for(i in firstVisiblePosition .. lastVisiblePosition) {
-            Timber.d("Position $i")
+//            Timber.d("Position $i")
 
             var viewHolder = checkListView.findViewHolderForAdapterPosition(i)
             if(viewHolder is PendingItemViewHolder) {
@@ -117,12 +118,27 @@ class TaskListActivity : BaseActivity() {
     override fun onCreateOptionsMenu(menu: Menu) : Boolean {
         menuInflater.inflate(R.menu.menu_main, menu);
         val toggleCurrentItems = menu.findItem(R.id.toggle_completed_items);
+
+        if(intent.hasExtra(COMPLETED_ITEMS_SHOULD_BE_SHOWN)) {
+            if(intent.getBooleanExtra(COMPLETED_ITEMS_SHOULD_BE_SHOWN, false)) {
+                toggleCurrentItems.isChecked = true
+                checkListAdapter.showCompletedItems()
+            } else {
+                toggleCurrentItems.isChecked = false
+                checkListAdapter.hideCompletedItems()
+            }
+        } else {
+            checkListAdapter.hideCompletedItems()
+        }
+
         toggleCurrentItems.setOnMenuItemClickListener {
             item -> if(item.isChecked) {
                 item.isChecked = false
+                intent.putExtra(COMPLETED_ITEMS_SHOULD_BE_SHOWN, false)
                 checkListAdapter.hideCompletedItems()
             } else {
                 item.isChecked = true
+                intent.putExtra(COMPLETED_ITEMS_SHOULD_BE_SHOWN, true)
                 checkListAdapter.showCompletedItems()
             }
             true

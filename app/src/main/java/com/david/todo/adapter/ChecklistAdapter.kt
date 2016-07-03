@@ -177,7 +177,9 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
         listPresenter.storeAndDisplaySnackBarFor(pendingTaskItem, completedItem, position)
     }
 
-    fun onItemMove(fromPosition: Int, toPosition: Int) : Boolean{
+    fun onItemMove(fromPosition: Int, toPosition: Int) : Boolean {
+        //if long touch put back
+
         if (fromPosition < toPosition) {
             for(i in fromPosition..toPosition - 1) {
                 Collections.swap(itemList, i, i + 1);

@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.View
 import android.widget.RelativeLayout
@@ -23,6 +24,7 @@ import com.david.todo.model.PendingCheckItemModel
 import com.david.todo.model.PendingToDeleteCheckItemModel
 import com.david.todo.presenter.TaskListPresenter
 import com.david.todo.view.BaseActivity
+import com.david.todo.view.eventlisteners.ListDragHandler
 import com.david.todo.view.eventlisteners.SwipeActionListener
 import com.david.todo.view.widgets.EnterItemView
 import timber.log.Timber
@@ -157,6 +159,10 @@ class TaskListActivity : BaseActivity() {
         checkListView.layoutManager = linearLayoutManager
 
         checkListView.addOnItemTouchListener(swipeActionListener)
+
+        var dragHelper = ListDragHandler(checkListAdapter)
+        var itemTouchHelper = ItemTouchHelper(dragHelper)
+        itemTouchHelper.attachToRecyclerView(checkListView)
     }
 
     fun delegateHideDropShadow() {

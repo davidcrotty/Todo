@@ -23,4 +23,8 @@ class ListDragHandler(val checkListAdapter: ChecklistAdapter) : ItemTouchHelper.
 
     }
 
+    override fun isLongPressDragEnabled(): Boolean {
+        return false
+    }
+
 }

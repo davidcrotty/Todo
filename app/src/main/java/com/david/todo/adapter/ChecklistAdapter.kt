@@ -178,19 +178,28 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
     }
 
     fun onItemMove(fromPosition: Int, toPosition: Int) : Boolean {
-        //if long touch put back
+
+        //if goes over completed do not swap
+        var pendingItemSizeLimit = 0
+        for (i in 0..itemList.size -1) {
+            if(itemList[i] is CompletedCheckItemModel) {
+                pendingItemSizeLimit = i
+            }
+        }
+
+        if(toPosition > pendingItemSizeLimit + 1) return true
 
         if (fromPosition < toPosition) {
             for(i in fromPosition..toPosition - 1) {
-                Collections.swap(itemList, i, i + 1);
+                Collections.swap(itemList, i, i + 1)
             }
         } else {
             for(i in fromPosition downTo toPosition + 1) {
-                Collections.swap(itemList, i, i - 1);
+                Collections.swap(itemList, i, i - 1)
             }
         }
-        notifyItemMoved(fromPosition, toPosition);
-        return true;
+        notifyItemMoved(fromPosition, toPosition)
+        return true
     }
 
     fun restoreCompletedItemWith(savedPosition: Int, checkItemToAdd: PendingCheckItemModel, completedItemToRemove: CompletedCheckItemModel?) {

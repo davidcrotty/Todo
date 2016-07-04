@@ -54,6 +54,7 @@ class TaskListActivity : BaseActivity() {
     lateinit var checkListAdapter: ChecklistAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
     var deleteToggleMargin: Float? = null
+    var itemTouchHelper: ItemTouchHelper? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -161,8 +162,8 @@ class TaskListActivity : BaseActivity() {
         checkListView.addOnItemTouchListener(swipeActionListener)
 
         var dragHelper = ListDragHandler(checkListAdapter)
-        var itemTouchHelper = ItemTouchHelper(dragHelper)
-        itemTouchHelper.attachToRecyclerView(checkListView)
+        itemTouchHelper = ItemTouchHelper(dragHelper)
+        itemTouchHelper?.attachToRecyclerView(checkListView)
     }
 
     fun delegateHideDropShadow() {
@@ -261,6 +262,10 @@ class TaskListActivity : BaseActivity() {
                                  undoDeletedItem()
                              })
         }
+    }
+
+    fun startListItemDragWith(pendingItemViewHolder: PendingItemViewHolder) {
+        itemTouchHelper?.startDrag(pendingItemViewHolder)
     }
 
     override fun finish() {

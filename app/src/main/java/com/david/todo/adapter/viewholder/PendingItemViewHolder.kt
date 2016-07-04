@@ -1,6 +1,8 @@
 package com.david.todo.adapter.viewholder
 
+import android.support.v4.view.MotionEventCompat
 import android.support.v7.widget.RecyclerView
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -41,6 +43,15 @@ class PendingItemViewHolder(view: View,
 
         deleteButton.setOnClickListener({
             activity.pendingItemDeleted(this)
+        })
+
+        dragHandle.setOnTouchListener({ view: View, motionEvent: MotionEvent ->
+            if (MotionEventCompat.getActionMasked(motionEvent) ==
+                    MotionEvent.ACTION_DOWN) {
+                activity.startListItemDragWith(this)
+            }
+
+            return@setOnTouchListener false
         })
     }
 }

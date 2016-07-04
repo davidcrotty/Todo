@@ -82,7 +82,7 @@
 
     </ViewSwitcher>
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/task_foreground"
         android:layout_width="match_parent"
         android:layout_height="?listPreferredItemHeight"
@@ -98,16 +98,6 @@
             android:layout_marginRight="16dp"
             android:layout_gravity="start" />
 
-            <!-- add margin from tabview, refactor once done-->
-            <TextView
-                android:layout_marginLeft="61dp"
-                android:id="@+id/text_item"
-                android:gravity="center"
-                style="@style/TextAppearance.AppCompat.Medium"
-                android:layout_gravity="start|center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/drag_handle"
                 android:layout_width="48dp"
@@ -115,7 +105,18 @@
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_drag_handle_black"
                 android:layout_marginRight="8dp"
-                android:layout_gravity="right|center_vertical" />
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:layout_toLeftOf="@id/drag_handle"
+                android:layout_marginLeft="61dp"
+                android:id="@+id/text_item"
+                android:gravity="left|center"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_gravity="start|center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         <View
             android:id="@+id/top_border"
@@ -130,6 +131,6 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@drawable/drop_shadow"></View>
-    </FrameLayout>
+    </RelativeLayout>
 
 </FrameLayout>

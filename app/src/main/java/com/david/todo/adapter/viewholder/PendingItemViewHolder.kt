@@ -25,7 +25,7 @@ class PendingItemViewHolder(view: View,
     var dragHandle: ImageView
     var doneImage: ImageView
     var topBorder: View
-    var taskForeground: FrameLayout
+    var taskForeground: RelativeLayout
     var taskBackground: FrameLayout
     var actionSwitch: ViewSwitcher
     var deleteButton: ViewGroup
@@ -36,7 +36,7 @@ class PendingItemViewHolder(view: View,
         dragHandle = view.findViewById(R.id.drag_handle) as ImageView
         doneImage = view.findViewById(R.id.done_image) as ImageView
         topBorder = view.findViewById(R.id.top_border) as View
-        taskForeground = view.findViewById(R.id.task_foreground) as FrameLayout
+        taskForeground = view.findViewById(R.id.task_foreground) as RelativeLayout
         taskBackground = view.findViewById(R.id.complete_task_background) as FrameLayout
         actionSwitch = view.findViewById(R.id.view_action_switch) as ViewSwitcher
         deleteButton = view.findViewById(R.id.delete_background) as ViewGroup

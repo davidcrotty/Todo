@@ -15,6 +15,7 @@ class ListDragHandler(val checkListAdapter: ChecklistAdapter) : ItemTouchHelper.
     }
 
     override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
+        //ensure touch helper is not intervening
         checkListAdapter.onItemMove(viewHolder!!.adapterPosition, target!!.adapterPosition)
         return false
     }

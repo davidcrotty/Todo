@@ -265,6 +265,7 @@ class TaskListActivity : BaseActivity() {
     }
 
     fun startListItemDragWith(pendingItemViewHolder: PendingItemViewHolder) {
+        swipeActionListener.reset()
         itemTouchHelper?.startDrag(pendingItemViewHolder)
     }
 

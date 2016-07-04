@@ -15,16 +15,21 @@ import timber.log.Timber
  * @param context - Used for getting view configuration in determining fling distance per device
  * @param checkListAdapter - Used for calling specific methods on the recycler adapter for handling removals
  */
-class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistAdapter, val deleteToggleMargin: Float) : RecyclerView.OnItemTouchListener {
+class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistAdapter, deleteToggleMargin: Float) : RecyclerView.OnItemTouchListener {
 
     companion object {
         val PENDING_TRANSLATE_X = 0F
     }
 
     lateinit var interactionHandler: InteractionHandler
+    var isDisabled: Boolean = false
 
     init {
         interactionHandler = InteractionHandler(checkListAdapter, context, deleteToggleMargin)
+    }
+
+    fun reset() {
+        interactionHandler.reset()
     }
 
     override fun onTouchEvent(rv: RecyclerView?, e: MotionEvent?) {

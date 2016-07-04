@@ -62,6 +62,11 @@ class InteractionHandler(val checkListAdapter: ChecklistAdapter,
         return HolderType.PENDING
     }
 
+    fun reset() {
+        selectedInteractionItem = null
+        velocityTracker?.recycle()
+    }
+
     fun translateSelectedViewWith(event: MotionEvent?) {
         if(selectedInteractionItem == null) return
         //calculate move

@@ -30,6 +30,10 @@
     <style name="AppThemeNoActionBar.Transparent.Green" parent="AppThemeNoActionBar">
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryDark">@color/green_ripple</item>
+        <item name="windowActionModeOverlay">true</item>
+
+        <item name="actionModeStyle">@style/Widget.ActionMode</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_keyboard_backspace_white_24dp</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="Base.Theme.AppCompat.Light.DarkActionBar"/>
@@ -42,5 +46,10 @@
         <item name="colorAccent">#fff</item>
         <item name="colorControlNormal">#fff</item>
         <item name="colorControlActivated">#fff</item>
+    </style>
+
+    <style name="Widget.ActionMode" parent="@style/Widget.AppCompat.ActionMode">
+        <item name="background">@color/flat_blue</item>
+        <item name="height">?attr/actionBarSize</item>
     </style>
 </resources>

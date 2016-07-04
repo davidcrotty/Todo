@@ -9,6 +9,9 @@
     <color name="Background">#fafafa</color>
     <color name="AddItemStatusBar">#BDBDBD</color>
 
+    <!-- Task sub list-->
+    <color name="flat_blue">#4285F4</color>
+
     <color name="add_activity_status_bar">#2c3e50</color>
 
     <!-- Secondary list item text -->

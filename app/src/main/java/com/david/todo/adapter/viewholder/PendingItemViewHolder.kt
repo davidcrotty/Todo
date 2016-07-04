@@ -2,13 +2,10 @@ package com.david.todo.adapter.viewholder
 
 import android.support.v4.view.MotionEventCompat
 import android.support.v7.widget.RecyclerView
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import com.david.todo.R
 import com.david.todo.view.activity.TaskListActivity
-import timber.log.Timber
 
 /**
  * Created by DavidHome on 06/05/2016.
@@ -40,6 +37,27 @@ class PendingItemViewHolder(view: View,
         taskBackground = view.findViewById(R.id.complete_task_background) as FrameLayout
         actionSwitch = view.findViewById(R.id.view_action_switch) as ViewSwitcher
         deleteButton = view.findViewById(R.id.delete_background) as ViewGroup
+
+        taskText.setOnClickListener {
+            activity.startSupportActionMode(object: android.support.v7.view.ActionMode.Callback {
+                override fun onPrepareActionMode(mode: android.support.v7.view.ActionMode?, menu: Menu?): Boolean {
+                    return false
+                }
+
+                override fun onActionItemClicked(mode: android.support.v7.view.ActionMode?, item: MenuItem?): Boolean {
+                    return false
+                }
+
+                override fun onCreateActionMode(mode: android.support.v7.view.ActionMode?, menu: Menu?): Boolean {
+                    var inflater = mode!!.menuInflater
+                    inflater.inflate(R.menu.edit_text_menu, menu)
+                    return true
+                }
+
+                override fun onDestroyActionMode(mode: android.support.v7.view.ActionMode?) {
+                }
+            })
+        }
 
         deleteButton.setOnClickListener({
             activity.pendingItemDeleted(this)

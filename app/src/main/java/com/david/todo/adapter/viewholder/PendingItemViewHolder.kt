@@ -3,6 +3,7 @@ package com.david.todo.adapter.viewholder
 import android.opengl.Visibility
 import android.support.v4.view.MotionEventCompat
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.*
 import android.widget.*
 import com.david.todo.R
@@ -47,13 +48,20 @@ class PendingItemViewHolder(view: View,
 
             activity.startSupportActionMode(object: android.support.v7.view.ActionMode.Callback {
 
+                var cachedText: String? = null //for when user enters nothing and commits
+
                 override fun onPrepareActionMode(mode: android.support.v7.view.ActionMode?, menu: Menu?): Boolean {
                     return false
                 }
 
                 override fun onActionItemClicked(mode: android.support.v7.view.ActionMode?, item: MenuItem?): Boolean {
                     if(item!!.itemId == R.id.done_icon) {
-                        taskText.text = taskEdit.text.toString()
+                        var text = taskEdit.text.toString()
+                        if(TextUtils.isEmpty(text)) {
+                            taskText.text = cachedText
+                        } else {
+                            taskText.text = text
+                        }
                         commitEdit()
                         mode?.finish()
                         return true
@@ -70,6 +78,7 @@ class PendingItemViewHolder(view: View,
                     var inflater = mode!!.menuInflater
                     inflater.inflate(R.menu.edit_text_menu, menu)
 
+                    cachedText = taskText.text.toString()
                     activity.disableNonActionItems()
                     taskForeground.translationX = 0F
                     taskEdit.visibility = View.VISIBLE
@@ -83,7 +92,7 @@ class PendingItemViewHolder(view: View,
                     if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                         activity.window.statusBarColor = activity.resources.getColor(R.color.green_ripple)
                     }
-//                    commitEdit()
+                    commitEdit()
                 }
 
                 private fun commitEdit() {

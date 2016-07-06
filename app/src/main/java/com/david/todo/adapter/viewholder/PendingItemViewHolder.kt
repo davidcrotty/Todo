@@ -71,6 +71,7 @@ class PendingItemViewHolder(view: View,
                     inflater.inflate(R.menu.edit_text_menu, menu)
 
                     activity.disableNonActionItems()
+                    taskForeground.translationX = 0F
                     taskEdit.visibility = View.VISIBLE
                     taskEdit.setText(taskText.text)
                     taskEdit.requestFocus()

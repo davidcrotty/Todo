@@ -42,6 +42,9 @@ class PendingItemViewHolder(view: View,
         taskEdit = view.findViewById(R.id.task_edit) as EditText
 
         taskText.setOnClickListener {
+            //Stop editing when item is pending a delete
+            if(taskForeground.translationX < 0F) return@setOnClickListener
+
             activity.startSupportActionMode(object: android.support.v7.view.ActionMode.Callback {
 
                 override fun onPrepareActionMode(mode: android.support.v7.view.ActionMode?, menu: Menu?): Boolean {
@@ -67,6 +70,7 @@ class PendingItemViewHolder(view: View,
                     var inflater = mode!!.menuInflater
                     inflater.inflate(R.menu.edit_text_menu, menu)
 
+                    activity.disableNonActionItems()
                     taskEdit.visibility = View.VISIBLE
                     taskEdit.setText(taskText.text)
                     taskEdit.requestFocus()
@@ -84,6 +88,7 @@ class PendingItemViewHolder(view: View,
                 private fun commitEdit() {
                     taskEdit.visibility = View.GONE
                     taskText.visibility = View.VISIBLE
+                    activity.enableNonActionItems()
                 }
             })
         }

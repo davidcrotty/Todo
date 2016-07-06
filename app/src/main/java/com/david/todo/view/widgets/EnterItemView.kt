@@ -25,10 +25,10 @@ class EnterItemView(context: Context, attrs: AttributeSet) : FrameLayout(context
     lateinit var _presenter: TaskListPresenter
 
     init {
-        inflate(context, R.layout.enter_item_view, this);
-        val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.speech_view, 0, 0);
+        inflate(context, R.layout.enter_item_view, this)
+        val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.speech_view, 0, 0)
         iconColour = typedArray.getColorStateList(R.styleable.speech_view_icon_colour)
-        typedArray.recycle();
+        typedArray.recycle()
         editText.addTextChangedListener(this)
     }
 

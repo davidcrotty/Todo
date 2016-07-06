@@ -56,6 +56,7 @@ class TaskListActivity : BaseActivity() {
     lateinit var linearLayoutManager: LinearLayoutManager
     var deleteToggleMargin: Float? = null
     var itemTouchHelper: ItemTouchHelper? = null
+    var dragHandler: ListDragHandler? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -166,8 +167,8 @@ class TaskListActivity : BaseActivity() {
 
         checkListView.addOnItemTouchListener(swipeActionListener)
 
-        var dragHelper = ListDragHandler(checkListAdapter)
-        itemTouchHelper = ItemTouchHelper(dragHelper)
+        dragHandler = ListDragHandler(checkListAdapter)
+        itemTouchHelper = ItemTouchHelper(dragHandler)
         itemTouchHelper?.attachToRecyclerView(checkListView)
     }
 
@@ -271,6 +272,27 @@ class TaskListActivity : BaseActivity() {
 
     fun startListItemDragWith(pendingItemViewHolder: PendingItemViewHolder) {
         swipeActionListener.reset()
+        if(pendingItemViewHolder == null || checkListView == null) return
         itemTouchHelper?.startDrag(pendingItemViewHolder)
+    }
+
+    /**
+     * Disables activity options that could disrupt the user experience while editing an item.
+     */
+    fun enableNonActionItems() {
+        enterItemWidget.visibility = View.VISIBLE
+        itemTouchHelper = ItemTouchHelper(dragHandler)
+        itemTouchHelper?.attachToRecyclerView(checkListView)
+        checkListView.addOnItemTouchListener(swipeActionListener)
+    }
+
+    /**
+     * Enables activity options that could disrupt the user experience while editing an item.
+     */
+    fun disableNonActionItems() {
+        enterItemWidget.visibility = View.INVISIBLE
+        itemTouchHelper?.attachToRecyclerView(null) //Removes it as a listener from the recyclerview
+        itemTouchHelper = null
+        checkListView.removeOnItemTouchListener(swipeActionListener)
     }
 }

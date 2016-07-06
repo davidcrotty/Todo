@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.david.todo" >
+    package="com.david.todo">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".appstart.AndroidApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppThemeNoActionBar"
-        android:name=".appstart.AndroidApplication">
+        android:theme="@style/AppThemeNoActionBar">
         <activity
             android:name=".view.activity.TodoListActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustPan">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
 
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
         <activity
             android:name=".view.activity.AddItemActivity"
-            android:theme="@style/AppThemeNoActionBar.Transparent"
             android:launchMode="singleTask"
-            />
-
+            android:theme="@style/AppThemeNoActionBar.Transparent" />
         <activity
             android:name=".view.activity.TaskListActivity"
-            android:theme="@style/AppThemeNoActionBar.Transparent.Green"
             android:label=""
-            android:windowSoftInputMode="stateHidden"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/AppThemeNoActionBar.Transparent.Green"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".view.activity.ToolbarActivity"
+            android:theme="@style/AppThemeNoActionBar.Transparent.Green">
         </activity>
     </application>
 

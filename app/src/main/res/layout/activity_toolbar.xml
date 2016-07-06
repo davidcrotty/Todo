@@ -10,13 +10,11 @@
     <android.support.design.widget.AppBarLayout
         android:layout_height="?android:attr/actionBarSize"
         android:layout_width="match_parent">
-
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:background="@color/green">
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -49,45 +47,16 @@
                     </ViewSwitcher>
                 </RelativeLayout>
             </RelativeLayout>
-
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
-        app:layout_behavior="com.david.todo.view.eventlisteners.ExpandUpBehaviour"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent">
+    <Button
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Action mode"
+        android:id="@+id/action_mode_button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
-        <View
-            android:id="@+id/recycler_margin"
-            android:layout_alignParentTop="true"
-            android:background="@android:color/white"
-            android:layout_width="match_parent"
-            android:layout_marginTop="?android:attr/actionBarSize"
-            android:layout_height="0dp"></View>
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_below="@id/recycler_margin"
-            android:id="@+id/check_list"
-
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent">
-        </android.support.v7.widget.RecyclerView>
-
-    </RelativeLayout>
-
-
-    <com.david.todo.view.widgets.EnterItemView
-            app:layout_behavior="com.david.todo.view.eventlisteners.ExpandUpBehaviour"
-            android:layout_gravity="bottom"
-            android:background="@android:color/transparent"
-            android:id="@+id/enter_item_view"
-            speech_view:icon_colour="@color/green"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></com.david.todo.view.widgets.EnterItemView>
 </android.support.design.widget.CoordinatorLayout>

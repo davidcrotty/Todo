@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'kotlin-android-extensions'
 
 def cmd = 'git rev-list HEAD --first-parent --count'
 def gitVersion = cmd.execute().text.trim().toInteger()

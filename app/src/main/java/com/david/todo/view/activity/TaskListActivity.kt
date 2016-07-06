@@ -12,6 +12,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.View
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.ViewSwitcher
 import butterknife.bindView
 import com.david.todo.R
@@ -147,6 +148,12 @@ class TaskListActivity : BaseActivity() {
         return true
     }
 
+    override fun finish() {
+        super.finish()
+        checkListView.removeOnItemTouchListener(swipeActionListener)
+    }
+    
+
     fun initAdapterWith(itemList: ArrayList<CheckItem>) {
         checkListAdapter = ChecklistAdapter(itemList, listPresenter, this, deleteToggleMargin!!)
         swipeActionListener = SwipeActionListener(this,checkListAdapter, deleteToggleMargin!!)
@@ -265,10 +272,5 @@ class TaskListActivity : BaseActivity() {
     fun startListItemDragWith(pendingItemViewHolder: PendingItemViewHolder) {
         swipeActionListener.reset()
         itemTouchHelper?.startDrag(pendingItemViewHolder)
-    }
-
-    override fun finish() {
-        super.finish()
-        checkListView.removeOnItemTouchListener(swipeActionListener)
     }
 }

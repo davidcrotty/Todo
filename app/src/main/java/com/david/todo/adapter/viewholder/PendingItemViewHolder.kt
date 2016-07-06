@@ -40,11 +40,17 @@ class PendingItemViewHolder(view: View,
 
         taskText.setOnClickListener {
             activity.startSupportActionMode(object: android.support.v7.view.ActionMode.Callback {
+
                 override fun onPrepareActionMode(mode: android.support.v7.view.ActionMode?, menu: Menu?): Boolean {
                     return false
                 }
 
                 override fun onActionItemClicked(mode: android.support.v7.view.ActionMode?, item: MenuItem?): Boolean {
+                    if(item!!.itemId == R.id.done_icon) {
+                        mode?.finish()
+                        return true
+                    }
+
                     return false
                 }
 
@@ -52,6 +58,7 @@ class PendingItemViewHolder(view: View,
                     if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                         activity.window.statusBarColor = activity.resources.getColor(R.color.dark_flat_blue)
                     }
+
                     var inflater = mode!!.menuInflater
                     inflater.inflate(R.menu.edit_text_menu, menu)
                     return true

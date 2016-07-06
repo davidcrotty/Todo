@@ -118,6 +118,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
+            <EditText
+                android:visibility="gone"
+                android:layout_toLeftOf="@id/drag_handle"
+                android:layout_marginLeft="61dp"
+                android:id="@+id/task_edit"
+                android:gravity="left|center"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_gravity="start|center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
         <View
             android:id="@+id/top_border"
             android:visibility="invisible"

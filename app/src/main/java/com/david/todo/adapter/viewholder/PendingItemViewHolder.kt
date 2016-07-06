@@ -1,5 +1,6 @@
 package com.david.todo.adapter.viewholder
 
+import android.opengl.Visibility
 import android.support.v4.view.MotionEventCompat
 import android.support.v7.widget.RecyclerView
 import android.view.*
@@ -19,6 +20,7 @@ class PendingItemViewHolder(view: View,
     }
 
     var taskText: TextView
+    var taskEdit: EditText
     var dragHandle: ImageView
     var doneImage: ImageView
     var topBorder: View
@@ -37,6 +39,7 @@ class PendingItemViewHolder(view: View,
         taskBackground = view.findViewById(R.id.complete_task_background) as FrameLayout
         actionSwitch = view.findViewById(R.id.view_action_switch) as ViewSwitcher
         deleteButton = view.findViewById(R.id.delete_background) as ViewGroup
+        taskEdit = view.findViewById(R.id.task_edit) as EditText
 
         taskText.setOnClickListener {
             activity.startSupportActionMode(object: android.support.v7.view.ActionMode.Callback {
@@ -47,6 +50,8 @@ class PendingItemViewHolder(view: View,
 
                 override fun onActionItemClicked(mode: android.support.v7.view.ActionMode?, item: MenuItem?): Boolean {
                     if(item!!.itemId == R.id.done_icon) {
+                        taskText.text = taskEdit.text.toString()
+                        commitEdit()
                         mode?.finish()
                         return true
                     }
@@ -61,6 +66,11 @@ class PendingItemViewHolder(view: View,
 
                     var inflater = mode!!.menuInflater
                     inflater.inflate(R.menu.edit_text_menu, menu)
+
+                    taskEdit.visibility = View.VISIBLE
+                    taskEdit.setText(taskText.text)
+                    taskEdit.requestFocus()
+                    taskText.visibility = View.GONE
                     return true
                 }
 
@@ -68,6 +78,12 @@ class PendingItemViewHolder(view: View,
                     if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                         activity.window.statusBarColor = activity.resources.getColor(R.color.green_ripple)
                     }
+                    commitEdit()
+                }
+
+                private fun commitEdit() {
+                    taskEdit.visibility = View.GONE
+                    taskText.visibility = View.VISIBLE
                 }
             })
         }

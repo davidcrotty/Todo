@@ -152,7 +152,7 @@ class TaskListActivity : BaseActivity() {
         super.finish()
         checkListView.removeOnItemTouchListener(swipeActionListener)
     }
-    
+
 
     fun initAdapterWith(itemList: ArrayList<CheckItem>) {
         checkListAdapter = ChecklistAdapter(itemList, listPresenter, this, deleteToggleMargin!!)

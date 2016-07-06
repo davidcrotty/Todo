@@ -75,8 +75,6 @@ class TaskListActivity : BaseActivity() {
                 deleteToggleViewSwitch.displayedChild = TRASH_ICON_VIEW
                 toggleItemsToViewStateWith(HolderType.PENDING)
             }
-
-
         })
     }
 

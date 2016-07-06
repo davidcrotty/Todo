@@ -49,12 +49,18 @@ class PendingItemViewHolder(view: View,
                 }
 
                 override fun onCreateActionMode(mode: android.support.v7.view.ActionMode?, menu: Menu?): Boolean {
+                    if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        activity.window.statusBarColor = activity.resources.getColor(R.color.dark_flat_blue)
+                    }
                     var inflater = mode!!.menuInflater
                     inflater.inflate(R.menu.edit_text_menu, menu)
                     return true
                 }
 
                 override fun onDestroyActionMode(mode: android.support.v7.view.ActionMode?) {
+                    if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        activity.window.statusBarColor = activity.resources.getColor(R.color.green_ripple)
+                    }
                 }
             })
         }

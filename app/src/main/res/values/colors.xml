@@ -11,6 +11,7 @@
 
     <!-- Task sub list-->
     <color name="flat_blue">#4285F4</color>
+    <color name="dark_flat_blue">#1976D2</color>
 
     <color name="add_activity_status_bar">#2c3e50</color>
 

@@ -23,6 +23,9 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
 
     lateinit var interactionHandler: InteractionHandler
     var isDisabled: Boolean = false
+    //Due to https://code.google.com/p/android/issues/detail?id=205947 ItemTouchHelper requires a manual
+    // 'shouldPreventSwipeEvents' to prevent unwanted touch events firing off
+    var shouldPreventSwipeEvents: Boolean = false
 
     init {
         interactionHandler = InteractionHandler(checkListAdapter, context, deleteToggleMargin)
@@ -37,9 +40,10 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
     }
 
     override fun onInterceptTouchEvent(rv: RecyclerView?, event: MotionEvent?): Boolean {
-
+        if(shouldPreventSwipeEvents) return false
         when(event?.action) {
             MotionEvent.ACTION_DOWN -> {
+
                 interactionHandler.beginInteractionWith(event = event,
                                                         recyclerView = rv)
             }

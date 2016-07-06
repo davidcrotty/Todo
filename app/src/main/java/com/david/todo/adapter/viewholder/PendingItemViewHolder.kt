@@ -41,9 +41,9 @@ class PendingItemViewHolder(view: View,
         deleteButton = view.findViewById(R.id.delete_background) as ViewGroup
         taskEdit = view.findViewById(R.id.task_edit) as EditText
 
-        taskText.setOnClickListener {
+        taskText.setOnLongClickListener {
             //Stop editing when item is pending a delete
-            if(taskForeground.translationX < 0F) return@setOnClickListener
+            if(taskForeground.translationX < 0F) return@setOnLongClickListener true
 
             activity.startSupportActionMode(object: android.support.v7.view.ActionMode.Callback {
 
@@ -82,7 +82,7 @@ class PendingItemViewHolder(view: View,
                     if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                         activity.window.statusBarColor = activity.resources.getColor(R.color.green_ripple)
                     }
-                    commitEdit()
+//                    commitEdit()
                 }
 
                 private fun commitEdit() {
@@ -91,6 +91,8 @@ class PendingItemViewHolder(view: View,
                     activity.enableNonActionItems()
                 }
             })
+
+            return@setOnLongClickListener true
         }
 
         deleteButton.setOnClickListener({

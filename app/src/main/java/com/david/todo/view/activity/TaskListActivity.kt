@@ -57,6 +57,7 @@ class TaskListActivity : BaseActivity() {
     var deleteToggleMargin: Float? = null
     var itemTouchHelper: ItemTouchHelper? = null
     var dragHandler: ListDragHandler? = null
+    var shouldPreventDragEvents: Boolean = false
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -271,6 +272,7 @@ class TaskListActivity : BaseActivity() {
     }
 
     fun startListItemDragWith(pendingItemViewHolder: PendingItemViewHolder) {
+        if(shouldPreventDragEvents) return
         swipeActionListener.reset()
         if(pendingItemViewHolder == null || checkListView == null) return
         itemTouchHelper?.startDrag(pendingItemViewHolder)
@@ -284,15 +286,22 @@ class TaskListActivity : BaseActivity() {
         itemTouchHelper = ItemTouchHelper(dragHandler)
         itemTouchHelper?.attachToRecyclerView(checkListView)
         checkListView.addOnItemTouchListener(swipeActionListener)
+        swipeActionListener.shouldPreventSwipeEvents = false
     }
 
     /**
      * Enables activity options that could disrupt the user experience while editing an item.
      */
     fun disableNonActionItems() {
+        shouldPreventDragEvents = true
         enterItemWidget.visibility = View.INVISIBLE
-        itemTouchHelper?.attachToRecyclerView(null) //Removes it as a listener from the recyclerview
-        itemTouchHelper = null
+
+        //Due to https://code.google.com/p/android/issues/detail?id=205947 ItemTouchHelper requires a manual
+        // 'shouldPreventSwipeEvents' to prevent unwanted touch events firing off
+        swipeActionListener.shouldPreventSwipeEvents = true
+        //TODO also needs to reset position of VH as when triggers view can move left or right before long touch is triggered
+//        itemTouchHelper?.attachToRecyclerView(null) //Removes it as a listener from the recyclerview
+//        itemTouchHelper = null
         checkListView.removeOnItemTouchListener(swipeActionListener)
     }
 }

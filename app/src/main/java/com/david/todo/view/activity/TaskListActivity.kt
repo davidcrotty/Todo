@@ -283,8 +283,7 @@ class TaskListActivity : BaseActivity() {
      */
     fun enableNonActionItems() {
         enterItemWidget.visibility = View.VISIBLE
-        itemTouchHelper = ItemTouchHelper(dragHandler)
-        itemTouchHelper?.attachToRecyclerView(checkListView)
+        swipeActionListener.deselectInteractionItem()
         checkListView.addOnItemTouchListener(swipeActionListener)
         swipeActionListener.shouldPreventSwipeEvents = false
     }
@@ -299,9 +298,6 @@ class TaskListActivity : BaseActivity() {
         //Due to https://code.google.com/p/android/issues/detail?id=205947 ItemTouchHelper requires a manual
         // 'shouldPreventSwipeEvents' to prevent unwanted touch events firing off
         swipeActionListener.shouldPreventSwipeEvents = true
-        //TODO also needs to reset position of VH as when triggers view can move left or right before long touch is triggered
-//        itemTouchHelper?.attachToRecyclerView(null) //Removes it as a listener from the recyclerview
-//        itemTouchHelper = null
         checkListView.removeOnItemTouchListener(swipeActionListener)
     }
 }

@@ -31,6 +31,10 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
         interactionHandler = InteractionHandler(checkListAdapter, context, deleteToggleMargin)
     }
 
+    fun deselectInteractionItem() {
+        interactionHandler.selectedInteractionItem = null
+    }
+
     fun reset() {
         interactionHandler.reset()
     }

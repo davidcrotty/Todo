@@ -15,7 +15,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/green">
+            android:background="@color/green"
+            app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -25,6 +26,7 @@
                     android:id="@+id/delete_action_icon_container"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true">
 
                     <ViewSwitcher

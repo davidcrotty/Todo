@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.*
 import com.david.todo.R
 import com.david.todo.domain.TaskItem
+import com.david.todo.presenter.TaskListPresenter
 import com.david.todo.view.activity.TaskListActivity
 import com.david.todo.view.eventlisteners.SwipeActionListener
 
@@ -15,7 +16,8 @@ import com.david.todo.view.eventlisteners.SwipeActionListener
  * Created by DavidHome on 06/05/2016.
  */
 class PendingItemViewHolder(view: View,
-                            val activity: TaskListActivity)  : RecyclerView.ViewHolder(view) {
+                            val activity: TaskListActivity,
+                            val presenter: TaskListPresenter)  : RecyclerView.ViewHolder(view) {
 
     companion object {
         val COMPLETE_VIEW: Int = 0
@@ -110,7 +112,7 @@ class PendingItemViewHolder(view: View,
         }
 
         deleteButton.setOnClickListener({
-            activity.pendingItemDeleted(this)
+            presenter.removePendingItemFromAdapterWith(this)
         })
 
         dragHandle.setOnTouchListener({ view: View, motionEvent: MotionEvent ->

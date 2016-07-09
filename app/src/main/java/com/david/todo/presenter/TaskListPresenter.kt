@@ -1,7 +1,9 @@
 package com.david.todo.presenter
 
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.david.todo.R
+import com.david.todo.adapter.viewholder.PendingItemViewHolder
 import com.david.todo.model.CheckItem
 import com.david.todo.model.PendingToCompleteItemHolder
 import com.david.todo.model.CompletedCheckItemModel
@@ -36,6 +38,25 @@ class TaskListPresenter(val taskListActivity: TaskListActivity) {
         val pendingItem = PendingCheckItemModel(task)
         taskListActivity.addPendingItemToAdapterWith(pendingItem, lastPosition)
         taskListActivity.dismissKeyboardWith(viewContext)
+        taskListActivity.showDeleteToggleIcon()
+    }
+
+    fun removePendingItemFromAdapterWith(pendingItemViewHolder: PendingItemViewHolder) {
+        val position = pendingItemViewHolder.adapterPosition
+        if(position == RecyclerView.NO_POSITION) return
+        taskListActivity.pendingItemDeleted(position)
+        //if adapter has any pending items
+        var remainingItems = taskListActivity.checkListAdapter.itemList
+        var hasAPendingItem = false
+        for(checkItem in remainingItems) {
+            if(checkItem is PendingCheckItemModel) {
+                hasAPendingItem = true
+                break
+            }
+        }
+
+        if(hasAPendingItem) return
+        taskListActivity.hideDeleteToggleIcon()
     }
 
     fun loadTaskItems(checkItems: ArrayList<CheckItem>?) {

@@ -24,6 +24,7 @@
                 android:layout_height="match_parent">
 
                 <RelativeLayout
+                    android:visibility="invisible"
                     android:id="@+id/delete_action_icon_container"
                     android:layout_width="48dp"
                     android:layout_height="48dp"

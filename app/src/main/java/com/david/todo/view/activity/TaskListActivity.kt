@@ -1,40 +1,35 @@
 package com.david.todo.view.activity
 
 import android.content.Context
-import android.graphics.Color
-import android.hardware.input.InputManager
 import android.os.Bundle
-import android.os.Handler
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.view.Gravity
 import android.view.Menu
 import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
 import android.widget.RelativeLayout
-import android.widget.TextView
 import android.widget.ViewSwitcher
 import butterknife.bindView
+import com.david.todo.BuildConfig
 import com.david.todo.R
 import com.david.todo.adapter.ChecklistAdapter
 import com.david.todo.adapter.viewholder.HolderType
 import com.david.todo.adapter.viewholder.PendingItemViewHolder
 import com.david.todo.model.CheckItem
-import com.david.todo.model.PendingToCompleteItemHolder
 import com.david.todo.model.PendingCheckItemModel
+import com.david.todo.model.PendingToCompleteItemHolder
 import com.david.todo.model.PendingToDeleteCheckItemModel
 import com.david.todo.presenter.TaskListPresenter
 import com.david.todo.view.BaseActivity
 import com.david.todo.view.eventlisteners.ListDragHandler
 import com.david.todo.view.eventlisteners.SwipeActionListener
 import com.david.todo.view.widgets.EnterItemView
-import kotlinx.android.synthetic.main.enter_item_view.*
-import timber.log.Timber
 import java.util.*
 
 /**
@@ -85,6 +80,46 @@ class TaskListActivity : BaseActivity() {
                 toggleItemsToViewStateWith(HolderType.PENDING)
             }
         })
+    }
+
+    fun hideDeleteToggleIcon() {
+        if(deleteToggleIconContainer.visibility != View.INVISIBLE) {
+            var fadeOutAnimation = AlphaAnimation(1F, 0F)
+            fadeOutAnimation.duration = BuildConfig.EASE_OUT_DURATION
+            fadeOutAnimation.setAnimationListener(object: Animation.AnimationListener {
+                override fun onAnimationRepeat(animation: Animation?) {
+                }
+
+                override fun onAnimationEnd(animation: Animation?) {
+                    deleteToggleIconContainer.visibility = View.INVISIBLE
+                }
+
+                override fun onAnimationStart(animation: Animation?) {
+                }
+
+            })
+            deleteToggleIconContainer.startAnimation(fadeOutAnimation)
+        }
+    }
+
+    fun showDeleteToggleIcon() {
+        if(deleteToggleIconContainer.visibility != View.VISIBLE) {
+            var fadeInAnimation = AlphaAnimation(0F, 1F)
+            fadeInAnimation.duration = BuildConfig.EASE_IN_DURATION
+            fadeInAnimation.setAnimationListener(object: Animation.AnimationListener {
+                override fun onAnimationRepeat(animation: Animation?) {
+                }
+
+                override fun onAnimationEnd(animation: Animation?) {
+                    deleteToggleIconContainer.visibility = View.VISIBLE
+                }
+
+                override fun onAnimationStart(animation: Animation?) {
+                }
+
+            })
+            deleteToggleIconContainer.startAnimation(fadeInAnimation)
+        }
     }
 
     /**
@@ -264,11 +299,10 @@ class TaskListActivity : BaseActivity() {
 
         checkListView.addOnChildAttachStateChangeListener(childStateChangedListener)
         checkListAdapter.restorePendingCheckItemWith(deletedItem.position, deletedItem.pendingToDeleteCheckItemModel)
+        showDeleteToggleIcon()
     }
 
-    fun pendingItemDeleted(pendingItemViewHolder: PendingItemViewHolder) {
-        val position = pendingItemViewHolder.adapterPosition;
-        if(position == RecyclerView.NO_POSITION) return
+    fun pendingItemDeleted(position: Int) {
         var item = checkListAdapter.getModelFor(position)
         if(item is PendingCheckItemModel) {
             intent.putExtra(MOST_RECENTLY_DELETED_MODEL, PendingToDeleteCheckItemModel(item, position))

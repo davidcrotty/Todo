@@ -58,7 +58,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
         return when(viewType) {
             HolderType.PENDING.ordinal -> {
                 val parentLayout = inflater.inflate(R.layout.pending_check_list_item, parent, false)
-                return PendingItemViewHolder(parentLayout, activity)
+                return PendingItemViewHolder(parentLayout, activity, listPresenter)
             }
             HolderType.COMPLETED.ordinal -> {
                 val parentLayout = inflater.inflate(R.layout.completed_check_list_item, parent, false)
@@ -66,7 +66,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
             }
             HolderType.DELETE_TOGGLE.ordinal -> {
                 val parentLayout = inflater.inflate(R.layout.pending_check_list_item, parent, false)
-                return PendingItemViewHolder(parentLayout, activity)
+                return PendingItemViewHolder(parentLayout, activity, listPresenter)
             }
             else -> {
                 return null
@@ -128,7 +128,7 @@ class ChecklistAdapter(val itemList: ArrayList<CheckItem>,
     }
 
     override fun getItemCount(): Int {
-        return itemList.count();
+        return itemList.count()
     }
 
     fun getModelFor(position: Int) : CheckItem? {

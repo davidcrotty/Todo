@@ -9,8 +9,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.Gravity
 import android.view.Menu
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.ViewSwitcher
@@ -28,6 +30,7 @@ import com.david.todo.view.BaseActivity
 import com.david.todo.view.eventlisteners.ListDragHandler
 import com.david.todo.view.eventlisteners.SwipeActionListener
 import com.david.todo.view.widgets.EnterItemView
+import kotlinx.android.synthetic.main.enter_item_view.*
 import timber.log.Timber
 import java.util.*
 
@@ -203,7 +206,7 @@ class TaskListActivity : BaseActivity() {
     }
 
     fun showSnackbarWith(text: String, undoColourId: Int, action: View.OnClickListener) {
-        Snackbar.make(rootView,
+        var snackbar = Snackbar.make(rootView,
                       text,
                       Snackbar.LENGTH_LONG)
                           .setAction(resources.getString(R.string.checklist_action), action)
@@ -217,7 +220,11 @@ class TaskListActivity : BaseActivity() {
                                 checkListAdapter.allowViewholderTypeTransform(false)
                               }
                       })
-                      .show()
+        var snackViewLayoutParams = snackbar.view.layoutParams as CoordinatorLayout.LayoutParams
+        snackViewLayoutParams.bottomMargin = enterItemWidget.height
+        snackViewLayoutParams.layoutAnimationParameters
+        snackbar.view.layoutParams = snackViewLayoutParams
+        snackbar.show()
     }
 
     fun storeIntentFor(taskItemHolder: PendingToCompleteItemHolder) {

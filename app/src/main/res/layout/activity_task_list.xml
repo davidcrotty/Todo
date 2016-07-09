@@ -57,7 +57,6 @@
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
-        app:layout_behavior="com.david.todo.view.eventlisteners.ExpandUpBehaviour"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -74,7 +73,6 @@
         <android.support.v7.widget.RecyclerView
             android:layout_below="@id/recycler_margin"
             android:id="@+id/check_list"
-
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -85,7 +83,6 @@
 
 
     <com.david.todo.view.widgets.EnterItemView
-            app:layout_behavior="com.david.todo.view.eventlisteners.ExpandUpBehaviour"
             android:layout_gravity="bottom"
             android:background="@android:color/transparent"
             android:id="@+id/enter_item_view"

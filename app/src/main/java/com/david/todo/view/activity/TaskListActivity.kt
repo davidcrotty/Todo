@@ -274,6 +274,7 @@ class TaskListActivity : BaseActivity() {
         checkListAdapter.restoreCompletedItemWith(checkItemHolder.position,
                 checkItemHolder.pendingCheckItemModel,
                 checkItemHolder.completedCheckItemModel)
+        showDeleteToggleIcon()
     }
 
     fun undoDeletedItem() {

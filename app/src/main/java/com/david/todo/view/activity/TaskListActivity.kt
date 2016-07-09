@@ -1,6 +1,8 @@
 package com.david.todo.view.activity
 
+import android.content.Context
 import android.graphics.Color
+import android.hardware.input.InputManager
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.CoordinatorLayout
@@ -12,6 +14,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Gravity
 import android.view.Menu
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -306,5 +309,17 @@ class TaskListActivity : BaseActivity() {
         // 'shouldPreventSwipeEvents' to prevent unwanted touch events firing off
         swipeActionListener.shouldPreventSwipeEvents = true
         checkListView.removeOnItemTouchListener(swipeActionListener)
+    }
+
+    fun dismissKeyboardWith(viewContext: View) {
+        viewContext.clearFocus()
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(viewContext.windowToken, InputMethodManager.RESULT_UNCHANGED_SHOWN)
+    }
+
+    fun showKeyboardWith(viewContext: View) {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInputFromWindow(viewContext.windowToken, InputMethodManager.SHOW_IMPLICIT, InputMethodManager.SHOW_IMPLICIT)
+        viewContext.requestFocus()
     }
 }

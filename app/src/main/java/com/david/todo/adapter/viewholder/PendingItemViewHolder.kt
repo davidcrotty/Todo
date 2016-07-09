@@ -80,10 +80,11 @@ class PendingItemViewHolder(view: View,
 
                     cachedText = taskText.text.toString()
                     activity.disableNonActionItems()
+
                     taskForeground.translationX = 0F
                     taskEdit.visibility = View.VISIBLE
                     taskEdit.setText(taskText.text)
-                    taskEdit.requestFocus()
+                    activity.showKeyboardWith(taskEdit)
                     taskText.visibility = View.GONE
                     return true
                 }
@@ -92,6 +93,7 @@ class PendingItemViewHolder(view: View,
                     if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                         activity.window.statusBarColor = activity.resources.getColor(R.color.green_ripple)
                     }
+                    activity.dismissKeyboardWith(taskEdit)
                     commitEdit()
                 }
 

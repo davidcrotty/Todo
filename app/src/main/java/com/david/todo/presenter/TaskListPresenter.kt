@@ -27,10 +27,15 @@ class TaskListPresenter(val taskListActivity: TaskListActivity) {
                                          })
     }
 
-    fun addPendingItemToAdapterWith(task: String) {
+    /**
+     * @param task text to add to the adapter as a pending item with
+     * @param viewContext the context of the view for the input manager to use as a binder token for hide/showing the keyboard
+     */
+    fun addPendingItemToAdapterWith(task: String, viewContext: View) {
         val lastPosition = taskListActivity.getLastCompletedItemPosition()
         val pendingItem = PendingCheckItemModel(task)
         taskListActivity.addPendingItemToAdapterWith(pendingItem, lastPosition)
+        taskListActivity.dismissKeyboardWith(viewContext)
     }
 
     fun loadTaskItems(checkItems: ArrayList<CheckItem>?) {

@@ -45,7 +45,7 @@ class EnterItemView(context: Context, attrs: AttributeSet) : FrameLayout(context
     }
 
     override fun onClick(v: View?) {
-        _presenter?.addPendingItemToAdapterWith(editText.text.toString())
+        _presenter?.addPendingItemToAdapterWith(editText.text.toString(), editText)
         sendImage.setOnClickListener(null)
         editText.text.clear()
     }

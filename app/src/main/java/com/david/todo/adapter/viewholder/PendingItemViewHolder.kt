@@ -7,7 +7,9 @@ import android.text.TextUtils
 import android.view.*
 import android.widget.*
 import com.david.todo.R
+import com.david.todo.domain.TaskItem
 import com.david.todo.view.activity.TaskListActivity
+import com.david.todo.view.eventlisteners.SwipeActionListener
 
 /**
  * Created by DavidHome on 06/05/2016.
@@ -44,7 +46,7 @@ class PendingItemViewHolder(view: View,
 
         taskText.setOnLongClickListener {
             //Stop editing when item is pending a delete
-            if(taskForeground.translationX < 0F) return@setOnLongClickListener true
+            if(taskForeground.translationX <= SwipeActionListener.DELETE_TOGGLE_MARGIN) return@setOnLongClickListener true
 
             activity.startSupportActionMode(object: android.support.v7.view.ActionMode.Callback {
 

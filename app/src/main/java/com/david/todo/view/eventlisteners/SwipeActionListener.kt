@@ -19,16 +19,18 @@ class SwipeActionListener(val context: Context, val checkListAdapter: ChecklistA
 
     companion object {
         val PENDING_TRANSLATE_X = 0F
+        var DELETE_TOGGLE_MARGIN = 0F
     }
 
     lateinit var interactionHandler: InteractionHandler
-    var isDisabled: Boolean = false
+
     //Due to https://code.google.com/p/android/issues/detail?id=205947 ItemTouchHelper requires a manual
     // 'shouldPreventSwipeEvents' to prevent unwanted touch events firing off
     var shouldPreventSwipeEvents: Boolean = false
 
     init {
-        interactionHandler = InteractionHandler(checkListAdapter, context, deleteToggleMargin)
+        DELETE_TOGGLE_MARGIN = deleteToggleMargin
+        interactionHandler = InteractionHandler(checkListAdapter, context)
     }
 
     fun deselectInteractionItem() {

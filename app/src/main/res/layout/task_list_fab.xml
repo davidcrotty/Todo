@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- No merge tag as this needs to be added to the Window also -->
+    <android.support.design.widget.FloatingActionButton android:layout_below="@id/line1"
+        android:layout_width="@dimen/small_fab"
+        android:layout_height="@dimen/small_fab"
+        android:scaleType="fitCenter"
+        android:layout_centerHorizontal="true"
+        app:backgroundTint="@color/green"
+        android:src="@drawable/check_box_white"
+        app:elevation="4dp"
+        app:rippleColor="@color/green_ripple"
+        android:id="@+id/task_list_fab"
+        android:clickable="true"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" />

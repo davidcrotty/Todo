@@ -15,18 +15,7 @@
         android:layout_centerHorizontal="true"
         android:background="#aaa"></View>
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_below="@id/line1"
-        android:layout_width="@dimen/small_fab"
-        android:layout_height="@dimen/small_fab"
-        android:scaleType="fitCenter"
-        android:layout_centerHorizontal="true"
-        app:backgroundTint="@color/green"
-        android:src="@drawable/check_box_white"
-        app:elevation="4dp"
-        app:rippleColor="@color/green_ripple"
-        android:id="@+id/task_list_fab"
-        android:clickable="true"/>
+    <include layout="@layout/task_list_fab"></include>
 
     <View
         android:layout_below="@+id/task_list_fab"

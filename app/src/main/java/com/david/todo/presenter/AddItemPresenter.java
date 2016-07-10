@@ -9,6 +9,7 @@ import com.david.todo.model.TimeHolderModel;
 import com.david.todo.module.DaggerEventServiceComponent;
 import com.david.todo.module.EventServiceModule;
 import com.david.todo.service.EventService;
+import com.david.todo.view.AddItemActionsView;
 import com.david.todo.view.activity.AddItemActivity;
 
 import org.joda.time.DateTime;

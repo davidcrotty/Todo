@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -212,6 +213,23 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
+    private void showTimePickButton() {
+        _timeText.setVisibility(View.VISIBLE);
+        _timeSelectContainer.setVisibility(View.VISIBLE);
+        _timeSelectContainer.setOnClickListener(this);
+    }
+
+    private void calculateAnimationCoordinates() {
+        float finalRadius = Math.max(_rootView.getWidth(), _rootView.getHeight());
+                int[] fabLocation = new int[2];
+                _actionFab.getLocationOnScreen(fabLocation);
+                _coordinatesModel = new AnimateLocationCoordinatesModel(fabLocation[0],
+                                                                        fabLocation[1],
+                                                                        _actionFab.getWidth(),
+                                                                        _actionFab.getHeight(),
+                                                                        finalRadius);
+    }
+
     public void launchTaskListActivity() {
         Intent intent = new Intent(this, TaskListActivity.class);
         startActivity(intent);
@@ -248,23 +266,6 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         _dateText.setTextColor(colour);
     }
 
-    private void showTimePickButton() {
-        _timeText.setVisibility(View.VISIBLE);
-        _timeSelectContainer.setVisibility(View.VISIBLE);
-        _timeSelectContainer.setOnClickListener(this);
-    }
-
-    private void calculateAnimationCoordinates() {
-        float finalRadius = Math.max(_rootView.getWidth(), _rootView.getHeight());
-                int[] fabLocation = new int[2];
-                _actionFab.getLocationOnScreen(fabLocation);
-                _coordinatesModel = new AnimateLocationCoordinatesModel(fabLocation[0],
-                                                                        fabLocation[1],
-                                                                        _actionFab.getWidth(),
-                                                                        _actionFab.getHeight(),
-                                                                        finalRadius);
-    }
-
     public void addEventView() {
         //on pause needs to store prior coords, but will be from prior rotation, so before going back needs to grab both land/port coords
         if(_eventView != null) {
@@ -278,6 +279,34 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         _actionContainer.addView(_eventView, params);
         getIntent().putExtra(EventView.PRESERVE_VIEW, true);
         getWindow().setStatusBarColor(getResources().getColor(R.color.orange_ripple));
+    }
+
+    public void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if(imm.isAcceptingText() == false) return;
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
+    public void setExpandedTitleText(String text) {
+        _expandedTitleText.setText(text);
+    }
+
+    public void createDatePicker() {
+        DateTime datePickerTime = new DateTime();
+        DatePickerDialog datePickerDialog =
+                DatePickerDialog.newInstance(this,
+                        datePickerTime.getYear(),
+                        datePickerTime.getMonthOfYear() - 1, //bug in library where dates do not start from 0
+                        datePickerTime.getDayOfMonth());
+        datePickerDialog.setAccentColor(getResources().getColor(R.color.orange_ripple));
+        datePickerDialog.setMinDate(datePickerTime.toCalendar(null));
+        datePickerDialog.show(getFragmentManager(), DatePickerDialog.class.getName());
+    }
+
+    public Point getScreenSize() {
+        Point screenSize = new Point();
+        getWindow().getWindowManager().getDefaultDisplay().getSize(screenSize);
+        return screenSize;
     }
 
     private void loadFabScrollThresholds() {
@@ -339,28 +368,6 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         _circularReveal.start();
         _circularReveal.reverse();
         getIntent().removeExtra(ANIMATE_START_INTENT_KEY);
-    }
-
-    public void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        if(imm.isAcceptingText() == false) return;
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-    }
-
-    public void setExpandedTitleText(String text) {
-        _expandedTitleText.setText(text);
-    }
-
-    public void createDatePicker() {
-        DateTime datePickerTime = new DateTime();
-        DatePickerDialog datePickerDialog =
-                DatePickerDialog.newInstance(this,
-                        datePickerTime.getYear(),
-                        datePickerTime.getMonthOfYear() - 1, //bug in library where dates do not start from 0
-                        datePickerTime.getDayOfMonth());
-        datePickerDialog.setAccentColor(getResources().getColor(R.color.orange_ripple));
-        datePickerDialog.setMinDate(datePickerTime.toCalendar(null));
-        datePickerDialog.show(getFragmentManager(), DatePickerDialog.class.getName());
     }
 
     private void createTimePicker() {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -23,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.david.todo.BuildConfig;
 import com.david.todo.R;
 import com.david.todo.model.AnimateLocationCoordinatesModel;
 import com.david.todo.model.EventModel;
@@ -44,6 +46,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
+import io.codetail.widget.RevealFrameLayout;
 
 public class AddItemActivity extends BaseActivity implements View.OnClickListener,
                                                              NestedScrollView.OnScrollChangeListener,
@@ -55,6 +58,10 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     public static String TITLE_TEXT_INTENT_KEY = "TITLE_TEXT_INTENT_KEY";
     public static String EVENT_INTENT_KEY = "EVENT_INTENT_KEY";
 
+    @Bind(R.id.reveal_layout)
+    public RevealFrameLayout _revealLayout;
+    @Bind(R.id.reveal_container)
+    public FrameLayout _revealContainer;
     @Bind(R.id.add_item_root)
     CoordinatorLayout _rootView;
     @Bind(R.id.app_bar_layout)
@@ -245,7 +252,9 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         if(getIntent().hasExtra(EventView.PRESERVE_VIEW)) {
             getIntent().removeExtra(EventView.PRESERVE_VIEW);
         }
-        getWindow().setStatusBarColor(getResources().getColor(R.color.add_activity_status_bar));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.add_activity_status_bar));
+        }
         _eventView = null;
     }
 
@@ -278,7 +287,9 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
                 FrameLayout.LayoutParams.MATCH_PARENT);
         _actionContainer.addView(_eventView, params);
         getIntent().putExtra(EventView.PRESERVE_VIEW, true);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.orange_ripple));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.orange_ripple));
+        }
     }
 
     public void hideKeyboard() {
@@ -362,7 +373,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         float finalRadius = Math.max(_rootView.getWidth(), _rootView.getHeight());
 
         _circularReveal = ViewAnimationUtils.createCircularReveal(_rootView, cx, cy, 0, finalRadius);
-        _circularReveal.setDuration(500);
+        _circularReveal.setDuration(BuildConfig.FULL_SCREEN_TRANSITION);
 
         _rootView.setVisibility(View.VISIBLE);
         _circularReveal.start();

@@ -21,6 +21,7 @@ android {
         buildConfigField 'String', 'DATE_FORMAT', '"MMM - dd"'
         buildConfigField 'long', 'EASE_IN_DURATION', '225L' //Ease in duration recommended by googles material guidelines for items entering the screen
         buildConfigField 'long', 'EASE_OUT_DURATION', '195L' //Ease out duration recommended by googles material guidelines for items entering the screen
+        buildConfigField 'long', 'FULL_SCREEN_TRANSITION', '375L' //Full screen transition duration recommended by googles material guidelines for items entering the screen
 
         vectorDrawables.useSupportLibrary = true
     }

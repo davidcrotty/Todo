@@ -62,6 +62,7 @@ class TaskListActivity : BaseActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         setContentView(R.layout.activity_task_list)
         setSupportActionBar(toolbar)
         deleteToggleMargin = -resources.getDimension(R.dimen.delete_text_hit_area)

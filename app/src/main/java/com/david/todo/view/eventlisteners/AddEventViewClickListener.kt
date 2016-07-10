@@ -9,7 +9,7 @@ import com.david.todo.presenter.AddItemPresenter
 class AddEventViewClickListener(val addItemPresenter: AddItemPresenter) : View.OnClickListener {
 
     override fun onClick(v: View?) {
-        addItemPresenter.delegateAddEventView();
+        addItemPresenter.delegateAddEventView()
     }
 
 }

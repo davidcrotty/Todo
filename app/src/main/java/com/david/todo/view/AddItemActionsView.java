@@ -9,18 +9,20 @@ import android.graphics.PathMeasure;
 import android.graphics.Point;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.ViewAnimationUtils;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import com.david.todo.BuildConfig;
 import com.david.todo.R;
 import com.david.todo.presenter.AddItemPresenter;
 import com.david.todo.view.activity.AddItemActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.codetail.animation.SupportAnimator;
 
 public class AddItemActionsView extends RelativeLayout implements View.OnClickListener {
 
@@ -57,13 +59,10 @@ public class AddItemActionsView extends RelativeLayout implements View.OnClickLi
     private void setupTransitionAnimationWith(final FloatingActionButton fabToAnimate, FloatingActionButton originalFab) {
         originalFab.setVisibility(View.INVISIBLE);
 
-        AddItemActivity additemActivity = (AddItemActivity) getContext();
-        Window window = additemActivity.getWindow();
-        WindowManager.LayoutParams windowLayoutParams = new WindowManager.LayoutParams();
-        windowLayoutParams.gravity = Gravity.START;
-        windowLayoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        windowLayoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        window.addContentView(fabToAnimate, windowLayoutParams);
+        final AddItemActivity additemActivity = (AddItemActivity) getContext();
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
+                                                                             FrameLayout.LayoutParams.WRAP_CONTENT);
+        additemActivity._revealLayout.addView(fabToAnimate, layoutParams);
 
         int[] xYCoordinates = new int[2];
         _taskListButton.getLocationOnScreen(xYCoordinates);
@@ -74,7 +73,7 @@ public class AddItemActionsView extends RelativeLayout implements View.OnClickLi
         fabToAnimate.setTranslationY(xYCoordinates[1]);
 
         ValueAnimator curveAnimation = ValueAnimator.ofFloat(0, 1); // values from 0 to 1
-        curveAnimation.setDuration(225); // 5 seconds duration from 0 to 1
+        curveAnimation.setDuration(BuildConfig.EASE_IN_DURATION); // 5 seconds duration from 0 to 1
 
         final float[] point = new float[2];
 
@@ -89,12 +88,55 @@ public class AddItemActionsView extends RelativeLayout implements View.OnClickLi
                 float val = animation.getAnimatedFraction();
                 PathMeasure pathMeasure = new PathMeasure(path, false);
                 pathMeasure.getPosTan(pathMeasure.getLength() * val, point, null);
-                fabToAnimate.setX(point[0]);
+                fabToAnimate.setX(point[0] - (fabToAnimate.getWidth() / 2));
                 fabToAnimate.setY(point[1]);
             }
         });
 
+        curveAnimation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                startRevealCompatAnimationWith(fabToAnimate, screenSize, additemActivity);
+            }
+        });
         curveAnimation.start();
+    }
+
+    private void startRevealCompatAnimationWith(FloatingActionButton fabToAnimate, Point screenSize, final AddItemActivity addItemActivity) {
+        FrameLayout layout = addItemActivity._revealContainer;
+        float finalRadius = Math.max(layout.getWidth(), layout.getHeight());
+
+        SupportAnimator circularReveal = io.codetail.animation.ViewAnimationUtils.createCircularReveal(layout,
+                                                                                                       screenSize.x / 2,
+                                                                                                       screenSize.y / 2,
+                                                                                                       0,
+                                                                                                       finalRadius);
+
+
+        layout.bringToFront();
+        layout.setVisibility(VISIBLE);
+        fabToAnimate.setVisibility(INVISIBLE);
+        circularReveal.setDuration(BuildConfig.FULL_SCREEN_TRANSITION);
+        circularReveal.addListener(new SupportAnimator.AnimatorListener() {
+            @Override
+            public void onAnimationStart() {
+            }
+
+            @Override
+            public void onAnimationEnd() {
+                addItemActivity.launchTaskListActivity();
+            }
+
+            @Override
+            public void onAnimationCancel() {
+            }
+
+            @Override
+            public void onAnimationRepeat() {
+            }
+        });
+        circularReveal.start();
     }
 
     @Override

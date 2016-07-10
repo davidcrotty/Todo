@@ -34,11 +34,8 @@
             android:name=".view.activity.TaskListActivity"
             android:label=""
             android:launchMode="singleTask"
-            android:theme="@style/AppThemeNoActionBar.Transparent.Green"
+            android:theme="@style/AppThemeNoActionBar.Green"
             android:windowSoftInputMode="stateHidden">
-        </activity>
-        <activity android:name=".view.activity.ToolbarActivity"
-            android:theme="@style/AppThemeNoActionBar.Transparent.Green">
         </activity>
     </application>
 

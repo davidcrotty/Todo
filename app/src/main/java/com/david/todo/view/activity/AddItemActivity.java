@@ -57,6 +57,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     public static String DATE_KEY = "DATE_KEY";
     public static String TITLE_TEXT_INTENT_KEY = "TITLE_TEXT_INTENT_KEY";
     public static String EVENT_INTENT_KEY = "EVENT_INTENT_KEY";
+    public static final int ACTIVITY_LAUNCHED = 0;
 
     @Bind(R.id.reveal_layout)
     public RevealFrameLayout _revealLayout;
@@ -111,6 +112,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     private AnimateLocationCoordinatesModel _coordinatesModel;
     private int _checkListScrollThreshold = 0;
     private int _commentsScrollThreshold = 0;
+    public AddItemActionsView _addItemActionsView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,6 +214,17 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == ACTIVITY_LAUNCHED) {
+            _revealContainer.setVisibility(View.INVISIBLE);
+            if(_addItemActionsView != null) {
+                _addItemActionsView.resetViews();
+            }
+        }
+    }
+
     private void delegateActionButtonEvent(int scrollY) {
         if(scrollY > _checkListScrollThreshold && scrollY < _commentsScrollThreshold) {
             _actionFab.setOnClickListener(new AddTaskListClickListener(_addItemPresenter));
@@ -239,7 +252,7 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
 
     public void launchTaskListActivity() {
         Intent intent = new Intent(this, TaskListActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, ACTIVITY_LAUNCHED);
     }
 
     public void updateTimeWith(String textToDisplay, int colour) {
@@ -350,10 +363,10 @@ public class AddItemActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void addItemActions() {
-        AddItemActionsView addItemActionsView = new AddItemActionsView(this, _addItemPresenter);
+        _addItemActionsView = new AddItemActionsView(this, _addItemPresenter);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams((int) getResources().getDimension(R.dimen.item_main_action_list),
                                                                       RelativeLayout.LayoutParams.MATCH_PARENT);
-        _actionContentContainer.addView(addItemActionsView, 0, layoutParams);
+        _actionContentContainer.addView(_addItemActionsView, 0, layoutParams);
     }
 
     private void circularRevealLayout() {

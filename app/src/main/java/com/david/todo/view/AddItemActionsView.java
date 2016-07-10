@@ -50,6 +50,13 @@ public class AddItemActionsView extends RelativeLayout implements View.OnClickLi
         _addItemPresenter = null;
     }
 
+    /**
+     * Resets views after a transition event
+     */
+    public void resetViews() {
+        _taskListButton.setVisibility(View.VISIBLE);
+    }
+
     private void init() {
         inflate(getContext(), R.layout.add_item_actions, this);
         ButterKnife.bind(this);
